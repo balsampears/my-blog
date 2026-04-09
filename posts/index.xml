@@ -1,4 +1,81 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 我的个人博客</title><link>https://balsampears.github.io/my-blog/posts/</link><description>Recent content in Posts on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 09 Apr 2026 14:01:08 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo高级用法</title><link>https://balsampears.github.io/my-blog/posts/hugo/hugo-high/</link><pubDate>Thu, 09 Apr 2026 14:01:08 +0800</pubDate><guid>https://balsampears.github.io/my-blog/posts/hugo/hugo-high/</guid><description>&lt;p&gt;暂无&lt;/p&gt;</description></item><item><title>使用Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/posts/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 13:49:15 +0800</pubDate><guid>https://balsampears.github.io/my-blog/posts/hugo/hugo-start/</guid><description>&lt;h1 id="一-开始"&gt;一. 开始&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 我的个人博客</title><link>https://balsampears.github.io/my-blog/posts/</link><description>Recent content in Posts on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 09 Apr 2026 14:05:08 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>使用GithubPage发布博客</title><link>https://balsampears.github.io/my-blog/posts/hugo/hugo-githubpage-publish/</link><pubDate>Thu, 09 Apr 2026 14:05:08 +0800</pubDate><guid>https://balsampears.github.io/my-blog/posts/hugo/hugo-githubpage-publish/</guid><description>&lt;h1 id="一-github仓库配置"&gt;一. Github仓库配置&lt;/h1&gt;
+&lt;h2 id="1发布代码到github"&gt;1.发布代码到Github&lt;/h2&gt;
+&lt;p&gt;这里大家都会，省略&lt;/p&gt;
+&lt;h2 id="2设置github-page"&gt;2.设置Github Page&lt;/h2&gt;
+&lt;p&gt;&lt;img src="setting_github_page.png" alt="设置页"&gt;
+这样做的目的是指定github page使用什么分支的代码、什么目录下的代码。&lt;/p&gt;
+&lt;h1 id="二-发布"&gt;二. 发布&lt;/h1&gt;
+&lt;h2 id="1发布前准备"&gt;1.发布前准备&lt;/h2&gt;
+&lt;p&gt;修改 config/_default/hugo.toml中的baseURL，指定为：&lt;br&gt;
+baseUrl = &amp;lsquo;[你的用户名].github.io/[Github仓库名]&amp;rsquo;&lt;/p&gt;
+&lt;h2 id="2运行发布脚本"&gt;2.运行发布脚本&lt;/h2&gt;
+&lt;p&gt;编写一个脚本，具体功能：
+1.使用hugo &amp;ndash;minify 生成public编译后的html
+2.切换到public目录，切换gh-pages分支
+3.将public目录下的代码发送到gh-pages分支上&lt;/p&gt;
+&lt;p&gt;将下面脚本放在 scripts/deploy.sh，运行它（scripts/deploy.sh）&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT=&amp;#34;$(cd &amp;#34;$(dirname &amp;#34;${BASH_SOURCE[0]}&amp;#34;)/..&amp;#34; &amp;amp;&amp;amp; pwd)&amp;#34;
+DEPLOY_DIR=&amp;#34;${REPO_ROOT}/.deploy-gh-pages&amp;#34;
+TARGET_BRANCH=&amp;#34;gh-pages&amp;#34;
+SITE_URL=&amp;#34;https://balsampears.github.io/my-blog/&amp;#34;
+
+cd &amp;#34;${REPO_ROOT}&amp;#34;
+
+if ! command -v hugo &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then
+ echo &amp;#34;Error: hugo not found. Please install Hugo first.&amp;#34;
+ exit 1
+fi
+
+if ! git rev-parse --is-inside-work-tree &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then
+ echo &amp;#34;Error: current directory is not a git repository.&amp;#34;
+ exit 1
+fi
+
+if [[ -n &amp;#34;$(git status --porcelain)&amp;#34; ]]; then
+ echo &amp;#34;Error: working tree is not clean. Please commit or stash changes first.&amp;#34;
+ exit 1
+fi
+
+echo &amp;#34;==&amp;gt; Building site with Hugo...&amp;#34;
+hugo --minify
+
+echo &amp;#34;==&amp;gt; Preparing ${TARGET_BRANCH} worktree...&amp;#34;
+if [[ -d &amp;#34;${DEPLOY_DIR}&amp;#34; ]]; then
+ git worktree remove &amp;#34;${DEPLOY_DIR}&amp;#34; --force
+fi
+
+if git ls-remote --exit-code --heads origin &amp;#34;${TARGET_BRANCH}&amp;#34; &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then
+ git worktree add -B &amp;#34;${TARGET_BRANCH}&amp;#34; &amp;#34;${DEPLOY_DIR}&amp;#34; &amp;#34;origin/${TARGET_BRANCH}&amp;#34;
+else
+ git worktree add -B &amp;#34;${TARGET_BRANCH}&amp;#34; &amp;#34;${DEPLOY_DIR}&amp;#34;
+fi
+
+echo &amp;#34;==&amp;gt; Syncing public/ to ${TARGET_BRANCH}...&amp;#34;
+rm -rf &amp;#34;${DEPLOY_DIR:?}/&amp;#34;*
+cp -R &amp;#34;${REPO_ROOT}/public/.&amp;#34; &amp;#34;${DEPLOY_DIR}/&amp;#34;
+
+cd &amp;#34;${DEPLOY_DIR}&amp;#34;
+
+touch .nojekyll
+git add -A
+
+if git diff --cached --quiet; then
+ echo &amp;#34;==&amp;gt; No changes to publish.&amp;#34;
+else
+ COMMIT_MSG=&amp;#34;发布: $(date &amp;#39;+%Y-%m-%d %H:%M:%S&amp;#39;)&amp;#34;
+ git commit -m &amp;#34;${COMMIT_MSG}&amp;#34;
+ git push -u origin &amp;#34;${TARGET_BRANCH}&amp;#34;
+ echo &amp;#34;==&amp;gt; Publish complete: ${SITE_URL}&amp;#34;
+fi
+
+cd &amp;#34;${REPO_ROOT}&amp;#34;
+git worktree remove &amp;#34;${DEPLOY_DIR}&amp;#34; --force
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="3访问"&gt;3.访问&lt;/h2&gt;
+&lt;p&gt;[你的用户名].github.io/[Github仓库名]&lt;br&gt;
+注意：当发布到gh-pages时，可能需要1~5分钟才会刷新页面&lt;/p&gt;</description></item><item><title>使用Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/posts/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 13:49:15 +0800</pubDate><guid>https://balsampears.github.io/my-blog/posts/hugo/hugo-start/</guid><description>&lt;h1 id="一-开始"&gt;一. 开始&lt;/h1&gt;
 &lt;h2 id="1开始一个hugo项目"&gt;1.开始一个hugo项目&lt;/h2&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;hugo new site quickstart
 cd quickstart

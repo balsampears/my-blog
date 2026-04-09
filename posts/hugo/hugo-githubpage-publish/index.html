@@ -1,0 +1,216 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>使用GithubPage发布博客 | 我的个人博客</title><meta name=viewport content="width=device-width,minimum-scale=1"><meta name=description content='一. Github仓库配置
+1.发布代码到Github
+这里大家都会，省略
+2.设置Github Page
+
+这样做的目的是指定github page使用什么分支的代码、什么目录下的代码。
+二. 发布
+1.发布前准备
+修改 config/_default/hugo.toml中的baseURL，指定为：
+baseUrl = &lsquo;[你的用户名].github.io/[Github仓库名]&rsquo;
+2.运行发布脚本
+编写一个脚本，具体功能：
+1.使用hugo &ndash;minify 生成public编译后的html
+2.切换到public目录，切换gh-pages分支
+3.将public目录下的代码发送到gh-pages分支上
+将下面脚本放在 scripts/deploy.sh，运行它（scripts/deploy.sh）
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+DEPLOY_DIR="${REPO_ROOT}/.deploy-gh-pages"
+TARGET_BRANCH="gh-pages"
+SITE_URL="https://balsampears.github.io/my-blog/"
+
+cd "${REPO_ROOT}"
+
+if ! command -v hugo >/dev/null 2>&amp;1; then
+  echo "Error: hugo not found. Please install Hugo first."
+  exit 1
+fi
+
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&amp;1; then
+  echo "Error: current directory is not a git repository."
+  exit 1
+fi
+
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "Error: working tree is not clean. Please commit or stash changes first."
+  exit 1
+fi
+
+echo "==> Building site with Hugo..."
+hugo --minify
+
+echo "==> Preparing ${TARGET_BRANCH} worktree..."
+if [[ -d "${DEPLOY_DIR}" ]]; then
+  git worktree remove "${DEPLOY_DIR}" --force
+fi
+
+if git ls-remote --exit-code --heads origin "${TARGET_BRANCH}" >/dev/null 2>&amp;1; then
+  git worktree add -B "${TARGET_BRANCH}" "${DEPLOY_DIR}" "origin/${TARGET_BRANCH}"
+else
+  git worktree add -B "${TARGET_BRANCH}" "${DEPLOY_DIR}"
+fi
+
+echo "==> Syncing public/ to ${TARGET_BRANCH}..."
+rm -rf "${DEPLOY_DIR:?}/"*
+cp -R "${REPO_ROOT}/public/." "${DEPLOY_DIR}/"
+
+cd "${DEPLOY_DIR}"
+
+touch .nojekyll
+git add -A
+
+if git diff --cached --quiet; then
+  echo "==> No changes to publish."
+else
+  COMMIT_MSG="发布: $(date &#39;+%Y-%m-%d %H:%M:%S&#39;)"
+  git commit -m "${COMMIT_MSG}"
+  git push -u origin "${TARGET_BRANCH}"
+  echo "==> Publish complete: ${SITE_URL}"
+fi
+
+cd "${REPO_ROOT}"
+git worktree remove "${DEPLOY_DIR}" --force
+3.访问
+[你的用户名].github.io/[Github仓库名]
+注意：当发布到gh-pages时，可能需要1~5分钟才会刷新页面'><meta name=generator content="Hugo 0.160.1"><meta name=robots content="index, follow"><link rel=stylesheet href=/my-blog/ananke/css/main.min.efe4d852f731d5d1fbb87718387202a97aafd768cdcdaed0662bbe6982e91824.css><link rel=canonical href=https://balsampears.github.io/my-blog/posts/hugo/hugo-githubpage-publish/><meta property="og:url" content="https://balsampears.github.io/my-blog/posts/hugo/hugo-githubpage-publish/"><meta property="og:site_name" content="我的个人博客"><meta property="og:title" content="使用GithubPage发布博客"><meta property="og:description" content='一. Github仓库配置 1.发布代码到Github 这里大家都会，省略
+2.设置Github Page 这样做的目的是指定github page使用什么分支的代码、什么目录下的代码。
+二. 发布 1.发布前准备 修改 config/_default/hugo.toml中的baseURL，指定为：
+baseUrl = ‘[你的用户名].github.io/[Github仓库名]’
+2.运行发布脚本 编写一个脚本，具体功能： 1.使用hugo –minify 生成public编译后的html 2.切换到public目录，切换gh-pages分支 3.将public目录下的代码发送到gh-pages分支上
+将下面脚本放在 scripts/deploy.sh，运行它（scripts/deploy.sh）
+#!/usr/bin/env bash set -euo pipefail REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)" DEPLOY_DIR="${REPO_ROOT}/.deploy-gh-pages" TARGET_BRANCH="gh-pages" SITE_URL="https://balsampears.github.io/my-blog/" cd "${REPO_ROOT}" if ! command -v hugo >/dev/null 2>&amp;1; then echo "Error: hugo not found. Please install Hugo first." exit 1 fi if ! git rev-parse --is-inside-work-tree >/dev/null 2>&amp;1; then echo "Error: current directory is not a git repository." exit 1 fi if [[ -n "$(git status --porcelain)" ]]; then echo "Error: working tree is not clean. Please commit or stash changes first." exit 1 fi echo "==> Building site with Hugo..." hugo --minify echo "==> Preparing ${TARGET_BRANCH} worktree..." if [[ -d "${DEPLOY_DIR}" ]]; then git worktree remove "${DEPLOY_DIR}" --force fi if git ls-remote --exit-code --heads origin "${TARGET_BRANCH}" >/dev/null 2>&amp;1; then git worktree add -B "${TARGET_BRANCH}" "${DEPLOY_DIR}" "origin/${TARGET_BRANCH}" else git worktree add -B "${TARGET_BRANCH}" "${DEPLOY_DIR}" fi echo "==> Syncing public/ to ${TARGET_BRANCH}..." rm -rf "${DEPLOY_DIR:?}/"* cp -R "${REPO_ROOT}/public/." "${DEPLOY_DIR}/" cd "${DEPLOY_DIR}" touch .nojekyll git add -A if git diff --cached --quiet; then echo "==> No changes to publish." else COMMIT_MSG="发布: $(date &#39;+%Y-%m-%d %H:%M:%S&#39;)" git commit -m "${COMMIT_MSG}" git push -u origin "${TARGET_BRANCH}" echo "==> Publish complete: ${SITE_URL}" fi cd "${REPO_ROOT}" git worktree remove "${DEPLOY_DIR}" --force 3.访问 [你的用户名].github.io/[Github仓库名]
+注意：当发布到gh-pages时，可能需要1~5分钟才会刷新页面'><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-04-09T14:05:08+08:00"><meta property="article:modified_time" content="2026-04-09T14:05:08+08:00"><meta itemprop=name content="使用GithubPage发布博客"><meta itemprop=description content='一. Github仓库配置 1.发布代码到Github 这里大家都会，省略
+2.设置Github Page 这样做的目的是指定github page使用什么分支的代码、什么目录下的代码。
+二. 发布 1.发布前准备 修改 config/_default/hugo.toml中的baseURL，指定为：
+baseUrl = ‘[你的用户名].github.io/[Github仓库名]’
+2.运行发布脚本 编写一个脚本，具体功能： 1.使用hugo –minify 生成public编译后的html 2.切换到public目录，切换gh-pages分支 3.将public目录下的代码发送到gh-pages分支上
+将下面脚本放在 scripts/deploy.sh，运行它（scripts/deploy.sh）
+#!/usr/bin/env bash set -euo pipefail REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)" DEPLOY_DIR="${REPO_ROOT}/.deploy-gh-pages" TARGET_BRANCH="gh-pages" SITE_URL="https://balsampears.github.io/my-blog/" cd "${REPO_ROOT}" if ! command -v hugo >/dev/null 2>&amp;1; then echo "Error: hugo not found. Please install Hugo first." exit 1 fi if ! git rev-parse --is-inside-work-tree >/dev/null 2>&amp;1; then echo "Error: current directory is not a git repository." exit 1 fi if [[ -n "$(git status --porcelain)" ]]; then echo "Error: working tree is not clean. Please commit or stash changes first." exit 1 fi echo "==> Building site with Hugo..." hugo --minify echo "==> Preparing ${TARGET_BRANCH} worktree..." if [[ -d "${DEPLOY_DIR}" ]]; then git worktree remove "${DEPLOY_DIR}" --force fi if git ls-remote --exit-code --heads origin "${TARGET_BRANCH}" >/dev/null 2>&amp;1; then git worktree add -B "${TARGET_BRANCH}" "${DEPLOY_DIR}" "origin/${TARGET_BRANCH}" else git worktree add -B "${TARGET_BRANCH}" "${DEPLOY_DIR}" fi echo "==> Syncing public/ to ${TARGET_BRANCH}..." rm -rf "${DEPLOY_DIR:?}/"* cp -R "${REPO_ROOT}/public/." "${DEPLOY_DIR}/" cd "${DEPLOY_DIR}" touch .nojekyll git add -A if git diff --cached --quiet; then echo "==> No changes to publish." else COMMIT_MSG="发布: $(date &#39;+%Y-%m-%d %H:%M:%S&#39;)" git commit -m "${COMMIT_MSG}" git push -u origin "${TARGET_BRANCH}" echo "==> Publish complete: ${SITE_URL}" fi cd "${REPO_ROOT}" git worktree remove "${DEPLOY_DIR}" --force 3.访问 [你的用户名].github.io/[Github仓库名]
+注意：当发布到gh-pages时，可能需要1~5分钟才会刷新页面'><meta itemprop=datePublished content="2026-04-09T14:05:08+08:00"><meta itemprop=dateModified content="2026-04-09T14:05:08+08:00"><meta itemprop=wordCount content="319"><meta name=twitter:card content="summary"><meta name=twitter:title content="使用GithubPage发布博客"><meta name=twitter:description content='一. Github仓库配置 1.发布代码到Github 这里大家都会，省略
+2.设置Github Page 这样做的目的是指定github page使用什么分支的代码、什么目录下的代码。
+二. 发布 1.发布前准备 修改 config/_default/hugo.toml中的baseURL，指定为：
+baseUrl = ‘[你的用户名].github.io/[Github仓库名]’
+2.运行发布脚本 编写一个脚本，具体功能： 1.使用hugo –minify 生成public编译后的html 2.切换到public目录，切换gh-pages分支 3.将public目录下的代码发送到gh-pages分支上
+将下面脚本放在 scripts/deploy.sh，运行它（scripts/deploy.sh）
+#!/usr/bin/env bash set -euo pipefail REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)" DEPLOY_DIR="${REPO_ROOT}/.deploy-gh-pages" TARGET_BRANCH="gh-pages" SITE_URL="https://balsampears.github.io/my-blog/" cd "${REPO_ROOT}" if ! command -v hugo >/dev/null 2>&amp;1; then echo "Error: hugo not found. Please install Hugo first." exit 1 fi if ! git rev-parse --is-inside-work-tree >/dev/null 2>&amp;1; then echo "Error: current directory is not a git repository." exit 1 fi if [[ -n "$(git status --porcelain)" ]]; then echo "Error: working tree is not clean. Please commit or stash changes first." exit 1 fi echo "==> Building site with Hugo..." hugo --minify echo "==> Preparing ${TARGET_BRANCH} worktree..." if [[ -d "${DEPLOY_DIR}" ]]; then git worktree remove "${DEPLOY_DIR}" --force fi if git ls-remote --exit-code --heads origin "${TARGET_BRANCH}" >/dev/null 2>&amp;1; then git worktree add -B "${TARGET_BRANCH}" "${DEPLOY_DIR}" "origin/${TARGET_BRANCH}" else git worktree add -B "${TARGET_BRANCH}" "${DEPLOY_DIR}" fi echo "==> Syncing public/ to ${TARGET_BRANCH}..." rm -rf "${DEPLOY_DIR:?}/"* cp -R "${REPO_ROOT}/public/." "${DEPLOY_DIR}/" cd "${DEPLOY_DIR}" touch .nojekyll git add -A if git diff --cached --quiet; then echo "==> No changes to publish." else COMMIT_MSG="发布: $(date &#39;+%Y-%m-%d %H:%M:%S&#39;)" git commit -m "${COMMIT_MSG}" git push -u origin "${TARGET_BRANCH}" echo "==> Publish complete: ${SITE_URL}" fi cd "${REPO_ROOT}" git worktree remove "${DEPLOY_DIR}" --force 3.访问 [你的用户名].github.io/[Github仓库名]
+注意：当发布到gh-pages时，可能需要1~5分钟才会刷新页面'></head><body class="ma0 avenir bg-near-white production is-page is-page page-使用GithubPage发布博客"><header><div class=bg-black><nav class="pv3 ph3 ph4-ns" role=navigation><div class="flex-l center items-center justify-between"><a href=/my-blog/ class="f3 fw2 hover-white white-90 dib no-underline">我的个人博客</a><div class="flex-l items-center"><ul class="pl0 mr3"><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white white-90 no-underline" href=/my-blog/ title="首页 page">首页</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white white-90 no-underline" href=/my-blog/posts/hugo/hugo-start title="Hugo教程 page">Hugo教程</a></li></ul><div class=ananke-socials></div></div></div></nav></div></header><main class=pb7 role=main><div class="mw9 center ph3 ph4-ns mt4 flex-l"><aside class="w-25-l pr4-l mb4 mb0-l"><h3 class="f5 mt0 mb3">Hugo教程</h3><ul class="list pl0"><li class=mb2><a class="link dark-gray" href=/my-blog/posts/hugo/hugo-start>使用Hugo搭建个人博客</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/hugo/hugo-githubpage-publish>使用GithubPage发布博客</a></li></ul></aside><article class=w-75-l><h1 class="f2 mt0">使用GithubPage发布博客</h1><div class="nested-copy-line-height lh-copy f4 nested-links mid-gray"><h1 id=一-github仓库配置>一. Github仓库配置</h1><h2 id=1发布代码到github>1.发布代码到Github</h2><p>这里大家都会，省略</p><h2 id=2设置github-page>2.设置Github Page</h2><p><img src=setting_github_page.png alt=设置页>
+这样做的目的是指定github page使用什么分支的代码、什么目录下的代码。</p><h1 id=二-发布>二. 发布</h1><h2 id=1发布前准备>1.发布前准备</h2><p>修改 config/_default/hugo.toml中的baseURL，指定为：<br>baseUrl = &lsquo;[你的用户名].github.io/[Github仓库名]&rsquo;</p><h2 id=2运行发布脚本>2.运行发布脚本</h2><p>编写一个脚本，具体功能：
+1.使用hugo &ndash;minify 生成public编译后的html
+2.切换到public目录，切换gh-pages分支
+3.将public目录下的代码发送到gh-pages分支上</p><p>将下面脚本放在 scripts/deploy.sh，运行它（scripts/deploy.sh）</p><pre tabindex=0><code>#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT=&#34;$(cd &#34;$(dirname &#34;${BASH_SOURCE[0]}&#34;)/..&#34; &amp;&amp; pwd)&#34;
+DEPLOY_DIR=&#34;${REPO_ROOT}/.deploy-gh-pages&#34;
+TARGET_BRANCH=&#34;gh-pages&#34;
+SITE_URL=&#34;https://balsampears.github.io/my-blog/&#34;
+
+cd &#34;${REPO_ROOT}&#34;
+
+if ! command -v hugo &gt;/dev/null 2&gt;&amp;1; then
+  echo &#34;Error: hugo not found. Please install Hugo first.&#34;
+  exit 1
+fi
+
+if ! git rev-parse --is-inside-work-tree &gt;/dev/null 2&gt;&amp;1; then
+  echo &#34;Error: current directory is not a git repository.&#34;
+  exit 1
+fi
+
+if [[ -n &#34;$(git status --porcelain)&#34; ]]; then
+  echo &#34;Error: working tree is not clean. Please commit or stash changes first.&#34;
+  exit 1
+fi
+
+echo &#34;==&gt; Building site with Hugo...&#34;
+hugo --minify
+
+echo &#34;==&gt; Preparing ${TARGET_BRANCH} worktree...&#34;
+if [[ -d &#34;${DEPLOY_DIR}&#34; ]]; then
+  git worktree remove &#34;${DEPLOY_DIR}&#34; --force
+fi
+
+if git ls-remote --exit-code --heads origin &#34;${TARGET_BRANCH}&#34; &gt;/dev/null 2&gt;&amp;1; then
+  git worktree add -B &#34;${TARGET_BRANCH}&#34; &#34;${DEPLOY_DIR}&#34; &#34;origin/${TARGET_BRANCH}&#34;
+else
+  git worktree add -B &#34;${TARGET_BRANCH}&#34; &#34;${DEPLOY_DIR}&#34;
+fi
+
+echo &#34;==&gt; Syncing public/ to ${TARGET_BRANCH}...&#34;
+rm -rf &#34;${DEPLOY_DIR:?}/&#34;*
+cp -R &#34;${REPO_ROOT}/public/.&#34; &#34;${DEPLOY_DIR}/&#34;
+
+cd &#34;${DEPLOY_DIR}&#34;
+
+touch .nojekyll
+git add -A
+
+if git diff --cached --quiet; then
+  echo &#34;==&gt; No changes to publish.&#34;
+else
+  COMMIT_MSG=&#34;发布: $(date &#39;+%Y-%m-%d %H:%M:%S&#39;)&#34;
+  git commit -m &#34;${COMMIT_MSG}&#34;
+  git push -u origin &#34;${TARGET_BRANCH}&#34;
+  echo &#34;==&gt; Publish complete: ${SITE_URL}&#34;
+fi
+
+cd &#34;${REPO_ROOT}&#34;
+git worktree remove &#34;${DEPLOY_DIR}&#34; --force
+</code></pre><h2 id=3访问>3.访问</h2><p>[你的用户名].github.io/[Github仓库名]<br>注意：当发布到gh-pages时，可能需要1~5分钟才会刷新页面</p><h2 id=4使用github-action发布可选>4.使用Github Action发布（可选）</h2><p>如果想监听分支提交，自动发布文档则可以使用Github Action</p><ol><li><p>重新设置Github Page
+<img src=setting_github_action.png alt=设置页></p></li><li><p>编写工作流
+创建 .github/workflows/hugo.yml。当监听到master代码提交时，触发一次hugo构建，并将public代码发布到gh-pages分支上</p></li></ol><pre tabindex=0><code>name: Deploy Hugo site to Pages
+
+on:
+  push:
+    branches: [&#34;master&#34;]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: &#34;pages&#34;
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: &#34;0.160.1&#34;
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+</code></pre><p>检查Github Action观察是否构建成功</p></div></article></div></main><footer class="bg-black bottom-0 w-100 pa3" role=contentinfo><div class="flex justify-between"><a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href=https://balsampears.github.io/my-blog/>&copy; 我的个人博客 2026</a><div><div class=ananke-socials></div></div></div></footer></body></html>
