@@ -1,26 +1,76 @@
 {{ define "header" }}{{ partials.Include "page-header.html" . }}{{ end }}
-{{ define "main" }}
-  {{- $page := . -}}
-  {{- $rootID := "" -}}
 
-  {{/* Find current root item by URL matching against main menu and its children. */}}
-  {{- $currentURL := strings.TrimSuffix "/" $page.RelPermalink -}}
-  {{- with site.Menus.main -}}
-    {{- range . -}}
-      {{- $itemURL := strings.TrimSuffix "/" .URL -}}
-      {{- if and (eq $rootID "") (ne .Identifier "") (eq $itemURL $currentURL) -}}
-        {{- $rootID = .Identifier -}}
+{{- define "sidebar-menu-tree" -}}
+  {{- $page := .page -}}
+  {{- $items := .items -}}
+  {{- $level := .level -}}
+
+  <ul class="list {{ if gt $level 1 }}pl3{{ else }}pl0{{ end }}">
+    {{- range $items -}}
+      {{- $isCurrent := $page.IsMenuCurrent .Menu . -}}
+      {{- $hasCurrent := $page.HasMenuCurrent .Menu . -}}
+      {{- $isLeafCurrent := and (eq (len .Children) 0) (eq (strings.TrimSuffix "/" $page.RelPermalink) (strings.TrimSuffix "/" .URL)) -}}
+      {{- $hasURL := ne (strings.TrimSpace .URL) "" -}}
+      {{- $linkClass := "link dark-gray" -}}
+      {{- if not $hasURL -}}
+        {{- $linkClass = printf "%s fw6" $linkClass -}}
       {{- end -}}
+      {{- if or $isCurrent $isLeafCurrent -}}
+        {{- $linkClass = printf "%s dark-blue bg-light-blue br2 ph2 pv1 dib" $linkClass -}}
+      {{- else if $hasCurrent -}}
+        {{- $linkClass = printf "%s fw6" $linkClass -}}
+      {{- end -}}
+
+      <li class="mb2">
+        {{- if $hasURL -}}
+          <a class="{{ $linkClass }}" href="{{ .URL }}">{{ .Name }}</a>
+        {{- else -}}
+          <span class="{{ $linkClass }}">{{ .Name }}</span>
+        {{- end -}}
+      </li>
+
       {{- with .Children -}}
+        {{- template "sidebar-menu-tree" (dict "page" $page "items" . "level" (add $level 1)) -}}
+      {{- end -}}
+    {{- end -}}
+  </ul>
+{{- end -}}
+
+{{- define "find-root-id-by-url" -}}
+  {{- $page := .page -}}
+  {{- $item := .item -}}
+  {{- $currentURL := .currentURL -}}
+  {{- $rootID := .rootID -}}
+
+  {{- if eq ($page.Scratch.Get "sidebarRootID") "" -}}
+    {{- $itemURL := strings.TrimSuffix "/" $item.URL -}}
+    {{- if and (ne $itemURL "") (eq $itemURL $currentURL) -}}
+      {{- $page.Scratch.Set "sidebarRootID" $rootID -}}
+    {{- else -}}
+      {{- with $item.Children -}}
         {{- range . -}}
-          {{- $childURL := strings.TrimSuffix "/" .URL -}}
-          {{- if and (eq $rootID "") (eq $childURL $currentURL) -}}
-            {{- $rootID = .Parent -}}
-          {{- end -}}
+          {{- template "find-root-id-by-url" (dict "page" $page "item" . "currentURL" $currentURL "rootID" $rootID) -}}
         {{- end -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
+{{- end -}}
+
+{{ define "main" }}
+  {{- $page := . -}}
+  {{- $rootID := "" -}}
+
+  {{/* Find root item by recursively matching URL through all menu levels. */}}
+  {{- $currentURL := strings.TrimSuffix "/" $page.RelPermalink -}}
+  {{- $page.Scratch.Set "sidebarRootID" "" -}}
+  {{- with site.Menus.main -}}
+    {{- range . -}}
+      {{- if and (eq ($page.Scratch.Get "sidebarRootID") "") (ne .Identifier "") -}}
+        {{- template "find-root-id-by-url" (dict "page" $page "item" . "currentURL" $currentURL "rootID" .Identifier) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $rootID = $page.Scratch.Get "sidebarRootID" -}}
 
   <div class="mw9 center ph3 ph4-ns mt4 flex-l">
     <aside class="w-25-l pr4-l mb4 mb0-l">
@@ -29,19 +79,7 @@
           {{- if eq .Identifier $rootID -}}
             <h3 class="f5 mt0 mb3">{{ .Name }}</h3>
             {{- with .Children -}}
-              <ul class="list pl0">
-                {{- range . -}}
-                  {{- $linkClass := "link dark-gray" -}}
-                  {{- if $page.IsMenuCurrent .Menu . -}}
-                    {{- $linkClass = printf "%s fw6 black" $linkClass -}}
-                  {{- else if $page.HasMenuCurrent .Menu . -}}
-                    {{- $linkClass = printf "%s fw6" $linkClass -}}
-                  {{- end -}}
-                  <li class="mb2">
-                    <a class="{{ $linkClass }}" href="{{ .URL }}">{{ .Name }}</a>
-                  </li>
-                {{- end -}}
-              </ul>
+              {{- template "sidebar-menu-tree" (dict "page" $page "items" . "level" 1) -}}
             {{- end -}}
           {{- end -}}
         {{- end -}}
@@ -49,6 +87,9 @@
     </aside>
     <article class="w-75-l">
       <h1 class="f2 mt0">{{ .Title }}</h1>
+      <p class="mid-gray f6 mt0 mb4">
+        发布于 {{ .Date.Format "2006-01-02 15:04" }}
+      </p>
       <div class="nested-copy-line-height lh-copy f4 nested-links {{ $.Param "text_color" | compare.Default "mid-gray" }}">
         {{ .Content }}
       </div>
