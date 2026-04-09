@@ -1,5 +1,0 @@
-baseURL = 'https://balsampears.github.io/my-blog/'
-locale = 'zh-cn'
-title = '我的个人博客'
-theme = 'ananke'
-
