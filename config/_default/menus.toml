@@ -16,8 +16,8 @@ weight = 10
 parent = "hugo"
 
 [[main]]
-name = "Hugo高级用法"
-url = "/posts/hugo/hugo-high"
+name = "使用GithubPage发布博客"
+url = "/posts/hugo/hugo-githubPage-publish"
 weight = 20
 parent = "hugo"
 
