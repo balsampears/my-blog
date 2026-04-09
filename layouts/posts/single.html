@@ -1,0 +1,57 @@
+{{ define "header" }}{{ partials.Include "page-header.html" . }}{{ end }}
+{{ define "main" }}
+  {{- $page := . -}}
+  {{- $rootID := "" -}}
+
+  {{/* Find current root item by URL matching against main menu and its children. */}}
+  {{- $currentURL := strings.TrimSuffix "/" $page.RelPermalink -}}
+  {{- with site.Menus.main -}}
+    {{- range . -}}
+      {{- $itemURL := strings.TrimSuffix "/" .URL -}}
+      {{- if and (eq $rootID "") (ne .Identifier "") (eq $itemURL $currentURL) -}}
+        {{- $rootID = .Identifier -}}
+      {{- end -}}
+      {{- with .Children -}}
+        {{- range . -}}
+          {{- $childURL := strings.TrimSuffix "/" .URL -}}
+          {{- if and (eq $rootID "") (eq $childURL $currentURL) -}}
+            {{- $rootID = .Parent -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  <div class="mw9 center ph3 ph4-ns mt4 flex-l">
+    <aside class="w-25-l pr4-l mb4 mb0-l">
+      {{- if ne $rootID "" -}}
+        {{- range site.Menus.main -}}
+          {{- if eq .Identifier $rootID -}}
+            <h3 class="f5 mt0 mb3">{{ .Name }}</h3>
+            {{- with .Children -}}
+              <ul class="list pl0">
+                {{- range . -}}
+                  {{- $linkClass := "link dark-gray" -}}
+                  {{- if $page.IsMenuCurrent .Menu . -}}
+                    {{- $linkClass = printf "%s fw6 black" $linkClass -}}
+                  {{- else if $page.HasMenuCurrent .Menu . -}}
+                    {{- $linkClass = printf "%s fw6" $linkClass -}}
+                  {{- end -}}
+                  <li class="mb2">
+                    <a class="{{ $linkClass }}" href="{{ .URL }}">{{ .Name }}</a>
+                  </li>
+                {{- end -}}
+              </ul>
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    </aside>
+    <article class="w-75-l">
+      <h1 class="f2 mt0">{{ .Title }}</h1>
+      <div class="nested-copy-line-height lh-copy f4 nested-links {{ $.Param "text_color" | compare.Default "mid-gray" }}">
+        {{ .Content }}
+      </div>
+    </article>
+  </div>
+{{ end }}

@@ -20,3 +20,5 @@ name = "Hugo高级用法"
 url = "/posts/hugo/hugo-high"
 weight = 20
 parent = "hugo"
+
+
