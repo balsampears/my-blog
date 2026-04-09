@@ -13,69 +13,25 @@ baseUrl = &amp;lsquo;[你的用户名].github.io/[Github仓库名]&amp;rsquo;&lt
 1.使用hugo &amp;ndash;minify 生成public编译后的html
 2.切换到public目录，切换gh-pages分支
 3.将public目录下的代码发送到gh-pages分支上&lt;/p&gt;
-&lt;p&gt;将下面脚本放在 scripts/deploy.sh，运行它（scripts/deploy.sh）&lt;/p&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;#!/usr/bin/env bash
-set -euo pipefail
-
-REPO_ROOT=&amp;#34;$(cd &amp;#34;$(dirname &amp;#34;${BASH_SOURCE[0]}&amp;#34;)/..&amp;#34; &amp;amp;&amp;amp; pwd)&amp;#34;
-DEPLOY_DIR=&amp;#34;${REPO_ROOT}/.deploy-gh-pages&amp;#34;
-TARGET_BRANCH=&amp;#34;gh-pages&amp;#34;
-SITE_URL=&amp;#34;https://balsampears.github.io/my-blog/&amp;#34;
-
-cd &amp;#34;${REPO_ROOT}&amp;#34;
-
-if ! command -v hugo &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then
- echo &amp;#34;Error: hugo not found. Please install Hugo first.&amp;#34;
- exit 1
-fi
-
-if ! git rev-parse --is-inside-work-tree &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then
- echo &amp;#34;Error: current directory is not a git repository.&amp;#34;
- exit 1
-fi
-
-if [[ -n &amp;#34;$(git status --porcelain)&amp;#34; ]]; then
- echo &amp;#34;Error: working tree is not clean. Please commit or stash changes first.&amp;#34;
- exit 1
-fi
-
-echo &amp;#34;==&amp;gt; Building site with Hugo...&amp;#34;
-hugo --minify
-
-echo &amp;#34;==&amp;gt; Preparing ${TARGET_BRANCH} worktree...&amp;#34;
-if [[ -d &amp;#34;${DEPLOY_DIR}&amp;#34; ]]; then
- git worktree remove &amp;#34;${DEPLOY_DIR}&amp;#34; --force
-fi
-
-if git ls-remote --exit-code --heads origin &amp;#34;${TARGET_BRANCH}&amp;#34; &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then
- git worktree add -B &amp;#34;${TARGET_BRANCH}&amp;#34; &amp;#34;${DEPLOY_DIR}&amp;#34; &amp;#34;origin/${TARGET_BRANCH}&amp;#34;
-else
- git worktree add -B &amp;#34;${TARGET_BRANCH}&amp;#34; &amp;#34;${DEPLOY_DIR}&amp;#34;
-fi
-
-echo &amp;#34;==&amp;gt; Syncing public/ to ${TARGET_BRANCH}...&amp;#34;
-rm -rf &amp;#34;${DEPLOY_DIR:?}/&amp;#34;*
-cp -R &amp;#34;${REPO_ROOT}/public/.&amp;#34; &amp;#34;${DEPLOY_DIR}/&amp;#34;
-
-cd &amp;#34;${DEPLOY_DIR}&amp;#34;
-
-touch .nojekyll
-git add -A
-
-if git diff --cached --quiet; then
- echo &amp;#34;==&amp;gt; No changes to publish.&amp;#34;
-else
- COMMIT_MSG=&amp;#34;发布: $(date &amp;#39;+%Y-%m-%d %H:%M:%S&amp;#39;)&amp;#34;
- git commit -m &amp;#34;${COMMIT_MSG}&amp;#34;
- git push -u origin &amp;#34;${TARGET_BRANCH}&amp;#34;
- echo &amp;#34;==&amp;gt; Publish complete: ${SITE_URL}&amp;#34;
-fi
-
-cd &amp;#34;${REPO_ROOT}&amp;#34;
-git worktree remove &amp;#34;${DEPLOY_DIR}&amp;#34; --force
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="3访问"&gt;3.访问&lt;/h2&gt;
+&lt;p&gt;将下面脚本放在 scripts/deploy.sh，运行它（scripts/deploy.sh）&lt;br&gt;
+参考: &lt;a href="https://github.com/balsampears/my-blog/blob/master/templates/deploy.sh"&gt;https://github.com/balsampears/my-blog/blob/master/templates/deploy.sh&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="3访问"&gt;3.访问&lt;/h2&gt;
 &lt;p&gt;[你的用户名].github.io/[Github仓库名]&lt;br&gt;
-注意：当发布到gh-pages时，可能需要1~5分钟才会刷新页面&lt;/p&gt;</description></item><item><title>使用Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/posts/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 13:49:15 +0800</pubDate><guid>https://balsampears.github.io/my-blog/posts/hugo/hugo-start/</guid><description>&lt;h1 id="一-开始"&gt;一. 开始&lt;/h1&gt;
+注意：当发布到gh-pages时，可能需要1~5分钟才会刷新页面&lt;/p&gt;
+&lt;h2 id="4使用github-action发布可选"&gt;4.使用Github Action发布（可选）&lt;/h2&gt;
+&lt;p&gt;如果想监听分支提交，自动发布文档则可以使用Github Action&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;重新设置Github Page
+&lt;img src="setting_github_action.png" alt="设置页"&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;编写工作流
+创建 .github/workflows/hugo.yml。当监听到master代码提交时，触发一次hugo构建，并将public代码发布到gh-pages分支上&lt;br&gt;
+参考: &lt;a href="https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml"&gt;https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;检查Github Action观察是否构建成功&lt;/p&gt;</description></item><item><title>使用Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/posts/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 13:49:15 +0800</pubDate><guid>https://balsampears.github.io/my-blog/posts/hugo/hugo-start/</guid><description>&lt;h1 id="一-开始"&gt;一. 开始&lt;/h1&gt;
 &lt;h2 id="1开始一个hugo项目"&gt;1.开始一个hugo项目&lt;/h2&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;hugo new site quickstart
 cd quickstart

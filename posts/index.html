@@ -2,66 +2,9 @@
 这样做的目的是指定github page使用什么分支的代码、什么目录下的代码。</p><h1 id=二-发布>二. 发布</h1><h2 id=1发布前准备>1.发布前准备</h2><p>修改 config/_default/hugo.toml中的baseURL，指定为：<br>baseUrl = &lsquo;[你的用户名].github.io/[Github仓库名]&rsquo;</p><h2 id=2运行发布脚本>2.运行发布脚本</h2><p>编写一个脚本，具体功能：
 1.使用hugo &ndash;minify 生成public编译后的html
 2.切换到public目录，切换gh-pages分支
-3.将public目录下的代码发送到gh-pages分支上</p><p>将下面脚本放在 scripts/deploy.sh，运行它（scripts/deploy.sh）</p><pre tabindex=0><code>#!/usr/bin/env bash
-set -euo pipefail
-
-REPO_ROOT=&#34;$(cd &#34;$(dirname &#34;${BASH_SOURCE[0]}&#34;)/..&#34; &amp;&amp; pwd)&#34;
-DEPLOY_DIR=&#34;${REPO_ROOT}/.deploy-gh-pages&#34;
-TARGET_BRANCH=&#34;gh-pages&#34;
-SITE_URL=&#34;https://balsampears.github.io/my-blog/&#34;
-
-cd &#34;${REPO_ROOT}&#34;
-
-if ! command -v hugo &gt;/dev/null 2&gt;&amp;1; then
-  echo &#34;Error: hugo not found. Please install Hugo first.&#34;
-  exit 1
-fi
-
-if ! git rev-parse --is-inside-work-tree &gt;/dev/null 2&gt;&amp;1; then
-  echo &#34;Error: current directory is not a git repository.&#34;
-  exit 1
-fi
-
-if [[ -n &#34;$(git status --porcelain)&#34; ]]; then
-  echo &#34;Error: working tree is not clean. Please commit or stash changes first.&#34;
-  exit 1
-fi
-
-echo &#34;==&gt; Building site with Hugo...&#34;
-hugo --minify
-
-echo &#34;==&gt; Preparing ${TARGET_BRANCH} worktree...&#34;
-if [[ -d &#34;${DEPLOY_DIR}&#34; ]]; then
-  git worktree remove &#34;${DEPLOY_DIR}&#34; --force
-fi
-
-if git ls-remote --exit-code --heads origin &#34;${TARGET_BRANCH}&#34; &gt;/dev/null 2&gt;&amp;1; then
-  git worktree add -B &#34;${TARGET_BRANCH}&#34; &#34;${DEPLOY_DIR}&#34; &#34;origin/${TARGET_BRANCH}&#34;
-else
-  git worktree add -B &#34;${TARGET_BRANCH}&#34; &#34;${DEPLOY_DIR}&#34;
-fi
-
-echo &#34;==&gt; Syncing public/ to ${TARGET_BRANCH}...&#34;
-rm -rf &#34;${DEPLOY_DIR:?}/&#34;*
-cp -R &#34;${REPO_ROOT}/public/.&#34; &#34;${DEPLOY_DIR}/&#34;
-
-cd &#34;${DEPLOY_DIR}&#34;
-
-touch .nojekyll
-git add -A
-
-if git diff --cached --quiet; then
-  echo &#34;==&gt; No changes to publish.&#34;
-else
-  COMMIT_MSG=&#34;发布: $(date &#39;+%Y-%m-%d %H:%M:%S&#39;)&#34;
-  git commit -m &#34;${COMMIT_MSG}&#34;
-  git push -u origin &#34;${TARGET_BRANCH}&#34;
-  echo &#34;==&gt; Publish complete: ${SITE_URL}&#34;
-fi
-
-cd &#34;${REPO_ROOT}&#34;
-git worktree remove &#34;${DEPLOY_DIR}&#34; --force
-</code></pre><h2 id=3访问>3.访问</h2><p>[你的用户名].github.io/[Github仓库名]<br>注意：当发布到gh-pages时，可能需要1~5分钟才会刷新页面</p></div><a href=/my-blog/posts/hugo/hugo-githubpage-publish/ class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a></div></div></div><div class="w-100 w-30-l mb4 relative bg-white"><div class="w-100 mb4 nested-copy-line-height relative bg-white"><div class="mb3 pa4 gray overflow-hidden bg-white"><span class="f6 db">Posts</span><h1 class="f3 near-black"><a href=/my-blog/posts/hugo/hugo-start/ class="link black dim">使用Hugo搭建个人博客</a></h1><div class="nested-links f5 lh-copy nested-copy-line-height"><h1 id=一-开始>一. 开始</h1><h2 id=1开始一个hugo项目>1.开始一个hugo项目</h2><pre tabindex=0><code>hugo new site quickstart
+3.将public目录下的代码发送到gh-pages分支上</p><p>将下面脚本放在 scripts/deploy.sh，运行它（scripts/deploy.sh）<br>参考: <a href=https://github.com/balsampears/my-blog/blob/master/templates/deploy.sh>https://github.com/balsampears/my-blog/blob/master/templates/deploy.sh</a></p><h2 id=3访问>3.访问</h2><p>[你的用户名].github.io/[Github仓库名]<br>注意：当发布到gh-pages时，可能需要1~5分钟才会刷新页面</p><h2 id=4使用github-action发布可选>4.使用Github Action发布（可选）</h2><p>如果想监听分支提交，自动发布文档则可以使用Github Action</p><ol><li><p>重新设置Github Page
+<img src=setting_github_action.png alt=设置页></p></li><li><p>编写工作流
+创建 .github/workflows/hugo.yml。当监听到master代码提交时，触发一次hugo构建，并将public代码发布到gh-pages分支上<br>参考: <a href=https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml>https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml</a></p></li></ol><p>检查Github Action观察是否构建成功</p></div><a href=/my-blog/posts/hugo/hugo-githubpage-publish/ class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a></div></div></div><div class="w-100 w-30-l mb4 relative bg-white"><div class="w-100 mb4 nested-copy-line-height relative bg-white"><div class="mb3 pa4 gray overflow-hidden bg-white"><span class="f6 db">Posts</span><h1 class="f3 near-black"><a href=/my-blog/posts/hugo/hugo-start/ class="link black dim">使用Hugo搭建个人博客</a></h1><div class="nested-links f5 lh-copy nested-copy-line-height"><h1 id=一-开始>一. 开始</h1><h2 id=1开始一个hugo项目>1.开始一个hugo项目</h2><pre tabindex=0><code>hugo new site quickstart
 cd quickstart
 git init
 # 下载并应用一个主题
