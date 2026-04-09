@@ -1,0 +1,22 @@
+[[main]]
+name = "首页"
+pageRef = "/"
+weight = 10
+
+[[main]]
+name = "Hugo教程"
+url = "/posts/hugo/hugo-start"
+weight = 20
+identifier = "hugo"
+
+[[main]]
+name = "使用Hugo搭建个人博客"
+url = "/posts/hugo/hugo-start"
+weight = 10
+parent = "hugo"
+
+[[main]]
+name = "Hugo高级用法"
+url = "/posts/hugo/hugo-high"
+weight = 20
+parent = "hugo"
