@@ -18,10 +18,10 @@ if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   exit 1
 fi
 
-# if [[ -n "$(git status --porcelain)" ]]; then
-#   echo "Error: working tree is not clean. Please commit or stash changes first."
-#   exit 1
-# fi
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "Error: working tree is not clean. Please commit or stash changes first."
+  exit 1
+fi
 
 echo "==> Building site with Hugo..."
 hugo --minify
