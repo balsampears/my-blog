@@ -1,5 +1,5 @@
 +++
-date = '2026-04-09T13:49:15+08:00'
+date = '2026-04-09T20:00:00+08:00'
 draft = false
 title = '使用Hugo搭建个人博客'
 slug = "hugo-start"
@@ -32,6 +32,7 @@ title = '使用Hugo搭建个人博客'
 ## 3.启动hugo
 ```
 hugo server -D # -D可以让草稿状态的文章也正常显示
+hugo server -D -F # -F可以未来发布的文件也正常显示
 ```
 
 # 二.创建菜单

@@ -1,5 +1,5 @@
 +++
-date = '2026-04-09T14:05:08+08:00'
+date = '2026-04-09T21:00:00+08:00'
 draft = false
 title = '使用GithubPage发布博客'
 slug = "hugo-githubPage-publish"

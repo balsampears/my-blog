@@ -5,7 +5,7 @@ weight = 10
 
 [[main]]
 name = "Solidity教程"
-url = "/posts/solidity/erc20_721_1155"
+url = "/posts/solidity/erc20"
 weight = 30
 identifier = "solidity"
 
@@ -68,15 +68,21 @@ parent = "hugo"
 # ======================== Solidity ========================
 
 [[main]]
-name = "ERC20/721/1155"
-url = "/posts/solidity/erc20_721_1155"
+name = "ERC20"
+url = "/posts/solidity/erc20"
 weight = 10
+parent = "solidity"
+
+[[main]]
+name = "ERC721 - NFT"
+url = "/posts/solidity/erc721"
+weight = 11
 parent = "solidity"
 
 [[main]]
 name = "合约签名（EIP191/712/2612/4492）"
 url = "/posts/solidity/contract_signature"
-weight = 11
+weight = 12
 parent = "solidity"
 
 [[main]]

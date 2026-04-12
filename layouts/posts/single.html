@@ -88,7 +88,7 @@
     <article class="w-75-l">
       <h1 class="f2 mt0">{{ .Title }}</h1>
       <p class="mid-gray f6 mt0 mb4">
-        发布于 {{ .Date.Format "2006-01-02 15:04" }}
+        发布于 {{ .Date.Format "2006-01-02 15:04:05" }}
       </p>
       <div class="nested-copy-line-height lh-copy f4 nested-links {{ $.Param "text_color" | compare.Default "mid-gray" }}">
         {{ .Content }}
