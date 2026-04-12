@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 09 Apr 2026 14:05:08 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>使用GithubPage发布博客</title><link>https://balsampears.github.io/my-blog/posts/hugo/hugo-githubpage-publish/</link><pubDate>Thu, 09 Apr 2026 14:05:08 +0800</pubDate><guid>https://balsampears.github.io/my-blog/posts/hugo/hugo-githubpage-publish/</guid><description>&lt;h1 id="一-github仓库配置"&gt;一. Github仓库配置&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sun, 12 Apr 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>ERC721 - NFT</title><link>https://balsampears.github.io/my-blog/posts/solidity/erc721/</link><pubDate>Sun, 12 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/posts/solidity/erc721/</guid><description>&lt;p&gt;ERC721是非同质化货币，Non-fungible token，简称NFT。&lt;br&gt;
+非同质化货币，每一个代币都是独特的、有区别的、与众不同的。ERC20中类似于法币，我的一块跟你的一块没有区别；ERC721类似于画作，虽然都是画，但是我的画跟你的画内容是完全不一样的。所以ERC721最早从数字藏品开始流行。&lt;br&gt;
+每一个NFT都有一个独特编号，这个编号是&lt;strong&gt;tokenId&lt;/strong&gt;。tokenId格式没有明确的要求，可以是自增ID，也可以是随机数。&lt;/p&gt;
+&lt;h1 id="一-nft组成部分"&gt;一. NFT组成部分&lt;/h1&gt;
+&lt;p&gt;NFT由五个部分组成：ERC721、ERC165、ERC721TokenReceiver、ERC721Metadata、Metadata JSON。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ERC721 基础标准&lt;/li&gt;
+&lt;li&gt;ERC165 接口描述标准&lt;/li&gt;
+&lt;li&gt;ERC721TokenReceiver NFT接收标准，所有接收NFT的合约必须实现&lt;/li&gt;
+&lt;li&gt;ERC721Metadata NFT元数据，基本属性&lt;/li&gt;
+&lt;li&gt;Metadata JSON NFT元数据详情属性文件，通常保存在去中心化存储服务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中NFT合约需要实现ERC721、ERC165、ERCMetadata，接收NFT合约需要实现ERC721TokenReceiver，Metadata JSON则放在去中心化存储服务。&lt;/p&gt;
+&lt;h2 id="1erc721"&gt;1.ERC721&lt;/h2&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;interface ERC721 {
+ # 事件
+ event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
+
+ event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
+
+ event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
+
+ # 查询
+ function balanceOf(address _owner) external view returns (uint256);
+
+ function ownerOf(uint256 _tokenId) external view returns (address);
+
+ function getApproved(uint256 _tokenId) external view returns (address);
+
+ function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+
+ # 操作：转账与授权
+ function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) external payable;
+
+ function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable;
+
+ function transferFrom(address _from, address _to, uint256 _tokenId) external payable;
+
+ function approve(address _approved, uint256 _tokenId) external payable;
+
+ function setApprovalForAll(address _operator, bool _approved) external;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;查询&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>ERC20</title><link>https://balsampears.github.io/my-blog/posts/solidity/erc20/</link><pubDate>Fri, 10 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/posts/solidity/erc20/</guid><description>&lt;h1 id="一-eip-与-erc"&gt;一. EIP 与 ERC&lt;/h1&gt;
+&lt;p&gt;EIP（Ethereum Improvement Proposals）是以太坊改进协议，包括从链底层到应用层，从共识算法到智能合约，范围广泛。&lt;br&gt;
+ERC（Ethereum Requests For Commments）是以太坊征求意见，主要针对应用层智能合约的改进，属于EIP的其中一种。&lt;/p&gt;
+&lt;h1 id="二-erc20"&gt;二. ERC20&lt;/h1&gt;
+&lt;p&gt;ERC20是代币标准提案，智能合约中最广泛应用的标准之一，提出于ERC的第20个issue。&lt;br&gt;
+ERC20定义了一系列代币交易的标准接口，使得不同智能合约的代币可以互相调用、互相交易。
+具体标准如下：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 事件
+event Transfer(address indexed _from, address indexed _to, uint256 _value);
+event Approval(address indexed _owner, address indexed _spender, uint256 _value);
+
+# 代币属性
+function name() public view returns (string)
+function symbol() public view returns (string)
+function decimals() public view returns (uint8)
+
+# 代币查询
+function totalSupply() public view returns (uint256)
+function balanceOf(address _owner) public view returns (uint256 balance)
+function allowance(address _owner, address _spender) public view returns (uint256 remaining)
+
+# 代币操作：转账和授权
+function transfer(address _to, uint256 _value) public returns (bool success)
+function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
+function approve(address _spender, uint256 _value) public returns (bool success)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;事件+属性+查询+操作：2+3+3+3，一共11个定义。&lt;/p&gt;</description></item><item><title>使用GithubPage发布博客</title><link>https://balsampears.github.io/my-blog/posts/hugo/hugo-githubpage-publish/</link><pubDate>Thu, 09 Apr 2026 21:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/posts/hugo/hugo-githubpage-publish/</guid><description>&lt;h1 id="一-github仓库配置"&gt;一. Github仓库配置&lt;/h1&gt;
 &lt;h2 id="1发布代码到github"&gt;1.发布代码到Github&lt;/h2&gt;
 &lt;p&gt;这里大家都会，省略&lt;/p&gt;
 &lt;h2 id="2设置github-page"&gt;2.设置Github Page&lt;/h2&gt;
@@ -31,7 +98,7 @@ baseUrl = &amp;lsquo;[你的用户名].github.io/[Github仓库名]&amp;rsquo;&lt
 参考: &lt;a href="https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml"&gt;https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;检查Github Action观察是否构建成功&lt;/p&gt;</description></item><item><title>使用Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/posts/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 13:49:15 +0800</pubDate><guid>https://balsampears.github.io/my-blog/posts/hugo/hugo-start/</guid><description>&lt;h1 id="一-开始"&gt;一. 开始&lt;/h1&gt;
+&lt;p&gt;检查Github Action观察是否构建成功&lt;/p&gt;</description></item><item><title>使用Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/posts/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/posts/hugo/hugo-start/</guid><description>&lt;h1 id="一-开始"&gt;一. 开始&lt;/h1&gt;
 &lt;h2 id="1开始一个hugo项目"&gt;1.开始一个hugo项目&lt;/h2&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;hugo new site quickstart
 cd quickstart
@@ -50,6 +117,7 @@ title = &amp;#39;使用Hugo搭建个人博客&amp;#39;
 +++
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id="3启动hugo"&gt;3.启动hugo&lt;/h2&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;hugo server -D # -D可以让草稿状态的文章也正常显示
+hugo server -D -F # -F可以未来发布的文件也正常显示
 &lt;/code&gt;&lt;/pre&gt;&lt;h1 id="二创建菜单"&gt;二.创建菜单&lt;/h1&gt;
 &lt;h2 id="1更新配置"&gt;1.更新配置&lt;/h2&gt;
 &lt;p&gt;为了更好的维护配置，不要把配置都全部放在hugo.toml一个文件中&lt;/p&gt;

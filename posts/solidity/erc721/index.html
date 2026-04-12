@@ -1,0 +1,136 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>ERC721 - NFT | 我的个人博客</title><meta name=viewport content="width=device-width,minimum-scale=1"><meta name=description content="ERC721是非同质化货币，Non-fungible token，简称NFT。
+非同质化货币，每一个代币都是独特的、有区别的、与众不同的。ERC20中类似于法币，我的一块跟你的一块没有区别；ERC721类似于画作，虽然都是画，但是我的画跟你的画内容是完全不一样的。所以ERC721最早从数字藏品开始流行。
+每一个NFT都有一个独特编号，这个编号是tokenId。tokenId格式没有明确的要求，可以是自增ID，也可以是随机数。
+一. NFT组成部分
+NFT由五个部分组成：ERC721、ERC165、ERC721TokenReceiver、ERC721Metadata、Metadata JSON。
+
+ERC721 基础标准
+ERC165 接口描述标准
+ERC721TokenReceiver NFT接收标准，所有接收NFT的合约必须实现
+ERC721Metadata  NFT元数据，基本属性
+Metadata JSON NFT元数据详情属性文件，通常保存在去中心化存储服务
+
+其中NFT合约需要实现ERC721、ERC165、ERCMetadata，接收NFT合约需要实现ERC721TokenReceiver，Metadata JSON则放在去中心化存储服务。
+1.ERC721
+interface ERC721 {
+  # 事件
+  event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
+
+  event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
+
+  event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
+
+  # 查询
+  function balanceOf(address _owner) external view returns (uint256);
+
+  function ownerOf(uint256 _tokenId) external view returns (address);
+
+  function getApproved(uint256 _tokenId) external view returns (address);
+
+  function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+
+  # 操作：转账与授权
+  function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) external payable;
+
+  function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable;
+
+  function transferFrom(address _from, address _to, uint256 _tokenId) external payable;
+
+  function approve(address _approved, uint256 _tokenId) external payable;
+
+  function setApprovalForAll(address _operator, bool _approved) external;
+}
+查询"><meta name=generator content="Hugo 0.160.1"><meta name=robots content="index, follow"><link rel=stylesheet href=/my-blog/ananke/css/main.min.efe4d852f731d5d1fbb87718387202a97aafd768cdcdaed0662bbe6982e91824.css><link rel=canonical href=https://balsampears.github.io/my-blog/posts/solidity/erc721/><meta property="og:url" content="https://balsampears.github.io/my-blog/posts/solidity/erc721/"><meta property="og:site_name" content="我的个人博客"><meta property="og:title" content="ERC721 - NFT"><meta property="og:description" content="ERC721是非同质化货币，Non-fungible token，简称NFT。
+非同质化货币，每一个代币都是独特的、有区别的、与众不同的。ERC20中类似于法币，我的一块跟你的一块没有区别；ERC721类似于画作，虽然都是画，但是我的画跟你的画内容是完全不一样的。所以ERC721最早从数字藏品开始流行。
+每一个NFT都有一个独特编号，这个编号是tokenId。tokenId格式没有明确的要求，可以是自增ID，也可以是随机数。
+一. NFT组成部分 NFT由五个部分组成：ERC721、ERC165、ERC721TokenReceiver、ERC721Metadata、Metadata JSON。
+ERC721 基础标准 ERC165 接口描述标准 ERC721TokenReceiver NFT接收标准，所有接收NFT的合约必须实现 ERC721Metadata NFT元数据，基本属性 Metadata JSON NFT元数据详情属性文件，通常保存在去中心化存储服务 其中NFT合约需要实现ERC721、ERC165、ERCMetadata，接收NFT合约需要实现ERC721TokenReceiver，Metadata JSON则放在去中心化存储服务。
+1.ERC721 interface ERC721 { # 事件 event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId); event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId); event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved); # 查询 function balanceOf(address _owner) external view returns (uint256); function ownerOf(uint256 _tokenId) external view returns (address); function getApproved(uint256 _tokenId) external view returns (address); function isApprovedForAll(address _owner, address _operator) external view returns (bool); # 操作：转账与授权 function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) external payable; function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable; function transferFrom(address _from, address _to, uint256 _tokenId) external payable; function approve(address _approved, uint256 _tokenId) external payable; function setApprovalForAll(address _operator, bool _approved) external; } 查询"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-04-12T22:00:00+08:00"><meta property="article:modified_time" content="2026-04-12T22:00:00+08:00"><meta itemprop=name content="ERC721 - NFT"><meta itemprop=description content="ERC721是非同质化货币，Non-fungible token，简称NFT。
+非同质化货币，每一个代币都是独特的、有区别的、与众不同的。ERC20中类似于法币，我的一块跟你的一块没有区别；ERC721类似于画作，虽然都是画，但是我的画跟你的画内容是完全不一样的。所以ERC721最早从数字藏品开始流行。
+每一个NFT都有一个独特编号，这个编号是tokenId。tokenId格式没有明确的要求，可以是自增ID，也可以是随机数。
+一. NFT组成部分 NFT由五个部分组成：ERC721、ERC165、ERC721TokenReceiver、ERC721Metadata、Metadata JSON。
+ERC721 基础标准 ERC165 接口描述标准 ERC721TokenReceiver NFT接收标准，所有接收NFT的合约必须实现 ERC721Metadata NFT元数据，基本属性 Metadata JSON NFT元数据详情属性文件，通常保存在去中心化存储服务 其中NFT合约需要实现ERC721、ERC165、ERCMetadata，接收NFT合约需要实现ERC721TokenReceiver，Metadata JSON则放在去中心化存储服务。
+1.ERC721 interface ERC721 { # 事件 event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId); event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId); event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved); # 查询 function balanceOf(address _owner) external view returns (uint256); function ownerOf(uint256 _tokenId) external view returns (address); function getApproved(uint256 _tokenId) external view returns (address); function isApprovedForAll(address _owner, address _operator) external view returns (bool); # 操作：转账与授权 function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) external payable; function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable; function transferFrom(address _from, address _to, uint256 _tokenId) external payable; function approve(address _approved, uint256 _tokenId) external payable; function setApprovalForAll(address _operator, bool _approved) external; } 查询"><meta itemprop=datePublished content="2026-04-12T22:00:00+08:00"><meta itemprop=dateModified content="2026-04-12T22:00:00+08:00"><meta itemprop=wordCount content="407"><meta name=twitter:card content="summary"><meta name=twitter:title content="ERC721 - NFT"><meta name=twitter:description content="ERC721是非同质化货币，Non-fungible token，简称NFT。
+非同质化货币，每一个代币都是独特的、有区别的、与众不同的。ERC20中类似于法币，我的一块跟你的一块没有区别；ERC721类似于画作，虽然都是画，但是我的画跟你的画内容是完全不一样的。所以ERC721最早从数字藏品开始流行。
+每一个NFT都有一个独特编号，这个编号是tokenId。tokenId格式没有明确的要求，可以是自增ID，也可以是随机数。
+一. NFT组成部分 NFT由五个部分组成：ERC721、ERC165、ERC721TokenReceiver、ERC721Metadata、Metadata JSON。
+ERC721 基础标准 ERC165 接口描述标准 ERC721TokenReceiver NFT接收标准，所有接收NFT的合约必须实现 ERC721Metadata NFT元数据，基本属性 Metadata JSON NFT元数据详情属性文件，通常保存在去中心化存储服务 其中NFT合约需要实现ERC721、ERC165、ERCMetadata，接收NFT合约需要实现ERC721TokenReceiver，Metadata JSON则放在去中心化存储服务。
+1.ERC721 interface ERC721 { # 事件 event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId); event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId); event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved); # 查询 function balanceOf(address _owner) external view returns (uint256); function ownerOf(uint256 _tokenId) external view returns (address); function getApproved(uint256 _tokenId) external view returns (address); function isApprovedForAll(address _owner, address _operator) external view returns (bool); # 操作：转账与授权 function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) external payable; function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable; function transferFrom(address _from, address _to, uint256 _tokenId) external payable; function approve(address _approved, uint256 _tokenId) external payable; function setApprovalForAll(address _operator, bool _approved) external; } 查询"></head><body class="ma0 avenir bg-near-white production is-page is-page page-erc721"><header><div class=bg-black><nav class="pv3 ph3 ph4-ns" role=navigation><div class="flex-l center items-center justify-between"><a href=/my-blog/ class="f3 fw2 hover-white white-90 dib no-underline">我的个人博客</a><div class="flex-l items-center"><ul class="pl0 mr3"><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white white-90 no-underline" href=/my-blog/ title="首页 page">首页</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white white-90 no-underline" href=/my-blog/posts/solidity/erc20 title="Solidity教程 page">Solidity教程</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white white-90 no-underline" href=/my-blog/posts/dex/uniswapv2 title="Dex教程 page">Dex教程</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white white-90 no-underline" href=/my-blog/posts/blockchain/frontend/viemjs title="区块链技术 page">区块链技术</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white white-90 no-underline" href=/my-blog/posts/hugo/hugo-start title="工具 page">工具</a></li></ul><div class=ananke-socials></div></div></div></nav></div></header><main class=pb7 role=main><div class="mw9 center ph3 ph4-ns mt4 flex-l"><aside class="w-25-l pr4-l mb4 mb0-l"><h3 class="f5 mt0 mb3">Solidity教程</h3><ul class="list pl0"><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/erc20>ERC20</a></li><li class=mb2><a class="link dark-gray dark-blue bg-light-blue br2 ph2 pv1 dib" href=/my-blog/posts/solidity/erc721>ERC721 - NFT</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/contract_signature>合约签名（EIP191/712/2612/4492）</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/evm_storage>EVM存储结构</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/gas_optimization>Gas优化</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/contract_create>合约创建</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/contract_upgrade>合约升级（代理/透明/UUPS）</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/contract_upgrade_diamond>合约升级（钻石代理）</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/contract_security>合约安全</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/bip32_bip39>HD钱包（BIP32/39/44）</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/vault_erc4626>Vault（ERC4626）</a></li></ul></aside><article class=w-75-l><h1 class="f2 mt0">ERC721 - NFT</h1><p class="mid-gray f6 mt0 mb4">发布于 2026-04-12 22:00:00</p><div class="nested-copy-line-height lh-copy f4 nested-links mid-gray"><p>ERC721是非同质化货币，Non-fungible token，简称NFT。<br>非同质化货币，每一个代币都是独特的、有区别的、与众不同的。ERC20中类似于法币，我的一块跟你的一块没有区别；ERC721类似于画作，虽然都是画，但是我的画跟你的画内容是完全不一样的。所以ERC721最早从数字藏品开始流行。<br>每一个NFT都有一个独特编号，这个编号是<strong>tokenId</strong>。tokenId格式没有明确的要求，可以是自增ID，也可以是随机数。</p><h1 id=一-nft组成部分>一. NFT组成部分</h1><p>NFT由五个部分组成：ERC721、ERC165、ERC721TokenReceiver、ERC721Metadata、Metadata JSON。</p><ul><li>ERC721 基础标准</li><li>ERC165 接口描述标准</li><li>ERC721TokenReceiver NFT接收标准，所有接收NFT的合约必须实现</li><li>ERC721Metadata NFT元数据，基本属性</li><li>Metadata JSON NFT元数据详情属性文件，通常保存在去中心化存储服务</li></ul><p>其中NFT合约需要实现ERC721、ERC165、ERCMetadata，接收NFT合约需要实现ERC721TokenReceiver，Metadata JSON则放在去中心化存储服务。</p><h2 id=1erc721>1.ERC721</h2><pre tabindex=0><code>interface ERC721 {
+  # 事件
+  event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
+
+  event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
+
+  event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
+
+  # 查询
+  function balanceOf(address _owner) external view returns (uint256);
+
+  function ownerOf(uint256 _tokenId) external view returns (address);
+
+  function getApproved(uint256 _tokenId) external view returns (address);
+
+  function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+
+  # 操作：转账与授权
+  function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) external payable;
+
+  function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable;
+
+  function transferFrom(address _from, address _to, uint256 _tokenId) external payable;
+
+  function approve(address _approved, uint256 _tokenId) external payable;
+
+  function setApprovalForAll(address _operator, bool _approved) external;
+}
+</code></pre><p><strong>查询</strong></p><ul><li>balanceOf(owner)<br>查询owner用户拥有多少个NFT</li><li>ownerOf(tokenId)<br>查询tokenId的持有者是谁</li><li>getApproved(tokenId)<br>查询token被持有者单独授权的用户</li><li>isApprovedForAll(owner, operator)<br>查询某个用户所有的NFT是否被授权给operator用户</li></ul><p><strong>转账与授权</strong></p><ul><li>safeTransferFrom(from, to, tokenId, data)<br>安全转账，将from用户的tokenId的NFT转账给to用户，可以携带data描述信息</li><li>safeTransferFrom(from, to, tokenId)<br>安全转账，将from用户的tokenId的NFT转账给to用户</li><li>transferFrom(from, to, tokenId)<br>转账，将from用户的tokenId的NFT转账给to用户</li><li>approve(operator, tokenId)<br>单个授权，可以授权某个tokenId的NFT给operator用户</li><li>setApprovalForAll(operator, approved)<br>全部授权/取消授权，可以将当前用户的所有NFT全部授权/取消授权给operator用户</li></ul><p><strong>安全转账</strong><br>用户对一个地址进行转账时，如果目标是合约地址，则强制要求其实现IERC721TokenReceiver接口（ERC721接收接口），否则会转账失败。（相当于ERC20的升级版ERC1363）</p><p><strong>与ERC20的区别</strong></p><ol><li>NFT有tokenId标识唯一性</li><li>NFT支持安全转账，防止转入合约锁死</li><li>NFT支持全部授权</li></ol><p>事件+查询+操作=3+4+5=12，一个12个定义。</p><h2 id=2erc165>2.ERC165</h2><p>ERC165是合约接口描述标准，用于让外部判断本合约是否实现了某些标准。<br>ERC721强制要求实现。<br>具体标准如下：</p><pre tabindex=0><code>interface ERC165 {
+  function supportsInterface(bytes4 interfaceID) external view returns (bool);
+}
+</code></pre><h3 id=1-interfaceid>(1) interfaceId</h3><p>interfaceId计算方式是合约中所有的、对外的函数选择器进行异或运算，取前4个字节。</p><h3 id=2-具体实现erc721>(2) 具体实现（ERC721）</h3><pre tabindex=0><code>function supportsInterface(bytes4 interfaceID) public view override returns (bool){
+  return
+    interfaceID == 0x01ffc9a7 ||
+    interfaceID == type(IERC721).interfaceId  # 这里使用了openZepplin的IERC721，同时使用type.interfaceId自动计算。
+    #如果后续实现了其他接口也可以继续加，如ERC721Metadata、ERC721Enumerable
+}
+</code></pre><h3 id=3-外界调用方式>(3) 外界调用方式</h3><ul><li>先判断某个合约是否实现了ERC165</li><li>如果返回了true，再判断是否实现了某个标准（如ERC721）</li></ul><h2 id=3erc721tokenreceiver>3.ERC721TokenReceiver</h2><p>接收NFT的合约必须实现这个接口，避免NFT被锁死在某个合约</p><pre tabindex=0><code>interface ERC721TokenReceiver {
+    function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes _data) external returns(bytes4);
+}
+</code></pre><h2 id=4erc721metadata>4.ERC721Metadata</h2><pre tabindex=0><code>interface ERC721Metadata {
+
+    function name() external view returns (string _name);
+
+    function symbol() external view returns (string _symbol);
+
+    function tokenURI(uint256 _tokenId) external view returns (string);
+}
+</code></pre><ul><li>name() 名称</li><li>symbol() 符号</li><li>tokenURI(tokenId) tokenId前缀URL<br>通过url+tokenId即可找到tokenId的具体数据。 $$
+以知名无聊猿NFT举例：tokenURI是ipfs://QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/，那么tokenId=12的NFT则会找到：ipfs://QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/12，这个就是具体属性文件（Metadata JSON）</li></ul><h2 id=5-metadata-json>5. Metadata JSON</h2><p>元数据描述文件分为两个部分：元数据定义文件和元数据文件。</p><ul><li>元数据定义文件<br>ERC721规定的是元数据定义，约定了元数据应该有什么</li></ul><pre tabindex=0><code>{
+    &#34;title&#34;: &#34;Asset Metadata&#34;,
+    &#34;type&#34;: &#34;object&#34;,
+    &#34;properties&#34;: {
+        &#34;name&#34;: {
+            &#34;type&#34;: &#34;string&#34;,
+            &#34;description&#34;: &#34;Identifies the asset to which this NFT represents&#34;
+        },
+        &#34;description&#34;: {
+            &#34;type&#34;: &#34;string&#34;,
+            &#34;description&#34;: &#34;Describes the asset to which this NFT represents&#34;
+        },
+        &#34;image&#34;: {
+            &#34;type&#34;: &#34;string&#34;,
+            &#34;description&#34;: &#34;A URI pointing to a resource with mime type image/* representing the asset to which this NFT represents. Consider making any images at a width between 320 and 1080 pixels and aspect ratio between 1.91:1 and 4:5 inclusive.&#34;
+        }
+    }
+}
+</code></pre><ul><li>元数据<br>元数据是根据元数据定义来填写的具体数据。例如根据上述的定义，可以写出以下元数据文件：</li></ul><pre tabindex=0><code>{
+  &#34;name&#34;: &#34;Monkey #1&#34;,
+  &#34;image&#34;: &#34;ipfs://xxxxx&#34;,
+  &#34;description&#34;: &#34;....&#34;
+}
+</code></pre><p><strong>定义文件与元数据文件区别</strong></p><ul><li>定义文件规定了表字段，元数据文件填写了表数据</li><li>定义文件通常放在项目仓库、网站上，元数据文件则需要放在去中心化存储服务中</li><li>定义文件是ERC721的标准的一部分，元数据文件是根据定义文件衍生的文件</li></ul><h1 id=二-去中心化存储---ipfs>二. 去中心化存储 - IPFS</h1><p>IPFS是一个免费的去中心化存储的方案，可以在本地搭建一个节点上传下载链上存储的文件数据。<br>缺点是一开始上传的数据只有本地节点拥有，外面未缓存数据的节点访问较慢。</p><h2 id=1安装>1.安装</h2><p>1.下载并安装IPFS在本地运行<figure><img src=/my-blog/posts/solidity/erc721/ipfs_local.png width=900></figure>2.下载并安装浏览器插件<figure><img src=/my-blog/posts/solidity/erc721/ipfs_chrome.png width=900></figure></p><h2 id=2创建nft目录并获取tokenuri>2.创建NFT目录并获取TokenURI</h2><p>1.创建目录，命名为“MyERC721”<figure><img src=/my-blog/posts/solidity/erc721/ipfs_folder_create.png width=900></figure>2.复制目录的CID<figure><img src=/my-blog/posts/solidity/erc721/ipfs_folder_copyCID.png width=900></figure>3.构造tokenURI
+“ipfs://+CID”就是tokenURI，例如：ipfs://QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn</p><h2 id=3上传nft图片>3.上传NFT图片</h2><p>1.上传图片到根目录<figure><img src=/my-blog/posts/solidity/erc721/ipfs_img_create.png width=900></figure>2.获取图片的CID<figure><img src=/my-blog/posts/solidity/erc721/ipfs_img_copyCID.png width=900></figure>例如我获得的是：QmRRPWG96cmgTn2qSzjwr2qvfNEuhunv6FNeMFGa9bx6mQ，拼接一下图片的地址就是：ipfs://QmRRPWG96cmgTn2qSzjwr2qvfNEuhunv6FNeMFGa9bx6mQ</p><h2 id=4编写元数据文件>4.编写元数据文件</h2><p>1.编写一个json文件，命名为0（不带后缀），其中image地址替换为你的图片ipfs地址</p><pre tabindex=0><code>{
+    &#34;description&#34;: &#34;&#34;,
+    &#34;image&#34;: &#34;ipfs://QmRRPWG96cmgTn2qSzjwr2qvfNEuhunv6FNeMFGa9bx6mQ&#34;,
+    &#34;name&#34;: &#34;MyERC721 #1&#34;
+}
+</code></pre><p>2.进入MyERC721目录，将元数据文件上传进去<figure><img src=/my-blog/posts/solidity/erc721/ipfs_token_0.png width=900></figure></p><p>这样合约的tokenURI设置完成，并且添加了tokenId=0的NFT。</p><h1 id=三-参考资料>三. 参考资料</h1><ul><li><a href=https://eips.ethereum.org/EIPS/eip-721>EIP721</a></li><li><a href=https://eips.ethereum.org/EIPS/eip-165>EIP165</a></li><li><a href=ipfs://QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/>无聊猿NFT</a></li><li><a href=https://opensea.io/>NFT市场OpenSea</a></li></ul></div></article></div></main><footer class="bg-black bottom-0 w-100 pa3" role=contentinfo><div class="flex justify-between"><a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href=https://balsampears.github.io/my-blog/>&copy; 我的个人博客 2026</a><div><div class=ananke-socials></div></div></div></footer></body></html>

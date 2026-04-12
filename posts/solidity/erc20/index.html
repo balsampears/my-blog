@@ -1,0 +1,73 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>ERC20 | 我的个人博客</title><meta name=viewport content="width=device-width,minimum-scale=1"><meta name=description content="一. EIP 与 ERC
+EIP（Ethereum Improvement Proposals）是以太坊改进协议，包括从链底层到应用层，从共识算法到智能合约，范围广泛。
+ERC（Ethereum Requests For Commments）是以太坊征求意见，主要针对应用层智能合约的改进，属于EIP的其中一种。
+二. ERC20
+ERC20是代币标准提案，智能合约中最广泛应用的标准之一，提出于ERC的第20个issue。
+ERC20定义了一系列代币交易的标准接口，使得不同智能合约的代币可以互相调用、互相交易。
+具体标准如下：
+# 事件
+event Transfer(address indexed _from, address indexed _to, uint256 _value);
+event Approval(address indexed _owner, address indexed _spender, uint256 _value);
+
+# 代币属性
+function name() public view returns (string)
+function symbol() public view returns (string)
+function decimals() public view returns (uint8)
+
+# 代币查询
+function totalSupply() public view returns (uint256)
+function balanceOf(address _owner) public view returns (uint256 balance)
+function allowance(address _owner, address _spender) public view returns (uint256 remaining)
+
+# 代币操作：转账和授权
+function transfer(address _to, uint256 _value) public returns (bool success)
+function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
+function approve(address _spender, uint256 _value) public returns (bool success)
+事件+属性+查询+操作：2+3+3+3，一共11个定义。"><meta name=generator content="Hugo 0.160.1"><meta name=robots content="index, follow"><link rel=stylesheet href=/my-blog/ananke/css/main.min.efe4d852f731d5d1fbb87718387202a97aafd768cdcdaed0662bbe6982e91824.css><link rel=canonical href=https://balsampears.github.io/my-blog/posts/solidity/erc20/><meta property="og:url" content="https://balsampears.github.io/my-blog/posts/solidity/erc20/"><meta property="og:site_name" content="我的个人博客"><meta property="og:title" content="ERC20"><meta property="og:description" content="一. EIP 与 ERC EIP（Ethereum Improvement Proposals）是以太坊改进协议，包括从链底层到应用层，从共识算法到智能合约，范围广泛。
+ERC（Ethereum Requests For Commments）是以太坊征求意见，主要针对应用层智能合约的改进，属于EIP的其中一种。
+二. ERC20 ERC20是代币标准提案，智能合约中最广泛应用的标准之一，提出于ERC的第20个issue。
+ERC20定义了一系列代币交易的标准接口，使得不同智能合约的代币可以互相调用、互相交易。 具体标准如下：
+# 事件 event Transfer(address indexed _from, address indexed _to, uint256 _value); event Approval(address indexed _owner, address indexed _spender, uint256 _value); # 代币属性 function name() public view returns (string) function symbol() public view returns (string) function decimals() public view returns (uint8) # 代币查询 function totalSupply() public view returns (uint256) function balanceOf(address _owner) public view returns (uint256 balance) function allowance(address _owner, address _spender) public view returns (uint256 remaining) # 代币操作：转账和授权 function transfer(address _to, uint256 _value) public returns (bool success) function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) function approve(address _spender, uint256 _value) public returns (bool success) 事件+属性+查询+操作：2+3+3+3，一共11个定义。"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-04-10T20:00:00+08:00"><meta property="article:modified_time" content="2026-04-10T20:00:00+08:00"><meta itemprop=name content="ERC20"><meta itemprop=description content="一. EIP 与 ERC EIP（Ethereum Improvement Proposals）是以太坊改进协议，包括从链底层到应用层，从共识算法到智能合约，范围广泛。
+ERC（Ethereum Requests For Commments）是以太坊征求意见，主要针对应用层智能合约的改进，属于EIP的其中一种。
+二. ERC20 ERC20是代币标准提案，智能合约中最广泛应用的标准之一，提出于ERC的第20个issue。
+ERC20定义了一系列代币交易的标准接口，使得不同智能合约的代币可以互相调用、互相交易。 具体标准如下：
+# 事件 event Transfer(address indexed _from, address indexed _to, uint256 _value); event Approval(address indexed _owner, address indexed _spender, uint256 _value); # 代币属性 function name() public view returns (string) function symbol() public view returns (string) function decimals() public view returns (uint8) # 代币查询 function totalSupply() public view returns (uint256) function balanceOf(address _owner) public view returns (uint256 balance) function allowance(address _owner, address _spender) public view returns (uint256 remaining) # 代币操作：转账和授权 function transfer(address _to, uint256 _value) public returns (bool success) function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) function approve(address _spender, uint256 _value) public returns (bool success) 事件+属性+查询+操作：2+3+3+3，一共11个定义。"><meta itemprop=datePublished content="2026-04-10T20:00:00+08:00"><meta itemprop=dateModified content="2026-04-10T20:00:00+08:00"><meta itemprop=wordCount content="302"><meta name=twitter:card content="summary"><meta name=twitter:title content="ERC20"><meta name=twitter:description content="一. EIP 与 ERC EIP（Ethereum Improvement Proposals）是以太坊改进协议，包括从链底层到应用层，从共识算法到智能合约，范围广泛。
+ERC（Ethereum Requests For Commments）是以太坊征求意见，主要针对应用层智能合约的改进，属于EIP的其中一种。
+二. ERC20 ERC20是代币标准提案，智能合约中最广泛应用的标准之一，提出于ERC的第20个issue。
+ERC20定义了一系列代币交易的标准接口，使得不同智能合约的代币可以互相调用、互相交易。 具体标准如下：
+# 事件 event Transfer(address indexed _from, address indexed _to, uint256 _value); event Approval(address indexed _owner, address indexed _spender, uint256 _value); # 代币属性 function name() public view returns (string) function symbol() public view returns (string) function decimals() public view returns (uint8) # 代币查询 function totalSupply() public view returns (uint256) function balanceOf(address _owner) public view returns (uint256 balance) function allowance(address _owner, address _spender) public view returns (uint256 remaining) # 代币操作：转账和授权 function transfer(address _to, uint256 _value) public returns (bool success) function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) function approve(address _spender, uint256 _value) public returns (bool success) 事件+属性+查询+操作：2+3+3+3，一共11个定义。"></head><body class="ma0 avenir bg-near-white production is-page is-page page-erc20"><header><div class=bg-black><nav class="pv3 ph3 ph4-ns" role=navigation><div class="flex-l center items-center justify-between"><a href=/my-blog/ class="f3 fw2 hover-white white-90 dib no-underline">我的个人博客</a><div class="flex-l items-center"><ul class="pl0 mr3"><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white white-90 no-underline" href=/my-blog/ title="首页 page">首页</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white white-90 no-underline" href=/my-blog/posts/solidity/erc20 title="Solidity教程 page">Solidity教程</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white white-90 no-underline" href=/my-blog/posts/dex/uniswapv2 title="Dex教程 page">Dex教程</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white white-90 no-underline" href=/my-blog/posts/blockchain/frontend/viemjs title="区块链技术 page">区块链技术</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white white-90 no-underline" href=/my-blog/posts/hugo/hugo-start title="工具 page">工具</a></li></ul><div class=ananke-socials></div></div></div></nav></div></header><main class=pb7 role=main><div class="mw9 center ph3 ph4-ns mt4 flex-l"><aside class="w-25-l pr4-l mb4 mb0-l"><h3 class="f5 mt0 mb3">Solidity教程</h3><ul class="list pl0"><li class=mb2><a class="link dark-gray dark-blue bg-light-blue br2 ph2 pv1 dib" href=/my-blog/posts/solidity/erc20>ERC20</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/erc721>ERC721 - NFT</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/contract_signature>合约签名（EIP191/712/2612/4492）</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/evm_storage>EVM存储结构</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/gas_optimization>Gas优化</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/contract_create>合约创建</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/contract_upgrade>合约升级（代理/透明/UUPS）</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/contract_upgrade_diamond>合约升级（钻石代理）</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/contract_security>合约安全</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/bip32_bip39>HD钱包（BIP32/39/44）</a></li><li class=mb2><a class="link dark-gray" href=/my-blog/posts/solidity/vault_erc4626>Vault（ERC4626）</a></li></ul></aside><article class=w-75-l><h1 class="f2 mt0">ERC20</h1><p class="mid-gray f6 mt0 mb4">发布于 2026-04-10 20:00:00</p><div class="nested-copy-line-height lh-copy f4 nested-links mid-gray"><h1 id=一-eip-与-erc>一. EIP 与 ERC</h1><p>EIP（Ethereum Improvement Proposals）是以太坊改进协议，包括从链底层到应用层，从共识算法到智能合约，范围广泛。<br>ERC（Ethereum Requests For Commments）是以太坊征求意见，主要针对应用层智能合约的改进，属于EIP的其中一种。</p><h1 id=二-erc20>二. ERC20</h1><p>ERC20是代币标准提案，智能合约中最广泛应用的标准之一，提出于ERC的第20个issue。<br>ERC20定义了一系列代币交易的标准接口，使得不同智能合约的代币可以互相调用、互相交易。
+具体标准如下：</p><pre tabindex=0><code># 事件
+event Transfer(address indexed _from, address indexed _to, uint256 _value);
+event Approval(address indexed _owner, address indexed _spender, uint256 _value);
+
+# 代币属性
+function name() public view returns (string)
+function symbol() public view returns (string)
+function decimals() public view returns (uint8)
+
+# 代币查询
+function totalSupply() public view returns (uint256)
+function balanceOf(address _owner) public view returns (uint256 balance)
+function allowance(address _owner, address _spender) public view returns (uint256 remaining)
+
+# 代币操作：转账和授权
+function transfer(address _to, uint256 _value) public returns (bool success)
+function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
+function approve(address _spender, uint256 _value) public returns (bool success)
+</code></pre><p>事件+属性+查询+操作：2+3+3+3，一共11个定义。</p><h2 id=1-代币属性>1. 代币属性</h2><p>代币属性通常在构造函数中定义完成</p><ul><li>name() 定义代币名，如Tether</li><li>symbol() 定义符号名，如USDT</li><li>decimals() 定义代币精度，solidity中没有小数，用代币精度来表示小数位。<br>通常是18位，这种精度下 1个代币 = 1*10^18个(代码中表示)<br>USDT是6位。</li></ul><h2 id=2-代币查询>2. 代币查询</h2><ul><li>totalSupply() 统计总共发行多少代币</li><li>balanceOf(owner) 查询owner用户持有多少代币</li><li>allowance(owner, spender) 查询spender用户可以在owner用户的钱包中花费多少代币</li></ul><h2 id=3-代币操作转账与授权>3. 代币操作：转账与授权</h2><ul><li>transfer(to, value) 调用方转账给to用户value个代币<br>value跟精度有关。口语中，转账给其他用户1个USDT，而实际代码中，实际转账给1*10^6个USDT（USDT精度decimals=6）<br>最后一步需要触发Transfer事件</li><li>transferFrom(from, to, value) 从from用户钱包转移给to用户value个代币<br>进行这个操作前必须让from用户授权to用户大于等于value个数量的代币
+最后一步需要触发Transfer事件</li><li>approve(spender, value) 调用方授权给spender用户value个代币
+最后一步需要触发Approval事件</li></ul><h3 id=注意事项>注意事项</h3><p>这里需要特别注意各个用户的区别：谁在调用（调用方）？从谁的钱包取钱（出钱方）？到谁的钱包中去（得钱方）？</p><ul><li>transfer 调用方和出钱方是同一个人</li><li>transferFrom 调用方、出钱方、得钱方可以是不同的人，不过通常情况下调用方和得钱方是同一个人</li><li>approve 调用方和出钱方是同一个人，不同的是现在是授权没有发生实际转账</li></ul><h3 id=授权优点>授权优点</h3><p>用户直接转账拆分成两步：授权+第三方转账，可以避免用户是调用代币合约执行操作还是调用业务合约操作产生的混乱，将业务逻辑全部放在业务合约便于管理。<br>具体用户操作如下：用户在一个业务合约消费时，先授权业务合约多少代币，然后调用业务合约执行函数，该合约可以从用户钱包查询并转入代币，再执行业务方法，这样操作可以保证一个交易原子性。</p><h2 id=4-代币发行>4. 代币发行</h2><p>代币发行并没有在ERC20标准中体现，而是由不同项目根据需求自行实现，通常是</p><pre tabindex=0><code>function mint(address to, uint256 value) public returns (bool);
+</code></pre><p>其中最重要的是需要控制权限，不能让用户随便mint货币</p><h2 id=5-标准库>5. 标准库</h2><p>OpenZeppelin是标准合约工具库，经过合约审计，安全性有保障，也可以避免重复造轮子</p><ul><li><a href=https://github.com/OpenZeppelin/openzeppelin-contracts>OpenZeppelin Github地址</a></li><li><a href=https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol>ERC20标准接口</a></li><li><a href=https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol>ERC20标准实现</a></li></ul><h2 id=6-常见应用>6. 常见应用</h2><p>区块链合约骨架之一，只要跟钱相关的都离不开ERC20，例如NFT交易、稳定币、Dex。</p><h1 id=三-扩展erc1363>三. 扩展：ERC1363</h1><p>ERC1363是可支付代币标准，是对ERC20增强补充，添加了支付回调函数、支付额外传参的功能。</p><h2 id=1合约要求>(1)合约要求</h2><h3 id=代币合约要求>代币合约要求</h3><p>代币合约要求支持实现ERC20、ERC165，以及以下ERC1363要求的标准：</p><pre tabindex=0><code>  function transferAndCall(address to, uint256 value) external returns (bool);
+
+  function transferAndCall(address to, uint256 value, bytes memory data) external returns (bool);
+
+  function transferFromAndCall(address from, address to, uint256 value) external returns (bool);
+
+  function transferFromAndCall(address from, address to, uint256 value, bytes memory data) external returns (bool);
+
+  function approveAndCall(address spender, uint256 value) external returns (bool);
+
+  function approveAndCall(address spender, uint256 value, bytes memory data) external returns (bool);
+</code></pre><h3 id=转账目标合约要求>转账目标合约要求</h3><pre tabindex=0><code>function onTransferReceived(address operator, address from, uint256 value, bytes memory data) external returns (bytes4);
+</code></pre><h3 id=授权目标合约要求>授权目标合约要求</h3><pre tabindex=0><code>function onApprovalReceived(address owner, uint256 value, bytes memory data) external returns (bytes4);
+</code></pre><p><strong>增强功能</strong></p><ol><li>转账/授权完成后需要调用目标合约的回调方法<ul><li>transferAndCall、transferFromAndCall 结束前调用 onTransferReceived</li><li>approveAndCall 结束前调用 onApprovalReceived</li></ul></li><li>调用目标合约回调方法时可以传递信息（bytes data）</li></ol><h2 id=2优势>(2)优势</h2><ul><li>要求目标合约实现回调，防止代币转账到目标合约而目标合约又没有能力处理代币，导致代币被永久锁定到该合约</li><li>可以对交易发生时传递一些信息</li><li>可以将授权+转账两步合并为一个步骤</li></ul><h2 id=3标准库>(3)标准库</h2><ul><li><a href=https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/interfaces/IERC1363.sol>IERC1363</a></li><li><a href=https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/interfaces/IERC1363Receiver.sol>IERC1363Receiver</a></li><li><a href=https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/interfaces/IERC1363Spender.sol>IERC1363Spender</a><br>仅有接口标准，无具体实现</li></ul><h1 id=四参考资料>四.参考资料</h1><ul><li><a href=https://eips.ethereum.org/EIPS/eip-20>EIP20</a></li><li><a href=https://eips.ethereum.org/EIPS/eip-1363>EIP1363</a></li></ul></div></article></div></main><footer class="bg-black bottom-0 w-100 pa3" role=contentinfo><div class="flex justify-between"><a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href=https://balsampears.github.io/my-blog/>&copy; 我的个人博客 2026</a><div><div class=ananke-socials></div></div></div></footer></body></html>
