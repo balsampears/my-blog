@@ -1,0 +1,24 @@
+.td-sidebar-nav {
+    @media (min-width: 768px) {
+      .ul-1 ul {
+        padding-left: 0.75em;
+      }
+    }
+  }
+  
+  nav.foldable-nav {
+    .ul-1 > li {
+      padding-left: 0.75em;
+    }
+  
+    .ul-1 li.with-child,
+    .ul-1 li.without-child {
+      padding-left: 0.75em;
+    }
+  
+    .ul-1 .with-child > label::before {
+      left: 0;
+      padding-left: 0.2em;
+      padding-right: 0.2em;
+    }
+  }
