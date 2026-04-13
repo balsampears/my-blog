@@ -5,201 +5,27 @@ weight = 10
 
 [[main]]
 name = "Solidity教程"
-url = "/posts/solidity/erc20"
-weight = 30
+pageRef = "/docs/solidity"
+weight = 20
 identifier = "solidity"
 
 [[main]]
 name = "Dex教程"
-url = "/posts/dex/uniswapV2"
+pageRef = "/docs/dex"
 weight = 40
 identifier = "dex"
 
 [[main]]
 name = "区块链技术"
-url = "/posts/blockchain/frontend/viemjs"
+pageRef = "/docs/blockchain"
 weight = 50
 identifier = "blockchain"
 
 [[main]]
 name = "工具"
-url = "/posts/hugo/hugo-start"
+pageRef = "/docs/more"
 weight = 60
-identifier = "tools"
-
-[[main]]
-name = "Web3前端"
-weight = 10
-identifier = "frontend"
-parent = "blockchain"
-
-[[main]]
-name = "Web3后端"
-weight = 20
-identifier = "backend"
-parent = "blockchain"
-
-[[main]]
-name = "Layer2"
-weight = 30
-identifier = "layer2"
-parent = "blockchain"
-
-[[main]]
-name = "Hugo教程"
-weight = 10
-identifier = "hugo"
-parent = "tools"
-
-# ======================== Hugo ========================ß
-
-[[main]]
-name = "使用Hugo搭建个人博客"
-url = "/posts/hugo/hugo-start"
-weight = 10
-parent = "hugo"
-
-[[main]]
-name = "使用GithubPage发布博客"
-url = "/posts/hugo/hugo-githubPage-publish"
-weight = 20
-parent = "hugo"
-
-# ======================== Solidity ========================
-
-[[main]]
-name = "ERC20"
-url = "/posts/solidity/erc20"
-weight = 10
-parent = "solidity"
-
-[[main]]
-name = "ERC721 - NFT"
-url = "/posts/solidity/erc721"
-weight = 11
-parent = "solidity"
-
-[[main]]
-name = "合约签名（EIP191/712/2612/4492）"
-url = "/posts/solidity/contract_signature"
-weight = 12
-parent = "solidity"
-
-[[main]]
-name = "EVM存储结构"
-url = "/posts/solidity/evm_storage"
-weight = 13
-parent = "solidity"
-
-[[main]]
-name = "Gas优化"
-url = "/posts/solidity/gas_optimization"
-weight = 14
-parent = "solidity"
-
-[[main]]
-name = "合约创建"
-url = "/posts/solidity/contract_create"
-weight = 14
-parent = "solidity"
-
-[[main]]
-name = "合约升级（代理/透明/UUPS）"
-url = "/posts/solidity/contract_upgrade"
-weight = 20
-parent = "solidity"
-
-[[main]]
-name = "合约升级（钻石代理）"
-url = "/posts/solidity/contract_upgrade_diamond"
-weight = 21
-parent = "solidity"
-
-[[main]]
-name = "合约安全"
-url = "/posts/solidity/contract_security"
-weight = 30
-parent = "solidity"
-
-[[main]]
-name = "HD钱包（BIP32/39/44）"
-url = "/posts/solidity/bip32_bip39"
-weight = 40
-parent = "solidity"
-
-[[main]]
-name = "Vault（ERC4626）"
-url = "/posts/solidity/vault_erc4626"
-weight = 50
-parent = "solidity"
+identifier = "more"
 
 
-# ======================== Dex ========================
-[[main]]
-name = "UniswapV2"
-url = "/posts/dex/uniswapV2"
-weight = 10
-parent = "dex"
 
-[[main]]
-name = "UniswapV3/V4"
-url = "/posts/dex/uniswapV3_V4"
-weight = 20
-parent = "dex"
-
-[[main]]
-name = "SushiSwap"
-url = "/posts/dex/sushiswap"
-weight = 30
-parent = "dex"
-
-[[main]]
-name = "Aave"
-url = "/posts/dex/aave"
-weight = 40
-parent = "dex"
-
-# ======================== Web3前端 ========================
-[[main]]
-name = "Viem.js"
-url = "/posts/blockchain/frontend/viemjs"
-weight = 10
-parent = "frontend"
-
-[[main]]
-name = "Wagmi.js"
-url = "/posts/blockchain/frontend/wagmijs"
-weight = 20
-parent = "frontend"
-
-# ======================== Web3后端 ========================
-[[main]]
-name = "链上数据索引 - The Graph"
-url = "/posts/blockchain/backend/the_graph"
-weight = 10
-parent = "backend"
-
-[[main]]
-name = "链上数据索引 - Dune"
-url = "/posts/blockchain/backend/dune"
-weight = 20
-parent = "backend"
-
-# ======================== Layer2 ========================
-[[main]]
-name = "Blob（EIP4844）"
-url = "/posts/blockchain/layer2/blob_eip4844"
-weight = 10
-parent = "layer2"
-
-[[main]]
-name = "Optimism Rollup"
-url = "/posts/blockchain/layer2/optimism_rollup"
-weight = 20
-parent = "layer2"
-
-[[main]]
-name = "Zk Rollup"
-url = "/posts/blockchain/layer2/zk_rollup"
-weight = 30
-parent = "layer2"

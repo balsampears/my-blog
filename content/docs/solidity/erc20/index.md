@@ -2,7 +2,7 @@
 date = '2026-04-10T20:00:00+08:00'
 draft = false
 title = 'ERC20'
-slug = "erc20"
+weight = 10
 +++
 
 # 一. EIP 与 ERC

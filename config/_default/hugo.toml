@@ -1,5 +1,12 @@
 baseURL = 'https://balsampears.github.io/my-blog/'
 locale = 'zh-cn'
 title = '我的个人博客'
-theme = 'ananke'
+#theme = 'ananke'
+theme = 'docsy'
 
+
+[params.ui]
+sidebar_menu_compact = true
+sidebar_menu_foldable = true
+showLightDarkModeMenu = true
+breadcrumb_disable = false

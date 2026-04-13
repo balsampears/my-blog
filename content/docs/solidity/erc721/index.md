@@ -2,7 +2,7 @@
 date = '2026-04-12T22:00:00+08:00'
 draft = false
 title = 'ERC721 - NFT'
-slug = "erc721"
+weight = 20
 +++
 
 ERC721是非同质化货币，Non-fungible token，简称NFT。  
