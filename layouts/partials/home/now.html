@@ -1,0 +1,25 @@
+{{- $homepage := .Site.Params.homepage -}}
+{{- $now := $homepage.now -}}
+
+<section class="home-section home-section--now" id="home-now">
+  <div class="home-section__header">
+    <div>
+      <p class="home-section__eyebrow">Now</p>
+      <h2 class="home-section__title">{{ $now.title | default "现在在做什么" }}</h2>
+    </div>
+    {{ with $now.description -}}
+      <p class="home-section__description">{{ . }}</p>
+    {{- end }}
+  </div>
+
+  {{ with $now.items -}}
+    <div class="home-now-list">
+      {{ range . -}}
+        <div class="home-now-list__item">
+          <p class="home-now-list__label">{{ .label }}</p>
+          <p class="home-now-list__value">{{ .value }}</p>
+        </div>
+      {{- end }}
+    </div>
+  {{- end }}
+</section>

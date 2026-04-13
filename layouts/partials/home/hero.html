@@ -1,0 +1,26 @@
+{{- $homepage := .Site.Params.homepage -}}
+
+<section class="home-hero">
+  <div class="home-hero__inner">
+    {{ with $homepage.eyebrow -}}
+      <p class="home-hero__eyebrow">{{ . }}</p>
+    {{- end }}
+
+    {{ with $homepage.title -}}
+      <h1 class="home-hero__title">{{ . }}</h1>
+    {{- end }}
+
+    {{ with $homepage.description -}}
+      <p class="home-hero__description">{{ . }}</p>
+    {{- end }}
+
+    <div class="home-hero__actions">
+      {{ with $homepage.primary_cta_text -}}
+        <a class="home-button home-button--primary" href="{{ $homepage.primary_cta_link | default "#recent-updates" }}">{{ . }}</a>
+      {{- end }}
+      {{ with $homepage.secondary_cta_text -}}
+        <a class="home-button home-button--secondary" href="{{ $homepage.secondary_cta_link | default "#home-now" }}">{{ . }}</a>
+      {{- end }}
+    </div>
+  </div>
+</section>

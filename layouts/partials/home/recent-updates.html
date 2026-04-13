@@ -1,0 +1,48 @@
+{{- $homepage := .Site.Params.homepage -}}
+{{- $recent := $homepage.recent -}}
+{{- $count := default 4 $recent.count -}}
+{{- $pages := where site.RegularPages "Section" "docs" -}}
+{{- $pages = where $pages "Draft" false -}}
+{{- $pages = where $pages "Params.date" "!=" nil -}}
+{{- $pages = first $count ($pages.ByDate.Reverse) -}}
+
+<section class="home-section home-section--recent" id="recent-updates">
+  <div class="home-section__header">
+    <div>
+      <p class="home-section__eyebrow">Recent</p>
+      <h2 class="home-section__title">{{ $recent.title | default "最近更新" }}</h2>
+    </div>
+    {{ with $recent.description -}}
+      <p class="home-section__description">{{ . }}</p>
+    {{- end }}
+  </div>
+
+  {{ if gt (len $pages) 0 -}}
+    <div class="home-updates">
+      {{ range $pages -}}
+        {{- $summary := .Description -}}
+        {{- if not $summary -}}
+          {{- $summary = .Summary | plainify | htmlUnescape -}}
+        {{- end -}}
+        {{- if not $summary -}}
+          {{- $summary = .Plain | truncate 110 -}}
+        {{- end -}}
+        <article class="home-updates__item">
+          <div class="home-updates__meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+          </div>
+          <div class="home-updates__content">
+            <h3 class="home-updates__title">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h3>
+            {{ with $summary -}}
+              <p class="home-updates__summary">{{ . | truncate 110 }}</p>
+            {{- end }}
+          </div>
+        </article>
+      {{- end }}
+    </div>
+  {{ else -}}
+    <p class="home-empty-state">{{ $recent.empty_text | default "最近更新还在整理中。" }}</p>
+  {{ end -}}
+</section>

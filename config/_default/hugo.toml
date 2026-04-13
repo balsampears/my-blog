@@ -11,3 +11,34 @@ sidebar_menu_foldable = true
 showLightDarkModeMenu = true
 breadcrumb_disable = false
 sidebar_root_enabled = true
+
+[params.homepage]
+eyebrow = 'Web3 / 区块链 / 前后端 / AI'
+title = '学习、实践和记录'
+description = '这里记录我学习 Solidity、区块链技术和前后端实践的过程，也整理那些真正踩过的坑。希望它既是我的知识索引，也能给后来者一点参考。'
+primary_cta_text = '查看最近更新'
+primary_cta_link = '#recent-updates'
+secondary_cta_text = '我最近在做什么'
+secondary_cta_link = '#home-now'
+
+[params.homepage.recent]
+title = '最近更新'
+description = '最近完成和整理过的内容，优先展示已经正式发布的文档。'
+count = 4
+empty_text = '最近更新还在整理中，先从顶部导航进入已有专题也可以。'
+
+[params.homepage.now]
+title = '现在在做什么'
+description = '近期关注的学习主题、正在整理的内容，以及想继续深入的方向。'
+
+[[params.homepage.now.items]]
+label = '最近在学'
+value = 'Solidity 标准、常见合约模式，以及从代币到合约升级，再到DEX、Layer2的实现。'
+
+[[params.homepage.now.items]]
+label = '最近在写'
+value = '把 Web3 学习笔记整理成更容易检索和复用的文档结构。'
+
+[[params.homepage.now.items]]
+label = '最近在实验'
+value = '围绕区块链前后端工具链做一些轻量实践，补齐从原理到落地的连接。'
