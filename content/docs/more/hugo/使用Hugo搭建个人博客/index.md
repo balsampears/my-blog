@@ -5,18 +5,18 @@ title = '使用Hugo搭建个人博客'
 slug = "hugo-start"
 +++
 
-# 一. 开始
-## 1.开始一个hugo项目
+## 一. 开始
+### 1.开始一个hugo项目
 ```
 hugo new site quickstart
 cd quickstart
 git init
-# 下载并应用一个主题
+## 下载并应用一个主题
 git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke
 echo "theme = 'ananke'" >> hugo.toml
 hugo server
 ```
-## 1.创建一篇文章
+### 1.创建一篇文章
 ```
 hugo new content/posts/my-first-post.md
 ```
@@ -29,18 +29,18 @@ title = '使用Hugo搭建个人博客'
 +++
 ```
 
-## 3.启动hugo
+### 3.启动hugo
 ```
 hugo server -D # -D可以让草稿状态的文章也正常显示
 hugo server -D -F # -F可以未来发布的文件也正常显示
 ```
 
-# 二.创建菜单
-## 1.更新配置
+## 二.创建菜单
+### 1.更新配置
 为了更好的维护配置，不要把配置都全部放在hugo.toml一个文件中
 1. 创建目录 config/_default/，并将hugo.toml移入该目录
 
-## 2.创建一级菜单配置
+### 2.创建一级菜单配置
 在 config/_default/ 创建 menus.toml 然后写入
 ```
 [[main]]
@@ -55,10 +55,10 @@ weight = 20
 ```
 右上角即可出现一级菜单
 
-## 3.创建二级菜单配置
+### 3.创建二级菜单配置
 ananke主题默认只展开一级菜单（site.Menus.main），所以需要自行添加二级菜单  
 笔者的思路是将二级菜单作为侧边栏的一级菜单使用
-## (1).修改 menus.toml 中的配置
+### (1).修改 menus.toml 中的配置
 ```
 [[main]]
 name = "Hugo教程"
@@ -80,7 +80,7 @@ parent = "hugo"
 ```
 其中identifier指定一个父标识，parent指定父菜单
 
-## (2).创建侧边栏文件 layouts/posts/single.html
+### (2).创建侧边栏文件 layouts/posts/single.html
 参考: https://github.com/balsampears/my-blog/blob/master/templates/menu_bar_single.html
 
 最终效果图：
