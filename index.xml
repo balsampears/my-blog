@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sun, 12 Apr 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>ERC20</title><link>https://balsampears.github.io/my-blog/docs/solidity/erc20/</link><pubDate>Fri, 10 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/solidity/erc20/</guid><description>&lt;h2 id="一-eip-与-erc"&gt;一. EIP 与 ERC&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Mon, 13 Apr 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>ERC20</title><link>https://balsampears.github.io/my-blog/docs/solidity/erc20/</link><pubDate>Fri, 10 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/solidity/erc20/</guid><description>&lt;h2 id="一-eip-与-erc"&gt;一. EIP 与 ERC&lt;/h2&gt;
 &lt;p&gt;EIP（Ethereum Improvement Proposals）是以太坊改进协议，包括从链底层到应用层，从共识算法到智能合约，范围广泛。&lt;br&gt;
 ERC（Ethereum Requests For Commments）是以太坊征求意见，主要针对应用层智能合约的改进，属于EIP的其中一种。&lt;/p&gt;
 &lt;h2 id="二-erc20"&gt;二. ERC20&lt;/h2&gt;
@@ -63,7 +63,7 @@ weight = 20
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;右上角即可出现一级菜单&lt;/p&gt;</description></item><item><title>ERC721 - NFT</title><link>https://balsampears.github.io/my-blog/docs/solidity/erc721/</link><pubDate>Sun, 12 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/solidity/erc721/</guid><description>&lt;p&gt;ERC721是非同质化货币，Non-fungible token，简称NFT。&lt;br&gt;
 非同质化货币，每一个代币都是独特的、有区别的、与众不同的。ERC20中类似于法币，我的一块跟你的一块没有区别；ERC721类似于画作，虽然都是画，但是我的画跟你的画内容是完全不一样的。所以ERC721最早从数字藏品开始流行。&lt;br&gt;
 每一个NFT都有一个独特编号，这个编号是&lt;strong&gt;tokenId&lt;/strong&gt;。tokenId格式没有明确的要求，可以是自增ID，也可以是随机数。&lt;/p&gt;
-&lt;h2 id="一-nft组成部分"&gt;一. NFT组成部分&lt;/h2&gt;
+&lt;h2 id="一-nft组成"&gt;一. NFT组成&lt;/h2&gt;
 &lt;p&gt;NFT由五个部分组成：ERC721、ERC165、ERC721TokenReceiver、ERC721Metadata、Metadata JSON。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ERC721 基础标准&lt;/li&gt;
@@ -135,4 +135,71 @@ baseUrl = &amp;lsquo;[你的用户名].github.io/[Github仓库名]&amp;rsquo;&lt
 参考: &lt;a href="https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml"&gt;https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;检查Github Action观察是否构建成功&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;检查Github Action观察是否构建成功&lt;/p&gt;</description></item><item><title>ERC1155</title><link>https://balsampears.github.io/my-blog/docs/solidity/erc1155/</link><pubDate>Mon, 13 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/solidity/erc1155/</guid><description>&lt;p&gt;ERC1155是多重货币，一个同时支持ERC20和ERC721的合约标准。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对于ERC20，ERC1155可以设置元数据。&lt;/li&gt;
+&lt;li&gt;对于ERC721，ERC1155可以同一个设置多个NFT。&lt;/li&gt;
+&lt;li&gt;相对于两者，ERC1155可以在一个合约中同时发行ERC20和NFT，简化发行多数不同类型代币合约的需求。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在ERC721中存在tokenId，在ERC1155中存在id，标识一种类型货币或者一个NFT。&lt;/p&gt;
+&lt;h2 id="一-erc1155组成"&gt;一. ERC1155组成&lt;/h2&gt;
+&lt;p&gt;ERC1155由四个部分组成：ERC1155、ERC165、ERC1155Received、Metadata JSON。&lt;br&gt;
+对比ERC721，缺少的部分是ERC1155Metadata接口，这是因为将这个接口填的数据放在了Metadata JSON配置文件进行管理。这样做的好处是，在当前合约发行ERC20类型的货币时，每个都可以有自己的name、decimals。&lt;/p&gt;
+&lt;h3 id="1-erc1155"&gt;1. ERC1155&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;interface ERC1155 /* is ERC165 */ {
+ # 事件
+ event TransferSingle(address indexed _operator, address indexed _from, address indexed _to, uint256 _id, uint256 _value);
+
+ event TransferBatch(address indexed _operator, address indexed _from, address indexed _to, uint256[] _ids, uint256[] _values);
+
+ event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
+
+ event URI(string _value, uint256 indexed _id);
+
+ # 查询
+ function balanceOf(address _owner, uint256 _id) external view returns (uint256);
+
+ function balanceOfBatch(address[] calldata _owners, uint256[] calldata _ids) external view returns (uint256[] memory);
+
+ function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+
+ # 操作：转账与授权
+ function safeTransferFrom(address _from, address _to, uint256 _id, uint256 _value, bytes calldata _data) external;
+
+ function safeBatchTransferFrom(address _from, address _to, uint256[] calldata _ids, uint256[] calldata _values, bytes calldata _data) external;
+
+ function setApprovalForAll(address _operator, bool _approved) external;
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;事件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;URI(value,id) 当某个id的前缀地址发生变化时，需要触发这个事件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;查询&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;balanceOf(owner,id) 查询用户在某个id下货币持有多少&lt;/li&gt;
+&lt;li&gt;balanceOfBatch(owners, ids) 查询多个用户在多个id下货币持有多少&lt;/li&gt;
+&lt;li&gt;isApprovedForAll(owner, operator) 查询用户是否给operator用户对所有货币进行了授权&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;操作：转账与授权&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;safeTransferFrom(from, to, id, value, data)&lt;br&gt;
+安全转账，将from用户的第id种货币转移value个给to用户&lt;/li&gt;
+&lt;li&gt;safeBatchTransferFrom(from, to, ids, values, data)&lt;br&gt;
+安全批量转账，将from用户的第ids种货币转移values个给to用户，ids和values一一对应&lt;/li&gt;
+&lt;li&gt;setApprovalForAll(operator, approved)
+将当前用户的所有货币给operator用户，进行全部授权/取消授权&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-erc165"&gt;2. ERC165&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;function supportsInterface(bytes4 interfaceID) external view returns (bool) {
+ return interfaceID == 0x01ffc9a7 || // ERC-165 support
+ interfaceID == type(IERC1155).interfaceId
+ ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;跟 ERC721 合约中的ERC165用法一致&lt;/p&gt;</description></item></channel></rss>
