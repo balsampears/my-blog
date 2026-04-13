@@ -1,0 +1,29 @@
+{
+  "name": "my-blog",
+  "version": "1.0.0",
+  "description": "个人博客项目，使用 Hugo 构建并发布到 GitHub Pages。",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/balsampears/my-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/balsampears/my-blog/issues"
+  },
+  "homepage": "https://github.com/balsampears/my-blog#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.9",
+    "postcss-cli": "^11.0.1"
+  }
+}

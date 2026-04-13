@@ -2,6 +2,7 @@
 date = '2026-04-10T20:00:00+08:00'
 draft = false
 title = 'ERC20'
+description= 'ERC20是以太坊中的代币标准'
 weight = 10
 +++
 

@@ -10,12 +10,6 @@ weight = 20
 identifier = "solidity"
 
 [[main]]
-name = "Dex教程"
-pageRef = "/docs/dex"
-weight = 40
-identifier = "dex"
-
-[[main]]
 name = "区块链技术"
 pageRef = "/docs/blockchain"
 weight = 50
