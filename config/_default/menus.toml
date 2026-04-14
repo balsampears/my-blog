@@ -4,22 +4,39 @@ pageRef = "/"
 weight = 10
 
 [[main]]
-name = "Solidity教程"
-pageRef = "/docs/solidity"
+name = "Solidity"
+pageRef = "/docs/web3/solidity"
 weight = 20
 identifier = "solidity"
 
 [[main]]
-name = "区块链技术"
-pageRef = "/docs/blockchain"
-weight = 50
+name = "区块链"
+pageRef = "/docs/web3/blockchain"
+weight = 21
 identifier = "blockchain"
 
 [[main]]
-name = "工具"
-pageRef = "/docs/more"
-weight = 60
-identifier = "more"
+name = "Defi"
+pageRef = "/docs/web3/defi"
+weight = 22
+identifier = "defi"
 
 
+[[main]]
+name = "Go"
+pageRef = "/docs/go"
+weight = 30
+identifier = "go"
+
+[[main]]
+name = "AI"
+pageRef = "/docs/ai"
+weight = 40
+identifier = "ai"
+
+[[main]]
+name = "其他"
+pageRef = "/docs/other"
+weight = 50
+identifier = "other"
 
