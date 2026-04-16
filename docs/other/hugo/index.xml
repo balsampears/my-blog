@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hugo on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/</link><description>Recent content in Hugo on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 09 Apr 2026 21:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/other/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>使用Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</guid><description>&lt;h2 id="一-开始"&gt;一. 开始&lt;/h2&gt;
+&lt;h3 id="1开始一个hugo项目"&gt;1.开始一个hugo项目&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hugo new site quickstart
+cd quickstart
+git init
+## 下载并应用一个主题
+git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke
+echo &amp;#34;theme = &amp;#39;ananke&amp;#39;&amp;#34; &amp;gt;&amp;gt; hugo.toml
+hugo server
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="1创建一篇文章"&gt;1.创建一篇文章&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hugo new content/posts/my-first-post.md
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;文章的头元数据如下：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;+++
+date = &amp;#39;2026-04-09T13:49:15+08:00&amp;#39;
+draft = true #代表是草稿状态，草稿状态正常不会展示到个人博客上 
+title = &amp;#39;使用Hugo搭建个人博客&amp;#39;
++++
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="3启动hugo"&gt;3.启动hugo&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hugo server -D # -D可以让草稿状态的文章也正常显示
+hugo server -D -F # -F可以未来发布的文件也正常显示
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="二创建菜单"&gt;二.创建菜单&lt;/h2&gt;
+&lt;h3 id="1更新配置"&gt;1.更新配置&lt;/h3&gt;
+&lt;p&gt;为了更好的维护配置，不要把配置都全部放在hugo.toml一个文件中&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;创建目录 config/_default/，并将hugo.toml移入该目录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="2创建一级菜单配置"&gt;2.创建一级菜单配置&lt;/h3&gt;
+&lt;p&gt;在 config/_default/ 创建 menus.toml 然后写入&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;[[main]]
+name = &amp;#34;首页&amp;#34;
+pageRef = &amp;#34;/&amp;#34;
+weight = 10
+
+[[main]]
+name = &amp;#34;文章&amp;#34;
+url = &amp;#34;/posts/hugo/hugo-start&amp;#34;
+weight = 20
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;右上角即可出现一级菜单&lt;/p&gt;</description></item><item><title>使用GithubPage发布博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/</link><pubDate>Thu, 09 Apr 2026 21:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/</guid><description>&lt;h2 id="一-github仓库配置"&gt;一. Github仓库配置&lt;/h2&gt;
+&lt;h3 id="1发布代码到github"&gt;1.发布代码到Github&lt;/h3&gt;
+&lt;p&gt;这里大家都会，省略&lt;/p&gt;
+&lt;h3 id="2设置github-page"&gt;2.设置Github Page&lt;/h3&gt;
+&lt;p&gt;&lt;img src="setting_github_page.png" alt="设置页"&gt;
+这样做的目的是指定github page使用什么分支的代码、什么目录下的代码。&lt;/p&gt;
+&lt;h2 id="二-发布"&gt;二. 发布&lt;/h2&gt;
+&lt;h3 id="1发布前准备"&gt;1.发布前准备&lt;/h3&gt;
+&lt;p&gt;修改 config/_default/hugo.toml中的baseURL，指定为：&lt;br&gt;
+baseUrl = &amp;lsquo;[你的用户名].github.io/[Github仓库名]&amp;rsquo;&lt;/p&gt;
+&lt;h3 id="2运行发布脚本"&gt;2.运行发布脚本&lt;/h3&gt;
+&lt;p&gt;编写一个脚本，具体功能：
+1.使用hugo &amp;ndash;minify 生成public编译后的html
+2.切换到public目录，切换gh-pages分支
+3.将public目录下的代码发送到gh-pages分支上&lt;/p&gt;
+&lt;p&gt;将下面脚本放在 scripts/deploy.sh，运行它（scripts/deploy.sh）&lt;br&gt;
+参考: &lt;a href="https://github.com/balsampears/my-blog/blob/master/templates/deploy.sh"&gt;https://github.com/balsampears/my-blog/blob/master/templates/deploy.sh&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="3访问"&gt;3.访问&lt;/h3&gt;
+&lt;p&gt;[你的用户名].github.io/[Github仓库名]&lt;br&gt;
+注意：当发布到gh-pages时，可能需要1~5分钟才会刷新页面&lt;/p&gt;
+&lt;h3 id="4使用github-action发布可选"&gt;4.使用Github Action发布（可选）&lt;/h3&gt;
+&lt;p&gt;如果想监听分支提交，自动发布文档则可以使用Github Action&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;重新设置Github Page
+&lt;img src="setting_github_action.png" alt="设置页"&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;编写工作流
+创建 .github/workflows/hugo.yml。当监听到master代码提交时，触发一次hugo构建，并将public代码发布到gh-pages分支上&lt;br&gt;
+参考: &lt;a href="https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml"&gt;https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;检查Github Action观察是否构建成功&lt;/p&gt;</description></item></channel></rss>
