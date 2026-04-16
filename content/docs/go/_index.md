@@ -1,6 +1,6 @@
 +++
-title = "Go教程"
-description = "Golang语言的学习与实战"
+title = "Go语言"
+description = "Golang是一门兼顾开发效率和运行速度的后端语言。"
 weight = 20
 sidebar_root_for = "self"
 +++

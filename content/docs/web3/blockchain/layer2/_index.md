@@ -1,5 +1,5 @@
 +++
-title = "Layer2教程"
-description = "Layer2教程"
+title = "Layer2"
+description = "Layer2"
 weight = 30
 +++
