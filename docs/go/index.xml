@@ -1,1 +1,62 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go语言 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/go/</link><description>Recent content in Go语言 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><atom:link href="https://balsampears.github.io/my-blog/docs/go/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go语言 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/go/</link><description>Recent content in Go语言 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 16 Apr 2026 19:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go语言特点</title><link>https://balsampears.github.io/my-blog/docs/go/1_feature/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_feature/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
+本篇文章不会介绍基础的语法以及语法细节，仅重点介绍go语言的与众不同的特点以及注意事项。&lt;/p&gt;
+&lt;h2 id="一-指针"&gt;一. 指针&lt;/h2&gt;
+&lt;p&gt;go中存在指针可以直接获取内存地址：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;amp;变量 是取地址符&lt;/li&gt;
+&lt;li&gt;*指针变量 是读地址上的具体数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;语法糖&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;stu := &amp;amp;Student{}
+stu.name
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stu是指针变量，但却可以直接取内部的属性，是go进行语法糖包装，实际上是(*stu).name&lt;/p&gt;
+&lt;h2 id="二-引用类型"&gt;二. 引用类型&lt;/h2&gt;
+&lt;p&gt;引用类型只有三类：slice、map、channel，需要使用make()分配内存空间&lt;/p&gt;
+&lt;h3 id="1值类型与引用类型对比"&gt;1.值类型与引用类型对比&lt;/h3&gt;
+&lt;p&gt;int、float、bool等大部分都是值类型；&lt;br&gt;
+仅有slice、map、channel是引用类型；&lt;br&gt;
+注意结构体是值类型，而不像java中是引用类型&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;&lt;br&gt;
+在函数传递数据时，特别注意传递的是值类型还是引用类型，如果是值类型（结构体）要使用指针&lt;/p&gt;
+&lt;h3 id="2slice"&gt;2.slice&lt;/h3&gt;
+&lt;p&gt;数组与slice对比：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;数组是值类型，定长不可更改，类似java的[]数组。&lt;/li&gt;
+&lt;li&gt;slice是引用类型，不定长可扩容，通过make()方式创建。类似java的ArrayList。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3map"&gt;3.map&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# keyType、valueType代表数据类型
+stuMap := make(map[keyType]valueType)
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="三结构体"&gt;三.结构体&lt;/h2&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;type Student struct {
+ name string
+ gender int
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Go不是一款面向对象的语言，但面向对象的思想可以用struct结构体实现。&lt;/p&gt;
+&lt;h3 id="1构造函数"&gt;1.构造函数&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;func newStudent() *Student{
+ stu := Student{}
+ //todo
+ return &amp;amp;stu
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;结构体没有构造函数，但是可以用一个单独函数去创建对象来充当构造函数&lt;/p&gt;
+&lt;h3 id="2接收者方法成员函数"&gt;2.接收者方法（成员函数）&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;// 定义
+func (stu *Student) DoHomework(){
+ //do homework
+}
+// 使用
+stu.DoHomework()
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;结构体没有成员函数，但是可以定义一个接收者方法，向结构体类型插入一个方法，类似于javascript中的object.prototype属性&lt;/p&gt;
+&lt;h3 id="3继承"&gt;3.继承&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;type Person struct{
+ name string
+}
+type Student struct{
+ no string
+ Person
+}
+# 使用
+stu:= Student{}
+stu.name
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;匿名结构体的特点是可以将字段映射到外部，通过这个特点就可以实现父子级的继承&lt;/p&gt;</description></item></channel></rss>
