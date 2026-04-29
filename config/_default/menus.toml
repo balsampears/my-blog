@@ -9,17 +9,17 @@ pageRef = "/docs/web3/solidity"
 weight = 20
 identifier = "solidity"
 
-[[main]]
-name = "区块链"
-pageRef = "/docs/web3/blockchain"
-weight = 21
-identifier = "blockchain"
+# [[main]]
+# name = "区块链"
+# pageRef = "/docs/web3/blockchain"
+# weight = 21
+# identifier = "blockchain"
 
-[[main]]
-name = "Defi"
-pageRef = "/docs/web3/defi"
-weight = 22
-identifier = "defi"
+# [[main]]
+# name = "Defi"
+# pageRef = "/docs/web3/defi"
+# weight = 22
+# identifier = "defi"
 
 
 [[main]]
@@ -28,11 +28,11 @@ pageRef = "/docs/go"
 weight = 30
 identifier = "go"
 
-[[main]]
-name = "AI"
-pageRef = "/docs/ai"
-weight = 40
-identifier = "ai"
+# [[main]]
+# name = "AI"
+# pageRef = "/docs/ai"
+# weight = 40
+# identifier = "ai"
 
 [[main]]
 name = "其他"
