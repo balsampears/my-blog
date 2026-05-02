@@ -1,0 +1,655 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js" data-theme-init>
+  <head><script src="/my-blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=my-blog/livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#000000">
+
+<style>
+  html { background: Canvas; color: CanvasText; }
+  @media (prefers-color-scheme: dark) {
+    html { background: #0b0d12; color: #e6e6e6; }
+  }
+  html[data-theme-init] * { transition: none !important; }
+</style>
+
+<script>
+  (function() {
+    const themeKey = 'td-color-theme';
+    const storedTheme = localStorage.getItem(themeKey);
+    let theme = storedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    if (theme === 'auto') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    document.documentElement.setAttribute('data-bs-theme', theme);
+  })();
+</script>
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="shortcut icon" href="/my-blog/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/my-blog/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/my-blog/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/my-blog/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/my-blog/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/my-blog/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/my-blog/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/my-blog/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/my-blog/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/my-blog/favicons/android-192x192.png" sizes="192x192">
+
+<title>运维一个微信小程序 | 我的个人博客</title>
+<meta name="description" content="前置准备 申请一个个体工商户/企业，拿到营业执照 开通一个对公账户的银行卡 分别购买服务器资源（以阿里云为例）： 云服务器ECS 云数据库RDS 对象存储OSS 域名，需要用到营业执照 一. 云服务器 选购服务器最好至少需要购买4G&#43;8G的，因为我们需要在一台服务器上配置很多软件。
+选择“远程连接”进入命令行模式。
+redis安装配置 sudo dnf install -y redis sudo systemctl enable --now redis 配置文件 /etc/redis.conf中，配置
+sudo tee /etc/redis.conf &lt;&lt;&#39;EOF&#39; bind 0.0.0.0 port 6379 daemonize no requirepass 你的强密码 supervised systemd dir /var/lib/redis EOF 需要重启：sudo systemctl restart redis
+外网访问redis（可选） 在“网络与安全组”中，添加入方向规则，端口6379，IP/4 0.0.0.0/0 二. 云数据库 1.进入数据库 购买RDS后，可以在实例列表中选择登录数据库。如果没有看到，则可以切换地域查看你购买的地域RDS。 点击登录数据库后，会进入DMS，此时系统可能会让你创建一个DMS用户进行管理。 进入数据库详情，也能在”账号管理“中看到DMS创建的用户。 2.配置安全组 需要配置ECS的安全组，让其中程序可以访问RDS。 3.配置外网直连数据库 新建一个用户，选择“普通账户”，选择可访问的数据库&#43;读写权限，输入密码，点击确认。 配置白名单，选择全部放开。 三. 对象存储OSS 1.创建一个RAM账号并分配权限 首先进入RAM控制台，用户 -&gt; 创建用户 命名为oss，不选择访问配置 进入oss用户，创建AccessKey，选其他，然后将accessKey、accessSecret写入代码配置中 最后给这个oss用户分配仅oss的权限
+在列表页点击授权，搜索oss，选择AliyunOSSFullAccess，确认新增授权">
+<meta property="og:url" content="http://localhost:1313/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/">
+  <meta property="og:site_name" content="我的个人博客">
+  <meta property="og:title" content="运维一个微信小程序">
+  <meta property="og:description" content="前置准备 申请一个个体工商户/企业，拿到营业执照 开通一个对公账户的银行卡 分别购买服务器资源（以阿里云为例）： 云服务器ECS 云数据库RDS 对象存储OSS 域名，需要用到营业执照 一. 云服务器 选购服务器最好至少需要购买4G&#43;8G的，因为我们需要在一台服务器上配置很多软件。
+选择“远程连接”进入命令行模式。
+redis安装配置 sudo dnf install -y redis sudo systemctl enable --now redis 配置文件 /etc/redis.conf中，配置
+sudo tee /etc/redis.conf &lt;&lt;&#39;EOF&#39; bind 0.0.0.0 port 6379 daemonize no requirepass 你的强密码 supervised systemd dir /var/lib/redis EOF 需要重启：sudo systemctl restart redis
+外网访问redis（可选） 在“网络与安全组”中，添加入方向规则，端口6379，IP/4 0.0.0.0/0 二. 云数据库 1.进入数据库 购买RDS后，可以在实例列表中选择登录数据库。如果没有看到，则可以切换地域查看你购买的地域RDS。 点击登录数据库后，会进入DMS，此时系统可能会让你创建一个DMS用户进行管理。 进入数据库详情，也能在”账号管理“中看到DMS创建的用户。 2.配置安全组 需要配置ECS的安全组，让其中程序可以访问RDS。 3.配置外网直连数据库 新建一个用户，选择“普通账户”，选择可访问的数据库&#43;读写权限，输入密码，点击确认。 配置白名单，选择全部放开。 三. 对象存储OSS 1.创建一个RAM账号并分配权限 首先进入RAM控制台，用户 -&gt; 创建用户 命名为oss，不选择访问配置 进入oss用户，创建AccessKey，选其他，然后将accessKey、accessSecret写入代码配置中 最后给这个oss用户分配仅oss的权限
+在列表页点击授权，搜索oss，选择AliyunOSSFullAccess，确认新增授权">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2026-04-29T20:00:00+08:00">
+    <meta property="article:modified_time" content="2026-04-29T20:00:00+08:00">
+
+  <meta itemprop="name" content="运维一个微信小程序">
+  <meta itemprop="description" content="前置准备 申请一个个体工商户/企业，拿到营业执照 开通一个对公账户的银行卡 分别购买服务器资源（以阿里云为例）： 云服务器ECS 云数据库RDS 对象存储OSS 域名，需要用到营业执照 一. 云服务器 选购服务器最好至少需要购买4G&#43;8G的，因为我们需要在一台服务器上配置很多软件。
+选择“远程连接”进入命令行模式。
+redis安装配置 sudo dnf install -y redis sudo systemctl enable --now redis 配置文件 /etc/redis.conf中，配置
+sudo tee /etc/redis.conf &lt;&lt;&#39;EOF&#39; bind 0.0.0.0 port 6379 daemonize no requirepass 你的强密码 supervised systemd dir /var/lib/redis EOF 需要重启：sudo systemctl restart redis
+外网访问redis（可选） 在“网络与安全组”中，添加入方向规则，端口6379，IP/4 0.0.0.0/0 二. 云数据库 1.进入数据库 购买RDS后，可以在实例列表中选择登录数据库。如果没有看到，则可以切换地域查看你购买的地域RDS。 点击登录数据库后，会进入DMS，此时系统可能会让你创建一个DMS用户进行管理。 进入数据库详情，也能在”账号管理“中看到DMS创建的用户。 2.配置安全组 需要配置ECS的安全组，让其中程序可以访问RDS。 3.配置外网直连数据库 新建一个用户，选择“普通账户”，选择可访问的数据库&#43;读写权限，输入密码，点击确认。 配置白名单，选择全部放开。 三. 对象存储OSS 1.创建一个RAM账号并分配权限 首先进入RAM控制台，用户 -&gt; 创建用户 命名为oss，不选择访问配置 进入oss用户，创建AccessKey，选其他，然后将accessKey、accessSecret写入代码配置中 最后给这个oss用户分配仅oss的权限
+在列表页点击授权，搜索oss，选择AliyunOSSFullAccess，确认新增授权">
+  <meta itemprop="datePublished" content="2026-04-29T20:00:00+08:00">
+  <meta itemprop="dateModified" content="2026-04-29T20:00:00+08:00">
+  <meta itemprop="wordCount" content="522">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="运维一个微信小程序">
+  <meta name="twitter:description" content="前置准备 申请一个个体工商户/企业，拿到营业执照 开通一个对公账户的银行卡 分别购买服务器资源（以阿里云为例）： 云服务器ECS 云数据库RDS 对象存储OSS 域名，需要用到营业执照 一. 云服务器 选购服务器最好至少需要购买4G&#43;8G的，因为我们需要在一台服务器上配置很多软件。
+选择“远程连接”进入命令行模式。
+redis安装配置 sudo dnf install -y redis sudo systemctl enable --now redis 配置文件 /etc/redis.conf中，配置
+sudo tee /etc/redis.conf &lt;&lt;&#39;EOF&#39; bind 0.0.0.0 port 6379 daemonize no requirepass 你的强密码 supervised systemd dir /var/lib/redis EOF 需要重启：sudo systemctl restart redis
+外网访问redis（可选） 在“网络与安全组”中，添加入方向规则，端口6379，IP/4 0.0.0.0/0 二. 云数据库 1.进入数据库 购买RDS后，可以在实例列表中选择登录数据库。如果没有看到，则可以切换地域查看你购买的地域RDS。 点击登录数据库后，会进入DMS，此时系统可能会让你创建一个DMS用户进行管理。 进入数据库详情，也能在”账号管理“中看到DMS创建的用户。 2.配置安全组 需要配置ECS的安全组，让其中程序可以访问RDS。 3.配置外网直连数据库 新建一个用户，选择“普通账户”，选择可访问的数据库&#43;读写权限，输入密码，点击确认。 配置白名单，选择全部放开。 三. 对象存储OSS 1.创建一个RAM账号并分配权限 首先进入RAM控制台，用户 -&gt; 创建用户 命名为oss，不选择访问配置 进入oss用户，创建AccessKey，选其他，然后将accessKey、accessSecret写入代码配置中 最后给这个oss用户分配仅oss的权限
+在列表页点击授权，搜索oss，选择AliyunOSSFullAccess，确认新增授权">
+<link href="/my-blog/scss/main.css" rel="stylesheet">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar js-navbar-scroll">
+<div class="td-navbar-container container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/my-blog/"><span class="navbar-brand__logo navbar-logo"><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500" style="enable-background:new 0 0 500 500"><g><path style="fill:#fff" d="M116.8525 421.9722c-5.7041.0-10.3442-4.3127-10.3442-9.6129V88.183c0-5.3002 4.6401-9.6117 10.3442-9.6117H320.858c3.0347.0 9.3959.5498 11.7506 2.6302l.3545.3442 58.905 63.2912c2.3101 2.491 2.9202 8.4928 2.9202 11.3184v256.2039c0 5.3002-4.6407 9.6129-10.3436 9.6129H116.8525z"/><g><g><g><path style="fill:#767676" d="M384.4445 423.2066H116.852c-6.3839.0-11.5786-4.8658-11.5786-10.8474V88.1831c0-5.9804 5.1947-10.8461 11.5786-10.8461h204.0062c.377.0 9.2786.0329 12.568 2.9389l.3947.3833 58.9508 63.337c3.2135 3.4652 3.2514 11.7924 3.2514 12.1593v256.2036C396.0231 418.3408 390.8284 423.2066 384.4445 423.2066zM116.5079 411.9189c.0848.0278.1999.0531.3441.0531h267.5925c.1442.0.2581-.0253.3441-.0531V156.1556c-.0076-.9033-.3593-3.7347-.7034-5.0037l-57.6527-61.9416c-1.4651-.3176-4.4533-.6389-5.5742-.6389H116.852c-.143.0-.2594.024-.3441.0531V411.9189zm267.4533-261.149zM327.0321 89.371v.0013V89.371z"/></g></g></g><g><g><path style="fill:#5b7fc0" d="M189.0874 210.1754l.0012-.0012c7.7751.0012 15.0295 4.1862 18.932 10.9234 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3304-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032s-11.328-2.2733-15.458-6.4032-6.4032-9.6186-6.4056-15.4628c.0012-6.025 2.454-11.4897 6.4116-15.4473C177.5953 212.627 183.0601 210.1742 189.0874 210.1754zm7.993 21.8576c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6539 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403S197.0816 234.1722 197.0804 232.033z"/><path style="opacity:.3;fill:#fff" d="M189.0898 210.176c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 212.6276 183.0612 210.176 189.0898 210.176zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 236.239 197.0839 234.2399 197.0839 232.0372z"/><g><defs><path id="SVGID_1_" d="M194.7376 237.6875c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.999 7.9942-7.9942 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.0839 234.2399 196.1861 236.239 194.7376 237.6875z"/></defs><clipPath id="SVGID_2_"><use xlink:href="#SVGID_1_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_2_);fill:#fff" d="M190.0704 225.0237c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 225.7247 191.9774 225.0237 190.0704 225.0237z"/><path style="opacity:.13;clip-path:url(#SVGID_2_);fill:#020202" d="M190.0704 225.0237c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 225.7247 191.9774 225.0237 190.0704 225.0237z"/></g><g><defs><path id="SVGID_3_" d="M189.0898 210.176c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 212.6276 183.0612 210.176 189.0898 210.176zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 236.239 197.0839 234.2399 197.0839 232.0372z"/></defs><clipPath id="SVGID_4_"><use xlink:href="#SVGID_3_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_4_);fill:#5b7fc0" d="M172.6595 215.6045c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8612 12.0547.0024 21.8636-9.797 21.8613-21.8612.0024-3.8475-1.0151-7.6326-2.9353-10.9462-3.8977-6.7324-11.1497-10.9151-18.926-10.9151C182.0806 209.1953 176.6171 211.647 172.6595 215.6045z"/></g></g><rect x="198.8952" y="225.1043" style="fill:#5b7fc0" width="122.6266" height="13.8671"/></g><g><path style="fill:#d95140" d="M189.0874 155.7611l.0012-.0012c7.7751.0012 15.0295 4.1862 18.932 10.9234 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3304-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032s-11.328-2.2733-15.458-6.4032-6.4032-9.6186-6.4056-15.4628c.0012-6.0249 2.454-11.4897 6.4116-15.4473C177.5953 158.2128 183.0601 155.7599 189.0874 155.7611zm7.993 21.8577c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6539 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403C196.2508 181.7667 197.0816 179.758 197.0804 177.6188z"/><path style="opacity:.3;fill:#fff" d="M189.0898 155.7617c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 158.2134 183.0612 155.7617 189.0898 155.7617zm7.9941 21.8613c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 181.8248 197.0839 179.8256 197.0839 177.623z"/><g><defs><path id="SVGID_5_" d="M194.7376 183.2733c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.9989 7.9942-7.9942 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.0839 179.8256 196.1861 181.8248 194.7376 183.2733z"/></defs><clipPath id="SVGID_6_"><use xlink:href="#SVGID_5_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_6_);fill:#fff" d="M190.0704 170.6095c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 171.3104 191.9774 170.6095 190.0704 170.6095z"/><path style="opacity:.13;clip-path:url(#SVGID_6_);fill:#020202" d="M190.0704 170.6095c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 171.3104 191.9774 170.6095 190.0704 170.6095z"/></g><g><defs><path id="SVGID_7_" d="M189.0898 155.7617c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 158.2134 183.0612 155.7617 189.0898 155.7617zm7.9941 21.8613c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 181.8248 197.0839 179.8256 197.0839 177.623z"/></defs><clipPath id="SVGID_8_"><use xlink:href="#SVGID_7_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_8_);fill:#d95140" d="M172.6595 161.1903c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8613 12.0547.0024 21.8636-9.797 21.8613-21.8613.0024-3.8474-1.0151-7.6326-2.9353-10.9462-3.8977-6.7324-11.1497-10.9151-18.926-10.9151C182.0806 154.7811 176.6171 157.2327 172.6595 161.1903z"/></g><rect x="198.8952" y="170.69" style="fill:#d95140" width="122.6266" height="13.8671"/></g><g><g><path style="fill:#56a55c" d="M189.5379 264.6147l.0012-.0012c7.7751.0012 15.0294 4.1862 18.932 10.9235 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3304-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032-5.8394.0-11.3281-2.2733-15.458-6.4032-4.13-4.13-6.4032-9.6186-6.4056-15.4628.0012-6.0249 2.454-11.4897 6.4116-15.4472C178.0458 267.0663 183.5105 264.6135 189.5379 264.6147zm7.993 21.8576c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6538 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403C196.7013 290.6202 197.5321 288.6115 197.5309 286.4723z"/><path style="opacity:.3;fill:#fff" d="M189.5403 264.6153c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8065-21.8612-21.8613.0-6.0285 2.4516-11.492 6.4116-15.452C178.0482 267.0669 183.5117 264.6153 189.5403 264.6153zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.6366 290.6783 197.5344 288.6792 197.5344 286.4765z"/><g><defs><path id="SVGID_9_" d="M195.1881 292.1268c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.9989 7.9942-7.9941 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.5344 288.6792 196.6366 290.6783 195.1881 292.1268z"/></defs><clipPath id="SVGID_10_"><use xlink:href="#SVGID_9_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_10_);fill:#fff" d="M190.5209 279.463c-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7446-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9941 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C194.239 280.164 192.4279 279.463 190.5209 279.463z"/><path style="opacity:.13;clip-path:url(#SVGID_10_);fill:#020202" d="M190.5209 279.463c-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7446-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9941 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C194.239 280.164 192.4279 279.463 190.5209 279.463z"/></g><g><defs><path id="SVGID_11_" d="M189.5403 264.6153c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8065-21.8612-21.8613.0-6.0285 2.4516-11.492 6.4116-15.452C178.0482 267.0669 183.5117 264.6153 189.5403 264.6153zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.6366 290.6783 197.5344 288.6792 197.5344 286.4765z"/></defs><clipPath id="SVGID_12_"><use xlink:href="#SVGID_11_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_12_);fill:#56a55c" d="M173.11 270.0439c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8613 12.0547.0024 21.8636-9.797 21.8613-21.8613.0024-3.8474-1.0151-7.6326-2.9353-10.9462-3.8977-6.7325-11.1497-10.9151-18.926-10.9151C182.5311 263.6346 177.0676 266.0863 173.11 270.0439z"/></g></g><rect x="199.3456" y="279.5436" style="fill:#56a55c" width="122.6266" height="13.8671"/></g><g><g><path style="fill:#f1bc42" d="M189.0874 318.7208l.0012-.0012c7.7751.0012 15.0295 4.1862 18.932 10.9234 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3305-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032s-11.328-2.2733-15.458-6.4032-6.4032-9.6186-6.4056-15.4628c.0012-6.025 2.454-11.4897 6.4116-15.4472C177.5953 321.1724 183.0601 318.7196 189.0874 318.7208zm7.993 21.8576c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6539 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403S197.0816 342.7176 197.0804 340.5784z"/><path style="opacity:.3;fill:#fff" d="M189.0898 318.7214c7.7763.0 15.0283 4.1826 18.926 10.915 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8612-12.0547.0024-21.8636-9.8065-21.8612-21.8612.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 321.173 183.0612 318.7214 189.0898 318.7214zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 344.7844 197.0839 342.7853 197.0839 340.5826z"/><g><defs><path id="SVGID_13_" d="M194.7376 346.2329c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.999 7.9942-7.9942 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.0839 342.7853 196.1861 344.7844 194.7376 346.2329z"/></defs><clipPath id="SVGID_14_"><use xlink:href="#SVGID_13_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_14_);fill:#fff" d="M190.0704 333.5691c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0834 6.1218 2.8788C193.7885 334.2701 191.9774 333.5691 190.0704 333.5691z"/><path style="opacity:.13;clip-path:url(#SVGID_14_);fill:#020202" d="M190.0704 333.5691c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0834 6.1218 2.8788C193.7885 334.2701 191.9774 333.5691 190.0704 333.5691z"/></g><g><defs><path id="SVGID_15_" d="M189.0898 318.7214c7.7763.0 15.0283 4.1826 18.926 10.915 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8612-12.0547.0024-21.8636-9.8065-21.8612-21.8612.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 321.173 183.0612 318.7214 189.0898 318.7214zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 344.7844 197.0839 342.7853 197.0839 340.5826z"/></defs><clipPath id="SVGID_16_"><use xlink:href="#SVGID_15_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_16_);fill:#f1bc42" d="M172.6595 324.15c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8612 12.0547.0024 21.8636-9.797 21.8613-21.8612.0024-3.8474-1.0151-7.6327-2.9353-10.9462-3.8977-6.7324-11.1497-10.9151-18.926-10.9151C182.0806 317.7407 176.6171 320.1924 172.6595 324.15z"/></g></g><rect x="198.8952" y="333.6497" style="fill:#f1bc42" width="122.6266" height="13.8671"/></g></g></svg></span><span class="navbar-brand__name">我的个人博客</span></a>
+  <div class="td-navbar__main td-navbar-nav-scroll td-navbar-nav-scroll--indicator" id="main_navbar">
+    <div class="scroll-indicator scroll-left"></div>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="/my-blog/"><span>首页</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/my-blog/docs/web3/solidity/"><span>Solidity</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/my-blog/docs/go/"><span>Go</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/my-blog/docs/other/"><span>更多</span></a>
+      </li>
+      <li class="nav-item td-navbar__light-dark-menu">
+        <div class="td-light-dark-menu dropdown"><svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu" aria-labelledby="bd-theme">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+</div>
+
+      </li>
+      </ul>
+    <div class="scroll-indicator scroll-right"></div>
+  </div>
+  <div class="td-navbar__search d-none d-lg-block">
+    
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main" data-bs-spy="scroll" data-bs-target=".td-toc" data-bs-root-margin="0px 0px -10%">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+    <button class="btn btn-link td-sidebar__toggle" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="td-sidebar-nav collapse foldable-nav" id="td-section-nav" data-sidebar-root-id="/my-blog/docs/other/">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-my-blogdocsother-li">
+    <a href="/my-blog/docs/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-my-blogdocsother"><span class=" td-sidebar-root-up-icon">更多</span></a>
+    <ul class="ul-1">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-my-blogdocsotherhugo-li">
+    <input type="checkbox" id="m-my-blogdocsotherhugo-check"/>
+    <label for="m-my-blogdocsotherhugo-check"><a href="/my-blog/docs/other/hugo/" class="align-left ps-0  td-sidebar-link td-sidebar-link__section" id="m-my-blogdocsotherhugo"><span class="">Hugo实践</span></a></label>
+    
+    <ul class="ul-2 foldable">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-my-blogdocsotherhugohugo-start-li">
+    <input type="checkbox" id="m-my-blogdocsotherhugohugo-start-check"/>
+    <label for="m-my-blogdocsotherhugohugo-start-check"><a href="/my-blog/docs/other/hugo/hugo-start/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-my-blogdocsotherhugohugo-start"><span class="">使用Hugo搭建个人博客</span></a></label>
+    
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-my-blogdocsotherhugohugo-githubpage-publish-li">
+    <input type="checkbox" id="m-my-blogdocsotherhugohugo-githubpage-publish-check"/>
+    <label for="m-my-blogdocsotherhugohugo-githubpage-publish-check"><a href="/my-blog/docs/other/hugo/hugo-githubpage-publish/" class="align-left ps-0  td-sidebar-link td-sidebar-link__page" id="m-my-blogdocsotherhugohugo-githubpage-publish"><span class="">使用GithubPage发布博客</span></a></label>
+    
+  </li>
+    </ul>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-my-blogdocsothere8bf90e7bbb4e4b880e4b8aae5beaee4bfa1e5b08fe7a88be5ba8f-li">
+    <input type="checkbox" id="m-my-blogdocsothere8bf90e7bbb4e4b880e4b8aae5beaee4bfa1e5b08fe7a88be5ba8f-check" checked/>
+    <label for="m-my-blogdocsothere8bf90e7bbb4e4b880e4b8aae5beaee4bfa1e5b08fe7a88be5ba8f-check"><a href="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="align-left ps-0  active td-sidebar-link td-sidebar-link__page" id="m-my-blogdocsothere8bf90e7bbb4e4b880e4b8aae5beaee4bfa1e5b08fe7a88be5ba8f"><span class="td-sidebar-nav-active-item">运维一个微信小程序</span></a></label>
+    
+  </li>
+    </ul>
+  </li>
+    </ul>
+  </nav>
+</div>
+          </aside>
+          <aside class="td-sidebar-toc">
+            <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+
+</div>
+
+            <div class="td-toc" data-proofer-ignore>
+<div class="td-toc-title">
+      <span class="td-toc-title__text">本页目录</span>
+      <a class="td-toc-title__link" title="回到顶部" href="#"></a>
+    </div>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前置准备">前置准备</a></li>
+    <li><a href="#一-云服务器">一. 云服务器</a>
+      <ul>
+        <li><a href="#redis安装配置">redis安装配置</a></li>
+      </ul>
+    </li>
+    <li><a href="#二-云数据库">二. 云数据库</a>
+      <ul>
+        <li><a href="#1进入数据库">1.进入数据库</a></li>
+        <li><a href="#2配置安全组">2.配置安全组</a></li>
+        <li><a href="#3配置外网直连数据库">3.配置外网直连数据库</a></li>
+      </ul>
+    </li>
+    <li><a href="#三-对象存储oss">三. 对象存储OSS</a>
+      <ul>
+        <li><a href="#1创建一个ram账号并分配权限">1.创建一个RAM账号并分配权限</a></li>
+        <li><a href="#2创建oss-bucket">2.创建OSS Bucket</a></li>
+      </ul>
+    </li>
+    <li><a href="#四-发布后端">四. 发布后端</a>
+      <ul>
+        <li><a href="#1安装jdk8">1.安装jdk8</a></li>
+        <li><a href="#2上传jar包">2.上传jar包</a></li>
+        <li><a href="#3运行jar包">3.运行jar包</a></li>
+        <li><a href="#4后台运行jar包">4.后台运行jar包</a></li>
+      </ul>
+    </li>
+    <li><a href="#五-发布前端">五. 发布前端</a>
+      <ul>
+        <li><a href="#1安装nginx">1.安装nginx</a></li>
+        <li><a href="#2上传前端代码">2.上传前端代码</a></li>
+        <li><a href="#3配置nginx">3.配置nginx</a></li>
+      </ul>
+    </li>
+    <li><a href="#六-自动构建">六. 自动构建</a>
+      <ul>
+        <li><a href="#1docker安装配置">1.Docker安装配置</a></li>
+        <li><a href="#2jenkins安装配置">2.Jenkins安装配置</a></li>
+        <li><a href="#3-ssh秘钥和主机秘钥">3. ssh秘钥和主机秘钥</a></li>
+        <li><a href="#4自动构建前端流水线">4.自动构建前端流水线</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+
+            
+
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="/my-blog/docs/">Docs</a></li>
+  <li class="breadcrumb-item">
+    <a href="/my-blog/docs/other/">更多</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    运维一个微信小程序</li>
+  </ol>
+</nav>
+<div class="td-content">
+	<h1>运维一个微信小程序</h1>
+	
+	<header class="article-meta">
+		<div class="text-body-secondary mb-3">
+			<time datetime="2026-04-29T20:00:00&#43;08:00">
+			  发布于 2026-04-29 20:00
+			</time>
+		  </div>
+		
+</header>
+	<h2 id="前置准备">前置准备</h2>
+<ol>
+<li>申请一个个体工商户/企业，拿到营业执照</li>
+<li>开通一个对公账户的银行卡</li>
+<li>分别购买服务器资源（以阿里云为例）：
+<ul>
+<li>云服务器ECS</li>
+<li>云数据库RDS</li>
+<li>对象存储OSS</li>
+<li>域名，需要用到营业执照</li>
+</ul>
+</li>
+</ol>
+<h2 id="一-云服务器">一. 云服务器</h2>
+<p>选购服务器最好至少需要购买4G+8G的，因为我们需要在一台服务器上配置很多软件。</p>
+<p>选择“远程连接”进入命令行模式。</p>
+<h3 id="redis安装配置">redis安装配置</h3>
+<pre tabindex="0"><code>sudo dnf install -y redis
+sudo systemctl enable --now redis
+</code></pre><h4 id="配置文件">配置文件</h4>
+<p>/etc/redis.conf中，配置</p>
+<pre tabindex="0"><code>sudo tee /etc/redis.conf &lt;&lt;&#39;EOF&#39;
+bind 0.0.0.0
+port 6379
+daemonize no
+requirepass 你的强密码
+supervised systemd 
+dir /var/lib/redis
+EOF
+</code></pre><p>需要重启：<code>sudo systemctl restart redis</code></p>
+<h4 id="外网访问redis可选">外网访问redis（可选）</h4>
+<p>在“网络与安全组”中，添加入方向规则，端口6379，IP/4 0.0.0.0/0
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/ecs_redis_nolimit.png" width="700">
+</figure>
+</p>
+<h2 id="二-云数据库">二. 云数据库</h2>
+<h3 id="1进入数据库">1.进入数据库</h3>
+<p>购买RDS后，可以在实例列表中选择登录数据库。如果没有看到，则可以切换地域查看你购买的地域RDS。
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/rds_1.png" width="700">
+</figure>
+
+点击登录数据库后，会进入DMS，此时系统可能会让你创建一个DMS用户进行管理。
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/rds_2.png" width="700">
+</figure>
+
+进入数据库详情，也能在”账号管理“中看到DMS创建的用户。
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/rds_3.png" width="700">
+</figure>
+</p>
+<h3 id="2配置安全组">2.配置安全组</h3>
+<p>需要配置ECS的安全组，让其中程序可以访问RDS。
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/rds_4.png" width="700">
+</figure>
+</p>
+<h3 id="3配置外网直连数据库">3.配置外网直连数据库</h3>
+<p>新建一个用户，选择“普通账户”，选择可访问的数据库+读写权限，输入密码，点击确认。
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/rds_nolimit_1.png" width="700">
+</figure>
+
+配置白名单，选择全部放开。
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/rds_nolimit_2.png" width="700">
+</figure>
+</p>
+<h2 id="三-对象存储oss">三. 对象存储OSS</h2>
+<h3 id="1创建一个ram账号并分配权限">1.创建一个RAM账号并分配权限</h3>
+<p>首先进入RAM控制台，用户 -&gt; 创建用户
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/oss_ram_1.png" width="700">
+</figure>
+
+命名为oss，不选择访问配置
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/oss_ram_2.png" width="700">
+</figure>
+
+进入oss用户，创建AccessKey，选其他，然后将accessKey、accessSecret写入代码配置中
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/oss_ram_3.png" width="700">
+</figure>
+
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/oss_ram_4.png" width="700">
+</figure>
+
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/oss_ram_5.png" width="700">
+</figure>
+
+最后给这个oss用户分配仅oss的权限<br>
+在列表页点击授权，搜索oss，选择AliyunOSSFullAccess，确认新增授权
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/oss_ram_6.png" width="700">
+</figure>
+
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/oss_ram_7.png" width="700">
+</figure>
+</p>
+<h3 id="2创建oss-bucket">2.创建OSS Bucket</h3>
+<p>首先进入OSS控制台，创建Bucket，注意地域需要跟ECS保持一致
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/oss_1.png" width="700">
+</figure>
+
+进入新增后的Bucket，查看概览，即可获取endpoint
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/oss_2.png" width="700">
+</figure>
+</p>
+<h2 id="四-发布后端">四. 发布后端</h2>
+<h3 id="1安装jdk8">1.安装jdk8</h3>
+<pre tabindex="0"><code>sudo dnf install -y java-1.8.0-openjdk
+</code></pre><h3 id="2上传jar包">2.上传jar包</h3>
+<p>选择目录图片，选择当前用户名右键，选择本地文件上传
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/backend_1.png" width="700">
+</figure>
+</p>
+<h3 id="3运行jar包">3.运行jar包</h3>
+<pre tabindex="0"><code>java -jar XXX.jar 
+</code></pre><p>检查是否报错，修复之。<br>
+在浏览器输入：公网IP/模块/doc.html（如果使用springfox-swagger），可以进入接口文档页面。</p>
+<h3 id="4后台运行jar包">4.后台运行jar包</h3>
+<pre tabindex="0"><code># 安装screen
+sudo dnf install -y screen 
+# 运行一个名为java的会话
+screen -S java  
+# 运行程序
+java -jar XXX.jar 
+# 退出当前会话
+ctrl + a, d
+# 查看所有会话
+screen -ls 
+# 重连接会话
+screen -r java
+</code></pre><h2 id="五-发布前端">五. 发布前端</h2>
+<h3 id="1安装nginx">1.安装nginx</h3>
+<pre tabindex="0"><code>sudo dnf install -y nginx
+sudo systemctl enable --now nginx
+</code></pre><p>ECS 控制台 → 实例 → 安全组，入方向放行：80端口、443端口<br>
+然后在浏览器输入：公网IP，查看是否进入默认页面</p>
+<h3 id="2上传前端代码">2.上传前端代码</h3>
+<pre tabindex="0"><code>sudo mkdir -p /var/www/my-site
+sudo chown -R nginx:nginx /var/www/   # 转让所有者
+sudo chmod -R 775 /var/www            # 授权写入
+sudo usermod -aG nginx &#34;$USER&#34;        # 给当前用户分配到nignx组
+</code></pre><p>重新登录，即可拥有上传权限。</p>
+<pre tabindex="0"><code># 本地打包build目录代码，压缩打包
+tar -czvf build.tar.gz build
+# 上传到服务器后，解压缩
+tar -xzvf build.tar.gz
+</code></pre><h3 id="3配置nginx">3.配置nginx</h3>
+<p>在/etc/nginx/conf.d/目录下新增mysite.conf</p>
+<pre tabindex="0"><code>server {
+    listen 80;
+    server_name _;
+    root /var/www/my-site;
+    index index.html;
+}
+</code></pre><p>最后重载nginx：</p>
+<pre tabindex="0"><code>sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+</code></pre><p>在浏览器输入：公网IP，即可看到前端页面。</p>
+<p><strong>特别注意</strong><br>
+在我国，使用域名服务必须进行ICP备案，没备案的域名很快就会被封。<br>
+我们可以准备一个静态的简单界面做官网，然后进行域名备案。<br>
+备案成功后，可以使用nignx，将后端api、jenkins等所有服务都改为使用域名进行访问。</p>
+<h2 id="六-自动构建">六. 自动构建</h2>
+<h3 id="1docker安装配置">1.Docker安装配置</h3>
+<pre tabindex="0"><code># 使用阿里镜像源安装docker
+sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+sudo dnf install -y docker-ce
+
+# 设置开机启动，现在立刻启动
+sudo systemctl enable --now docker
+
+# 给当前用户添加docker用户组，避免使用docker命令总需要sudo（重新登录生效）
+sudo usermod -aG docker ecs-user
+</code></pre><h4 id="配置加速镜像源">配置加速镜像源</h4>
+<p>为了后续拉取镜像方便，可以在阿里云找“镜像容器服务”，获取加速器地址。</p>
+<pre tabindex="0"><code>sudo tee /etc/docker/daemon.json &lt;&lt;-&#39;EOF&#39;
+{
+  &#34;registry-mirrors&#34;: [&#34;https://你的ID.mirror.aliyuncs.com&#34;]
+}
+EOF
+
+# 重新加载配置并重启docker
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+</code></pre><p>不过，即使是配置了镜像地址，也不一定可以获取镜像，这时只能本地拉取导出镜像，然后上传到服务器。</p>
+<h4 id="docker常见命令">docker常见命令</h4>
+<pre tabindex="0"><code># 镜像操作
+# 查询镜像列表
+docker images 
+# 删除镜像
+docker images rm 镜像名
+# 拉取镜像
+docker pull 镜像名:版本号
+
+# 容器操作
+# 查询容器列表
+docker ps
+# 开始/停止/重启容器
+docker start/stop/restart 容器名
+# 删除容器
+docker rm 容器名
+# 容器详情
+docker inspect 容器名
+
+# 通过docker-compose.yml拉取并后台启动一个容器
+# 在docker-compose.yml同一个目录下执行：
+docker compose up -d
+
+# 查看docker信息
+docker info
+</code></pre><h3 id="2jenkins安装配置">2.Jenkins安装配置</h3>
+<ol>
+<li>创建一个jenkins目录，并且创建jenkins的docker文件</li>
+</ol>
+<pre tabindex="0"><code>mkdir jenkins_home
+cd jenkins_home
+# 创建文件
+cat &gt; docker-compose.yml &lt;&lt;&#39;EOF&#39;
+services:
+  jenkins:
+    image: jenkins/jenkins:2.555.1-lts
+    container_name: jenkins
+    restart: always
+    ports:
+      - &#34;8080:8080&#34;
+      - &#34;50000:50000&#34;
+    volumes:
+      - ~/jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    user: root
+EOF
+
+# 根据docker-compose文件创建容器
+sudo docker compose up -d
+</code></pre><p>需要注意的是，如果使用sudo执行，则jenkins容器卷volume目录会在/root/jenkins_home，而不是当前用户的/home/ecs_user/jenkins_home。</p>
+<ol start="2">
+<li>启动成功后，查询jenkins密码：</li>
+</ol>
+<pre tabindex="0"><code>sudo docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+</code></pre><ol start="3">
+<li>
+<p>在阿里云ECS，安全组-入方向，添加8080端口放行</p>
+</li>
+<li>
+<p>在浏览器输入：公网IP:8080 即可进入jenkins。</p>
+<ul>
+<li>选择“选择插件来安装”，选择“无”后安装</li>
+<li>选择不创建用户。</li>
+<li>实例配置中，直接选择”保存并完成“。</li>
+</ul>
+</li>
+<li>
+<p>创建一个用户<br>
+依次选择 Manage Jenkins - Manage User - Create User， 然后就可以创建一个用户</p>
+</li>
+<li>
+<p>替换插件安装源（可选）<br>
+如果安装插件速度很慢，可以替换源<br>
+Manage Jenkins &gt; Plugins &gt; Advanced：<br>
+<a href="https://mirrors.huaweicloud.com/jenkins/updates/update-center.json">https://mirrors.huaweicloud.com/jenkins/updates/update-center.json</a></p>
+</li>
+<li>
+<p>安装插件<br>
+进入 Manage Jenkins - Plugins - Available plugins<br>
+搜索安装：Git、Docker Pipeline、SSH Agent</p>
+</li>
+</ol>
+<h3 id="3-ssh秘钥和主机秘钥">3. ssh秘钥和主机秘钥</h3>
+<ol>
+<li>配置凭证
+现在需要让jenkins有权限访问git仓库。
+（1）在本地生成一个SSH，注意查看生成的地址和文件名</li>
+</ol>
+<pre tabindex="0"><code>ssh-keygen -t rsa -C &#34;邮箱&#34;
+</code></pre><p>秘钥文件在：~/.ssh/id_rsa</p>
+<p>（2）在git仓库保存ssh公钥</p>
+<p>（3）进入 Mange Jenkins - Credentials - Add Credentials， 选择 SSH Username with private key，输入秘钥并记录下ID
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/jenkins_1.png" width="700">
+</figure>
+
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/jenkins_2.png" width="400">
+</figure>
+
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/jenkins_3.png" width="400">
+</figure>
+</p>
+<ol start="2">
+<li>配置主机秘钥
+jenkins需要信任仓库地址域名，添加主机秘钥。笔者采用设置known_hosts方式。
+（1）进入jenkins容器内部，设置known_hosts文件</li>
+</ol>
+<pre tabindex="0"><code>docker exec -it jenkins bash
+# 进入后执行
+mkdir -p /var/jenkins_home/.ssh
+ssh-keyscan -t rsa gitee.com &gt;&gt; /var/jenkins_home/.ssh/known_hosts
+# 如果后续构建提示需要ED25519算法验证，则使用：
+ssh-keyscan -t ed25519 gitee.com &gt;&gt; /var/jenkins_home/.ssh/known_hosts
+
+# 验证是否成功
+ssh -T git@gitee.com
+</code></pre><p>（2）检查jenkins校验主机方式
+进入：Manage Jenkins → Security → Git Host Key Verification Configuration<br>
+选择：Known hosts file 即可。<br>
+若选择：No Verification 则不会进行主机校验，非生产环境可适用。</p>
+<h3 id="4自动构建前端流水线">4.自动构建前端流水线</h3>
+<ol>
+<li>
+<p>创建一个流水线任务
+<figure><img src="/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E4%B8%80%E4%B8%AA%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/jenkins_4.png" width="700">
+</figure>
+</p>
+</li>
+<li>
+<p>禁止并发构建和重启构建
+Do not allow concurrent builds
+Do not allow the pipeline to resume if the controller restarts
+勾选以上两项</p>
+</li>
+<li>
+<p>配置git仓库地址<br>
+依次选择：Pipeline script - Git，并写入以下内容。点击保存。</p>
+</li>
+</ol>
+<pre tabindex="0"><code>pipeline {
+    agent any
+    stages {
+        stage(&#39;Checkout&#39;) {
+            steps {
+                git branch: &#39;master&#39;, //填入分支
+                    url: &#39;https://github.com/你的用户名/你的前端仓库.git&#39;,
+                    credentialsId: &#39;你的凭证ID&#39;  // 私有库填，公开库删掉
+                echo &#39;✅ 代码拉取成功！&#39;
+            }
+        }
+    }
+}
+</code></pre>
+	
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/my-blog/js/main.js"></script>
+<script defer src="/my-blog/js/click-to-copy.js" crossorigin="anonymous"></script>
+<script src='/my-blog/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go语言 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/go/</link><description>Recent content in Go语言 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 16 Apr 2026 19:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go语言特点</title><link>https://balsampears.github.io/my-blog/docs/go/1_feature/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_feature/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go语言 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/go/</link><description>Recent content in Go语言 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 29 Apr 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go语言特点</title><link>https://balsampears.github.io/my-blog/docs/go/1_feature/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_feature/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
 本篇文章不会介绍基础的语法以及语法细节，仅重点介绍go语言的与众不同的特点以及注意事项。&lt;/p&gt;
 &lt;h2 id="一-指针"&gt;一. 指针&lt;/h2&gt;
 &lt;p&gt;go中存在指针可以直接获取内存地址：&lt;/p&gt;
@@ -59,4 +59,64 @@ type Student struct{
 # 使用
 stu:= Student{}
 stu.name
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;匿名结构体的特点是可以将字段映射到外部，通过这个特点就可以实现父子级的继承&lt;/p&gt;</description></item></channel></rss>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;匿名结构体的特点是可以将字段映射到外部，通过这个特点就可以实现父子级的继承&lt;/p&gt;</description></item><item><title>并发编程</title><link>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link><pubDate>Wed, 29 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid><description>&lt;h2 id="一-简介"&gt;一. 简介&lt;/h2&gt;
+&lt;h3 id="1进程线程协程"&gt;1.进程、线程、协程&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;进程 操作系统级别，CPU操作和内存调度的单位。&lt;/li&gt;
+&lt;li&gt;线程 进程的执行实体，CPU操作的最小单位。&lt;/li&gt;
+&lt;li&gt;协程 线程的更小一层执行实体，拥有独立的栈空间和共享的堆空间。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2并发并行"&gt;2.并发、并行&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;并发 不同的任务，在一个CPU上，分时间段执行。&lt;/li&gt;
+&lt;li&gt;并行 不同的任务，在不同CPU上，同时执行。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="二-goroutine"&gt;二. goroutine&lt;/h2&gt;
+&lt;p&gt;goroutine是go中协程，最小占用4~5KB栈空间，并且创建和销毁成本大幅降低，这是go实现高并发的基础。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;go funcXXX()
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="共享变量"&gt;共享变量&lt;/h3&gt;
+&lt;p&gt;goroutine通过通信来共享内存，而不是加锁来共享内存。&lt;/p&gt;
+&lt;h3 id="gpm"&gt;GPM&lt;/h3&gt;
+&lt;p&gt;GPM是go实现的一套调度机制&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;G 指 Goroutine，go协程&lt;/li&gt;
+&lt;li&gt;P 指 逻辑处理器，负责将Goroutine任务都分派到不同的M&lt;/li&gt;
+&lt;li&gt;M 指 Machine，操作系统线程，Go程序执行需要映射到对应的M上。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="运作流程"&gt;运作流程&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;一个G被创建时会进入本地队列或全局队列。&lt;/li&gt;
+&lt;li&gt;然后调度器在P在队列中取出G，并在P绑定的M上执行G。&lt;/li&gt;
+&lt;li&gt;当G执行完成时，调度器会从队列中取出下一个G继续在相同的M执行。&lt;/li&gt;
+&lt;li&gt;当G被阻塞时，有两种情况。第一种是通道/锁用户态阻塞，P与M不解绑，而是将G挂起，取出下一个G继续执行。第二种是系统级阻塞，P与M解绑，M持续阻塞，调度器重新给P分配一个新的M，然后再执行下一个G。当阻塞的M释放后，会尝试绑定一个新的P。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="对应关系"&gt;对应关系&lt;/h4&gt;
+&lt;p&gt;同一时刻下P与M是一对一关系。&lt;br&gt;
+当某个G阻塞时，P会重新创建个M并将其余的G迁移过去。当阻塞的G完成或终止时，旧的M会被回收。
+G与M是多对多关系（M:N)
+多个G可以在一个M上执行。G阻塞入队列时，可以被不同的M取走。&lt;/p&gt;
+&lt;h3 id="常用函数"&gt;常用函数&lt;/h3&gt;
+&lt;h4 id="runtimegosched"&gt;runtime.Gosched()&lt;/h4&gt;
+&lt;p&gt;让出当前占用内存给其他协程&lt;/p&gt;
+&lt;h4 id="runtimegoexit"&gt;runtime.Goexit()&lt;/h4&gt;
+&lt;p&gt;终止当前协程&lt;/p&gt;
+&lt;h4 id="runtimegomaxprocs"&gt;runtime.GOMAXPROCS&lt;/h4&gt;
+&lt;p&gt;使用的CPU最大内核，默认对应当前系统的CPU核心数&lt;/p&gt;
+&lt;h2 id="三-channel"&gt;三. channel&lt;/h2&gt;
+&lt;p&gt;channel是用于goroutine传输数据的通道&lt;/p&gt;
+&lt;h3 id="1-创建"&gt;1. 创建&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;var 变量 chan 数据类型 //指定这个chan可以传输什么数据类型
+变量 = make(chan 数据类型, [容量]) //创建之后需要使用make分配内存，同时可以指定channel最多容纳多少条数据
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2操作"&gt;2.操作&lt;/h3&gt;
+&lt;p&gt;channel操作可以分为：发送、接收、关闭&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;c := make(chan int)
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="发送"&gt;发送&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;c &amp;lt;- 1 #发送1到c的channel
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="接收"&gt;接收&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;m := &amp;lt;- c #接收c传输的数据
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="关闭"&gt;关闭&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;close(m)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="3无缓冲有缓冲通道"&gt;3.无缓冲/有缓冲通道&lt;/h3&gt;
+&lt;h4 id="无缓冲通道"&gt;无缓冲通道&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;c := make(chan int)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;没有指定容量的，就是无缓冲通道，特点是必须先指定接收者，才能发送数据&lt;/p&gt;</description></item></channel></rss>
