@@ -1,8 +1,8 @@
 +++
-date = '2026-04-09T20:00:00+08:00'
-draft = true
-title = '运维一个微信小程序'
-weight = 100
+date = '2026-04-29T20:00:00+08:00'
+draft = false
+title = '运维微信小程序1'
+weight = 20
 +++
 
 ## 前置准备
@@ -158,113 +158,3 @@ sudo nginx -t && sudo systemctl reload nginx
 在我国，使用域名服务必须进行ICP备案，没备案的域名很快就会被封。  
 我们可以准备一个静态的简单界面做官网，然后进行域名备案。  
 备案成功后，可以使用nignx，将后端api、jenkins等所有服务都改为使用域名进行访问。  
-
-## 六. 自动构建
-
-### 1.Docker安装配置
-```
-# 使用阿里镜像源安装docker
-sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-sudo dnf install -y docker-ce
-
-# 设置开机启动，现在立刻启动
-sudo systemctl enable --now docker
-
-# 给当前用户添加docker用户组，避免使用docker命令总需要sudo（重新登录生效）
-sudo usermod -aG docker ecs-user
-```
-
-#### 配置加速镜像源
-为了后续拉取镜像方便，可以在阿里云找“镜像容器服务”，获取加速器地址。
-```
-sudo tee /etc/docker/daemon.json <<-'EOF'
-{
-  "registry-mirrors": ["https://你的ID.mirror.aliyuncs.com"]
-}
-EOF
-
-# 重新加载配置并重启docker
-sudo systemctl daemon-reload
-sudo systemctl restart docker
-```
-不过，即使是配置了镜像地址，也不一定可以获取镜像，这时只能本地拉取导出镜像，然后上传到服务器。
-
-
-#### docker常见命令
-```
-# 镜像操作
-# 查询镜像列表
-docker images 
-# 删除镜像
-docker images rm 镜像名
-# 拉取镜像
-docker pull 镜像名:版本号
-
-# 容器操作
-# 查询容器列表
-docker ps
-# 开始/停止/重启容器
-docker start/stop/restart 容器名
-# 删除容器
-docker rm 容器名
-# 容器详情
-docker inspect 容器名
-
-# 通过docker-compose.yml拉取并后台启动一个容器
-# 在docker-compose.yml同一个目录下执行：
-docker compose up -d
-
-# 查看docker信息
-docker info
-```
-
-### 2.Jenkins安装配置
-1. 创建一个jenkins目录，并且创建jenkins的docker文件
-```
-mkdir jenkins_home
-cd jenkins_home
-# 创建文件
-cat > docker-compose.yml <<'EOF'
-services:
-  jenkins:
-    image: jenkins/jenkins:2.555.1-lts
-    container_name: jenkins
-    restart: always
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - ~/jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-    user: root
-EOF
-
-# 根据docker-compose文件创建容器
-sudo docker compose up -d
-```
-需要注意的是，如果使用sudo执行，则jenkins容器卷volume目录会在/root/jenkins_home，而不是当前用户的/home/ecs_user/jenkins_home。
-
-2. 启动成功后，查询jenkins密码：
-```
-sudo docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
-```
-
-3. 在阿里云ECS，安全组-入方向，添加8080端口放行
-   
-4. 在浏览器输入：公网IP:8080 即可进入jenkins。
-   - 选择“选择插件来安装”，选择“无”后安装
-   - 选择不创建用户。
-   - 实例配置中，直接选择”保存并完成“。
-  
-5. 创建一个用户  
-依次选择 Manage Jenkins - Manage User - Create User， 然后就可以创建一个用户  
-
-6. 替换插件安装源（可选）  
-如果安装插件速度很慢，可以替换源  
-Manage Jenkins > Plugins > Advanced：  
-https://mirrors.huaweicloud.com/jenkins/updates/update-center.json
-
-7. 安装插件  
-进入 Manage Jenkins - Plugins - Available plugins  
-
-//todo 未完待续

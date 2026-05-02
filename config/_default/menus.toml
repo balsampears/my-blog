@@ -35,7 +35,7 @@ identifier = "go"
 # identifier = "ai"
 
 [[main]]
-name = "其他"
+name = "更多"
 pageRef = "/docs/other"
 weight = 50
 identifier = "other"
