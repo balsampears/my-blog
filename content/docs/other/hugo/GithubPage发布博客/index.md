@@ -1,7 +1,7 @@
 +++
 date = '2026-04-09T21:00:00+08:00'
 draft = false
-title = '使用GithubPage发布博客'
+title = 'GithubPage发布博客'
 slug = "hugo-githubPage-publish"
 weight = 20
 +++

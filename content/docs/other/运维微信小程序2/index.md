@@ -40,7 +40,7 @@ sudo systemctl restart docker
 - 方式一：  
 本地拉取导出镜像，然后上传到服务器。
 - 方式二：  
-在`https://github.com/dongyubin/DockerHub`寻找
+在`https://github.com/dongyubin/DockerHub`寻找一个可靠的镜像地址。
 
 #### docker常见命令
 ```
