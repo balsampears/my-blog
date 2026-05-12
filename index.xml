@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sat, 02 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Go语言特点</title><link>https://balsampears.github.io/my-blog/docs/go/1_feature/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_feature/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 12 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Go语言特点</title><link>https://balsampears.github.io/my-blog/docs/go/1_feature/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_feature/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
 本篇文章不会介绍基础的语法以及语法细节，仅重点介绍go语言的与众不同的特点以及注意事项。&lt;/p&gt;
 &lt;h2 id="一-指针"&gt;一. 指针&lt;/h2&gt;
 &lt;p&gt;go中存在指针可以直接获取内存地址：&lt;/p&gt;
@@ -84,7 +84,7 @@ function allowance(address _owner, address _spender) public view returns (uint25
 function transfer(address _to, uint256 _value) public returns (bool success)
 function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
 function approve(address _spender, uint256 _value) public returns (bool success)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;事件+属性+查询+操作：2+3+3+3，一共11个定义。&lt;/p&gt;</description></item><item><title>使用Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</guid><description>&lt;h2 id="一-开始"&gt;一. 开始&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;事件+属性+查询+操作：2+3+3+3，一共11个定义。&lt;/p&gt;</description></item><item><title>Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</guid><description>&lt;h2 id="一-开始"&gt;一. 开始&lt;/h2&gt;
 &lt;h3 id="1开始一个hugo项目"&gt;1.开始一个hugo项目&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;hugo new site quickstart
 cd quickstart
@@ -313,7 +313,7 @@ EOF
 
  function setApprovalForAll(address _operator, bool _approved) external;
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;查询&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>使用GithubPage发布博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/</link><pubDate>Thu, 09 Apr 2026 21:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/</guid><description>&lt;h2 id="一-github仓库配置"&gt;一. Github仓库配置&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;查询&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>GithubPage发布博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/</link><pubDate>Thu, 09 Apr 2026 21:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/</guid><description>&lt;h2 id="一-github仓库配置"&gt;一. Github仓库配置&lt;/h2&gt;
 &lt;h3 id="1发布代码到github"&gt;1.发布代码到Github&lt;/h3&gt;
 &lt;p&gt;这里大家都会，省略&lt;/p&gt;
 &lt;h3 id="2设置github-page"&gt;2.设置Github Page&lt;/h3&gt;
@@ -375,7 +375,7 @@ sudo systemctl restart docker
 &lt;li&gt;方式一：&lt;br&gt;
 本地拉取导出镜像，然后上传到服务器。&lt;/li&gt;
 &lt;li&gt;方式二：&lt;br&gt;
-在&lt;code&gt;https://github.com/dongyubin/DockerHub&lt;/code&gt;寻找&lt;/li&gt;
+在&lt;code&gt;https://github.com/dongyubin/DockerHub&lt;/code&gt;寻找一个可靠的镜像地址。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id="docker常见命令"&gt;docker常见命令&lt;/h4&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;# 镜像操作
@@ -494,4 +494,52 @@ sudo docker compose up -d
  interfaceID == type(IERC1155).interfaceId
  ...
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;跟 ERC721 合约中的ERC165用法一致&lt;/p&gt;</description></item></channel></rss>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;跟 ERC721 合约中的ERC165用法一致&lt;/p&gt;</description></item><item><title>EVM存储布局</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/evm%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80/</link><pubDate>Tue, 12 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/evm%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80/</guid><description>&lt;h2 id="一-空间资源"&gt;一. 空间资源&lt;/h2&gt;
+&lt;p&gt;EVM对空间应用可以视为键值对数据库，读写一次都是以256字节为单位。&lt;br&gt;
+EVM中空间资源划分为四类，有不同的特点和gas消耗。&lt;/p&gt;
+&lt;h3 id="1-永久存储"&gt;1. 永久存储&lt;/h3&gt;
+&lt;p&gt;变量会永久保存在链上，使用方式是成员变量的默认值或storage。&lt;br&gt;
+初始化数据、冷数据启动(第一次交易)、更新数据都需要消耗大量的gas（分别是20000， 2100， 5000）。&lt;/p&gt;
+&lt;p&gt;EVM操作码&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SSTORE(slot, value) 存储&lt;/li&gt;
+&lt;li&gt;SLOAD(slot) 加载&lt;br&gt;
+slot指槽位，后续解释。上面两个操作码gas消耗100。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-瞬时存储"&gt;2. 瞬时存储&lt;/h3&gt;
+&lt;p&gt;仅在一个交易中保存的数据，交易完成后变量会被丢弃，在成员变量前添加transient。
+gas消耗大幅降低。&lt;br&gt;
+通常会在防重入锁中用到，可以节约gas消耗。&lt;/p&gt;
+&lt;p&gt;EVM操作码&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;TSTORE(slot, value) 存储&lt;/li&gt;
+&lt;li&gt;TLOAD(slot) 加载&lt;br&gt;
+上面两个操作码gas消耗100。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-内存"&gt;3. 内存&lt;/h3&gt;
+&lt;p&gt;函数传参、返回值、内部变量等等都需要用到内存。&lt;br&gt;
+通常会在内联汇编（assembly）中用到。&lt;/p&gt;
+&lt;p&gt;EVM操作码&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MSTORE(index, value) 存储&lt;/li&gt;
+&lt;li&gt;MLOAD(index) 加载&lt;br&gt;
+上面两个操作码gas消耗3。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;内联汇编示例&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;let result := add(x, y)
+mstore(0x0, result)
+return(0x0, 32)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="4-栈"&gt;4. 栈&lt;/h3&gt;
+&lt;p&gt;EVM自动进行管理。&lt;/p&gt;
+&lt;h2 id="二-存储布局"&gt;二. 存储布局&lt;/h2&gt;
+&lt;h3 id="1-槽位slot"&gt;1. 槽位Slot&lt;/h3&gt;
+&lt;p&gt;合约的不同数据类型的成员变量，最终会转换为在链上占用一定空间的槽位。&lt;br&gt;
+槽位从0开始，依次递增，每个槽位占用32字节。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;槽位合并&lt;/strong&gt;
+变量和槽位的关系不是一对一，而是多对一。当相邻两个或多个变量的数据类型字节小于等于32字节时，会合并并保存到同一个槽位上。&lt;br&gt;
+举例：存在两个uint8 a, uint8 b，两者合并到槽位0。a在偏移0xFF位置，b在偏移0xFF00位置。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;内联汇编取值
+a := and 0xFF(sload 0x0)
+b := and 0xFF00(sload 0x0)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-定长存储"&gt;2. 定长存储&lt;/h3&gt;
+&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item></channel></rss>

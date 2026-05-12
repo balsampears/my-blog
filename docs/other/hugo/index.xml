@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hugo实践 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/</link><description>Recent content in Hugo实践 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 09 Apr 2026 21:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/other/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>使用Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</guid><description>&lt;h2 id="一-开始"&gt;一. 开始&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hugo实践 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/</link><description>Recent content in Hugo实践 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 09 Apr 2026 21:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/other/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</guid><description>&lt;h2 id="一-开始"&gt;一. 开始&lt;/h2&gt;
 &lt;h3 id="1开始一个hugo项目"&gt;1.开始一个hugo项目&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;hugo new site quickstart
 cd quickstart
@@ -35,7 +35,7 @@ weight = 10
 name = &amp;#34;文章&amp;#34;
 url = &amp;#34;/posts/hugo/hugo-start&amp;#34;
 weight = 20
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;右上角即可出现一级菜单&lt;/p&gt;</description></item><item><title>使用GithubPage发布博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/</link><pubDate>Thu, 09 Apr 2026 21:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/</guid><description>&lt;h2 id="一-github仓库配置"&gt;一. Github仓库配置&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;右上角即可出现一级菜单&lt;/p&gt;</description></item><item><title>GithubPage发布博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/</link><pubDate>Thu, 09 Apr 2026 21:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/</guid><description>&lt;h2 id="一-github仓库配置"&gt;一. Github仓库配置&lt;/h2&gt;
 &lt;h3 id="1发布代码到github"&gt;1.发布代码到Github&lt;/h3&gt;
 &lt;p&gt;这里大家都会，省略&lt;/p&gt;
 &lt;h3 id="2设置github-page"&gt;2.设置Github Page&lt;/h3&gt;

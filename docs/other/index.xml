@@ -117,7 +117,7 @@ sudo systemctl restart docker
 &lt;li&gt;方式一：&lt;br&gt;
 本地拉取导出镜像，然后上传到服务器。&lt;/li&gt;
 &lt;li&gt;方式二：&lt;br&gt;
-在&lt;code&gt;https://github.com/dongyubin/DockerHub&lt;/code&gt;寻找&lt;/li&gt;
+在&lt;code&gt;https://github.com/dongyubin/DockerHub&lt;/code&gt;寻找一个可靠的镜像地址。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id="docker常见命令"&gt;docker常见命令&lt;/h4&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;# 镜像操作
