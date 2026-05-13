@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 12 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Go语言特点</title><link>https://balsampears.github.io/my-blog/docs/go/1_feature/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_feature/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
-本篇文章不会介绍基础的语法以及语法细节，仅重点介绍go语言的与众不同的特点以及注意事项。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 13 May 2026 13:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Go语言基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
+本篇文章不会介绍基础语法以及细节，仅重点介绍go语言的与众不同的特点以及注意事项。&lt;/p&gt;
 &lt;h2 id="一-指针"&gt;一. 指针&lt;/h2&gt;
 &lt;p&gt;go中存在指针可以直接获取内存地址：&lt;/p&gt;
 &lt;ul&gt;
@@ -542,4 +542,41 @@ return(0x0, 32)
 a := and 0xFF(sload 0x0)
 b := and 0xFF00(sload 0x0)
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-定长存储"&gt;2. 定长存储&lt;/h3&gt;
-&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item><item><title>合约升级</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/%E5%90%88%E7%BA%A6%E5%8D%87%E7%BA%A7/</link><pubDate>Wed, 13 May 2026 13:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/%E5%90%88%E7%BA%A6%E5%8D%87%E7%BA%A7/</guid><description>&lt;p&gt;实际合约开发过程中，经常会遇到合约代码的功能升级和问题修复的需求，此时就需要做合约升级。&lt;/p&gt;
+&lt;h2 id="一-升级---代理模式"&gt;一. 升级 - 代理模式&lt;/h2&gt;
+&lt;p&gt;业务合约拆分为代理合约和逻辑合约，代理合约负责保存用户数据和映射逻辑，逻辑合约负责逻辑计算。&lt;br&gt;
+核心是使用delegatecall，使用当前合约的上下文，来执行目标合约的逻辑。&lt;/p&gt;
+&lt;p&gt;实现代码参考：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;contract Animal{
+ //逻辑合约
+ address private impl; 
+ //升级逻辑合约
+ function updateTo(address newImpl) public{
+ impl = newImpl;
+ }
+ function eat(){
+ bytes memory data = abi.encodeWithSignature(&amp;#34;eat()&amp;#34;);
+ (bool success, ) = impl.delegatecall(data);
+ require(success, &amp;#34;delegatecall fail&amp;#34;);
+ }
+ function run(){
+ bytes memory data = abi.encodeWithSignature(&amp;#34;run()&amp;#34;);
+ (bool success, ) = impl.delegatecall(data);
+ require(success, &amp;#34;delegatecall fail&amp;#34;);
+ }
+ ...
+}
+
+contract Cat{
+ function eat(){}
+ function run(){}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;新的问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;每个实现函数都需要在代理合约中实现一遍，代码耦合度非常高。同时逻辑合约升级有新的方法，代理合约却无法添加新方法。&lt;/li&gt;
+&lt;li&gt;代理合约跟逻辑合约的成员变量顺序必须一致，否则会出现变量混乱问题。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="二-升级---统一委托"&gt;二. 升级 - 统一委托&lt;/h2&gt;
+&lt;p&gt;在代理合约中，将除了updateTo之外，所有的函数包括fallback和receive全部都映射到逻辑合约。&lt;/p&gt;</description></item></channel></rss>
