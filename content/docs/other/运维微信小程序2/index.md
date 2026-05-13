@@ -325,3 +325,23 @@ stage('Health Check') {
 }
 ```
 最后，通过：公网IP:8081访问jenkins部署的前端网站。
+
+### 8.nginx映射
+本机nginx采用80，但是在前端项目容器采用8081，需要将两个接口进行映射。  
+在/etc/nginx/conf.d/default.conf新增：
+```
+server {
+    listen 80;
+    server_name _;
+    index index.html;
+
+    location / {
+        proxy_pass http://127.0.0.1:8081;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+}
+```
