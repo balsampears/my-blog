@@ -1,8 +1,8 @@
 +++
 date = '2026-04-29T20:00:00+08:00'
 draft = false
-title = '运维微信小程序1'
-weight = 20
+title = '配置并启动PC网站'
+weight = 10
 +++
 
 ## 前置准备
@@ -139,7 +139,7 @@ tar -xzvf build.tar.gz
 ```
 
 ### 3.配置nginx
-在/etc/nginx/conf.d/目录下新增mysite.conf
+在/etc/nginx/conf.d/目录下新增default.conf
 ```
 server {
     listen 80;

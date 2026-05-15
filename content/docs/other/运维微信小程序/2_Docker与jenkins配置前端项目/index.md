@@ -1,8 +1,8 @@
 +++
 date = '2026-05-02T20:00:00+08:00'
 draft = false
-title = '运维微信小程序2'
-weight = 30
+title = 'Docker与jenkins配置官网项目'
+weight = 20
 +++
 
 
@@ -328,7 +328,7 @@ stage('Health Check') {
 
 ### 8.nginx映射
 本机nginx采用80，但是在前端项目容器采用8081，需要将两个接口进行映射。  
-在/etc/nginx/conf.d/default.conf新增：
+在/etc/nginx/conf.d/default.conf进行修改：
 ```
 server {
     listen 80;

@@ -1,7 +1,7 @@
 +++
 date = '2026-04-16T19:00:00+08:00'
 draft = false
-title = 'Go语言基础'
+title = 'Go基础'
 description= 'Golang基础语法特点和注意事项'
 weight = 10
 +++
@@ -212,7 +212,7 @@ return value, err
 ## 七.接口
 接口是定义了一组需要实现的方法。在go中没有显式继承，只要struct拥有了接口中的一样方法，编译器就认为该struct实现了接口。
 
-### 1.接口的作用：多态
+### 1.使用接口
 ```
 type Mover interface{
     Move()
@@ -222,7 +222,7 @@ func (p Person) Move(){
 }
 
 func main{
-    var m Mover = Person{}  //类似java中的多台
+    var m Mover = Person{}
     m.Move()
 }
 ```
