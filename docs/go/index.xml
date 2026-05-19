@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go语言 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/go/</link><description>Recent content in Go语言 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 29 Apr 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go语言基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go语言 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/go/</link><description>Recent content in Go语言 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sat, 16 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
 本篇文章不会介绍基础语法以及细节，仅重点介绍go语言的与众不同的特点以及注意事项。&lt;/p&gt;
 &lt;h2 id="一-指针"&gt;一. 指针&lt;/h2&gt;
 &lt;p&gt;go中存在指针可以直接获取内存地址：&lt;/p&gt;
@@ -119,4 +119,88 @@ G与M是多对多关系（M:N)
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id="3无缓冲有缓冲通道"&gt;3.无缓冲/有缓冲通道&lt;/h3&gt;
 &lt;h4 id="无缓冲通道"&gt;无缓冲通道&lt;/h4&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;c := make(chan int)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;没有指定容量的，就是无缓冲通道，特点是必须先指定接收者，才能发送数据&lt;/p&gt;</description></item></channel></rss>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;没有指定容量的，就是无缓冲通道，特点是必须先指定接收者，才能发送数据&lt;/p&gt;</description></item><item><title>命令与工具</title><link>https://balsampears.github.io/my-blog/docs/go/3_%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%B7%A5%E5%85%B7/</link><pubDate>Thu, 14 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/3_%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%B7%A5%E5%85%B7/</guid><description>&lt;h2 id="一编译与运行---go-run"&gt;一.编译与运行 - go run&lt;/h2&gt;
+&lt;p&gt;go源代码是跨平台的，编译后的机器码是限制目标平台，直接运行在目标平台。java源代码和编译后的字节码都是跨平台的，运行在JVM。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;go 到处编译，直接运行&lt;/li&gt;
+&lt;li&gt;java 一次编译，到处运行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="1编译并直接运行"&gt;1.编译并直接运行&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;go run main.go&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="2编译并生成可执行文件"&gt;2.编译并生成可执行文件&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;go build &lt;/code&gt; 当前目录编译&lt;/p&gt;
+&lt;h3 id="3编译目标平台"&gt;3.编译目标平台&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 编译到windows 
+GOOS=windows GOARCH=arm64 go build 
+# 编译到linux 
+GOOS=linux GOARCH=arm64 go build 
+# 编译到mac 
+GOOS=darwin GOARCH=arm64 go build 
+
+# 查看所有合法架构
+go tool dist list
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="二包管理---go-install"&gt;二.包管理 - go install&lt;/h2&gt;
+&lt;p&gt;通过go install安装的通常是二进制可执行程序。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 安装
+go install &amp;lt;package&amp;gt;@latest
+
+# 查看可执行程序
+ls $(go env GOPATH)/bin
+
+# 删除可执行程序
+rm $(go env GOPATH)/bin/&amp;lt;tool-name&amp;gt;
+# 删除指定包缓存
+go clean -i &amp;lt;package&amp;gt;
+# 删除模块缓存（下载了源码但没有生成二进制文件可通过这里命令删除）
+go clean -modcache
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="三模块管理---go-mod"&gt;三.模块管理 - go mod&lt;/h2&gt;
+&lt;p&gt;在golang 1.16之后，go默认使用模块化管理。通过创建一个依赖描述文件，自动下载相关库，类似java中的maven、前端的package.json。&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
+&lt;h3 id="1-安装gin"&gt;1. 安装Gin&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;go mod init &amp;lt;项目名&amp;gt;
+go get -u github.com/gin-gonic/gin
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-启动web服务"&gt;2. 启动Web服务&lt;/h3&gt;
+&lt;p&gt;添加main.go:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;func main(){
+ r := gin.Default()
+ // 定义一个接口
+ r.GET(&amp;#39;/&amp;#39;, func(c *gin.Context){
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+ })
+ // 启动项目，默认8080端口
+ r.Run()
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="二-接口请求与响应"&gt;二. 接口请求与响应&lt;/h2&gt;
+&lt;h3 id="1-restful风格接口"&gt;1. Restful风格接口&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;r.GET(...)
+r.POST(...)
+r.PUT(...)
+r.DELETE(...)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-请求参数"&gt;2. 请求参数&lt;/h3&gt;
+&lt;h4 id="1query入参"&gt;（1）Query入参&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;r.GET(&amp;#34;/get&amp;#34;, func(c *gin.Context){
+ name := c.Query(&amp;#34;name&amp;#34;)
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="2路径入参"&gt;（2）路径入参&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;r.GET(&amp;#39;/get2/:name&amp;#39;, func(c *gin.Context){
+ name := c.Query(&amp;#34;name&amp;#34;)
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;路径入参有两种写法，:name和*name，*name写法获取的值会带个/&lt;/p&gt;
+&lt;h4 id="3表单入参"&gt;（3）表单入参&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;r.POST(&amp;#34;/post&amp;#34;, func(c *gin.Context){
+ name := c.PostForm(&amp;#34;name&amp;#34;)
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="4表单json入参"&gt;（4）表单json入参&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;type Article struct{
+ Title string `json:title`
+ Content string `json:content`
+}
+r.POST(&amp;#34;/post&amp;#34;, func(c *gin.Context){
+ var art Article
+ if err:= c.ShouldBindJSON(&amp;amp;art); err!= nil{
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+ }
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;普通表单可以用ShouldBindQuery，xml可以用ShouldBindXML&lt;/p&gt;</description></item></channel></rss>

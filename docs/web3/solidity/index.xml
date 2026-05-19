@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Solidity on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/</link><description>Recent content in Solidity on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 13 May 2026 13:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/web3/solidity/index.xml" rel="self" type="application/rss+xml"/><item><title>ERC20</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/erc20/</link><pubDate>Fri, 10 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/erc20/</guid><description>&lt;h2 id="一-eip-与-erc"&gt;一. EIP 与 ERC&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Solidity on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/</link><description>Recent content in Solidity on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 13 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/web3/solidity/index.xml" rel="self" type="application/rss+xml"/><item><title>ERC20</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/1_erc20/</link><pubDate>Fri, 10 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/1_erc20/</guid><description>&lt;h2 id="一-eip-与-erc"&gt;一. EIP 与 ERC&lt;/h2&gt;
 &lt;p&gt;EIP（Ethereum Improvement Proposals）是以太坊改进协议，包括从链底层到应用层，从共识算法到智能合约，范围广泛。&lt;br&gt;
 ERC（Ethereum Requests For Commments）是以太坊征求意见，主要针对应用层智能合约的改进，属于EIP的其中一种。&lt;/p&gt;
 &lt;h2 id="二-erc20"&gt;二. ERC20&lt;/h2&gt;
@@ -23,7 +23,7 @@ function allowance(address _owner, address _spender) public view returns (uint25
 function transfer(address _to, uint256 _value) public returns (bool success)
 function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
 function approve(address _spender, uint256 _value) public returns (bool success)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;事件+属性+查询+操作：2+3+3+3，一共11个定义。&lt;/p&gt;</description></item><item><title>ERC721 - NFT</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/erc721/</link><pubDate>Sun, 12 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/erc721/</guid><description>&lt;p&gt;ERC721是非同质化货币，Non-fungible token，简称NFT。&lt;br&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;事件+属性+查询+操作：2+3+3+3，一共11个定义。&lt;/p&gt;</description></item><item><title>ERC721 - NFT</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/2_erc721/</link><pubDate>Sun, 12 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/2_erc721/</guid><description>&lt;p&gt;ERC721是非同质化货币，Non-fungible token，简称NFT。&lt;br&gt;
 非同质化货币，每一个代币都是独特的、有区别的、与众不同的。ERC20中类似于法币，我的一块跟你的一块没有区别；ERC721类似于画作，虽然都是画，但是我的画跟你的画内容是完全不一样的。所以ERC721最早从数字藏品开始流行。&lt;br&gt;
 每一个NFT都有一个独特编号，这个编号是&lt;strong&gt;tokenId&lt;/strong&gt;。tokenId格式没有明确的要求，可以是自增ID，也可以是随机数。&lt;/p&gt;
 &lt;h2 id="一-nft组成"&gt;一. NFT组成&lt;/h2&gt;
@@ -65,7 +65,7 @@ function approve(address _spender, uint256 _value) public returns (bool success)
 
  function setApprovalForAll(address _operator, bool _approved) external;
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;查询&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>ERC1155</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/erc1155/</link><pubDate>Mon, 13 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/erc1155/</guid><description>&lt;p&gt;ERC1155是多重货币，一个同时支持ERC20和ERC721的合约标准。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;查询&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>ERC1155</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/3_erc1155/</link><pubDate>Mon, 13 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/3_erc1155/</guid><description>&lt;p&gt;ERC1155是多重货币，一个同时支持ERC20和ERC721的合约标准。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;对于ERC20，ERC1155可以设置元数据。&lt;/li&gt;
 &lt;li&gt;对于ERC721，ERC1155可以同一个设置多个NFT。&lt;/li&gt;
@@ -132,7 +132,7 @@ function approve(address _spender, uint256 _value) public returns (bool success)
  interfaceID == type(IERC1155).interfaceId
  ...
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;跟 ERC721 合约中的ERC165用法一致&lt;/p&gt;</description></item><item><title>EVM存储布局</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/evm%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80/</link><pubDate>Tue, 12 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/evm%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80/</guid><description>&lt;h2 id="一-空间资源"&gt;一. 空间资源&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;跟 ERC721 合约中的ERC165用法一致&lt;/p&gt;</description></item><item><title>EVM存储布局</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/4_evm%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80/</link><pubDate>Tue, 12 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/4_evm%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80/</guid><description>&lt;h2 id="一-空间资源"&gt;一. 空间资源&lt;/h2&gt;
 &lt;p&gt;EVM对空间应用可以视为键值对数据库，读写一次都是以256字节为单位。&lt;br&gt;
 EVM中空间资源划分为四类，有不同的特点和gas消耗。&lt;/p&gt;
 &lt;h3 id="1-永久存储"&gt;1. 永久存储&lt;/h3&gt;
@@ -180,7 +180,60 @@ return(0x0, 32)
 a := and 0xFF(sload 0x0)
 b := and 0xFF00(sload 0x0)
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-定长存储"&gt;2. 定长存储&lt;/h3&gt;
-&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item><item><title>合约升级</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/%E5%90%88%E7%BA%A6%E5%8D%87%E7%BA%A7/</link><pubDate>Wed, 13 May 2026 13:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/%E5%90%88%E7%BA%A6%E5%8D%87%E7%BA%A7/</guid><description>&lt;p&gt;实际合约开发过程中，经常会遇到合约代码的功能升级和问题修复的需求，此时就需要做合约升级。&lt;/p&gt;
+&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item><item><title>合约创建</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/7_%E5%90%88%E7%BA%A6%E5%88%9B%E5%BB%BA/</link><pubDate>Wed, 13 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/7_%E5%90%88%E7%BA%A6%E5%88%9B%E5%BB%BA/</guid><description>&lt;p&gt;合约创建后返回的合约地址并不是随机的，接下来我们来了解如何获得确定性的合约地址。&lt;/p&gt;
+&lt;h2 id="一create"&gt;一.create&lt;/h2&gt;
+&lt;p&gt;EVM操作码create，采用账户nonce创建合约。&lt;/p&gt;
+&lt;h3 id="1地址计算方式"&gt;1.地址计算方式&lt;/h3&gt;
+&lt;p&gt;创建合约的账户地址和交易记录计算获得hash，取后20个字节
+&lt;code&gt;keccak256(rlp.encode([user address], [user nonce]))[12:]&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="2代码实现"&gt;2.代码实现&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;solidity
+&lt;code&gt;ERC20 erc20 = new ERC20()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;foundry
+&lt;code&gt;forge create xxx.sol:xxx&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3创建合约的账户"&gt;3.创建合约的账户&lt;/h3&gt;
+&lt;p&gt;EOA账户和合约账号创建合约时有一些区别&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;EOA账户
+EOA的nonce每发生一笔交易则会增加一次。&lt;/li&gt;
+&lt;li&gt;合约账户
+合约账户的nonce每创建一个合约会增加一次。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4优缺点"&gt;4.优缺点&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;优点：gas消耗最低&lt;/li&gt;
+&lt;li&gt;缺点：create是solidity最基础的创建合约方式，很难控制合约地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="二create2---合约工厂"&gt;二.create2 - 合约工厂&lt;/h2&gt;
+&lt;p&gt;EVM操作码create2，采用加盐salt创建合约。&lt;br&gt;
+通过合约工厂加盐创建合约，可以保证合约的地址的确定性。&lt;/p&gt;
+&lt;h3 id="1地址计算方式-1"&gt;1.地址计算方式&lt;/h3&gt;
+&lt;p&gt;账户+盐+目标合约部署字节码
+&lt;code&gt;keccak256(0xff + sender + salt + keccak256(init_code))&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="2代码实现-1"&gt;2.代码实现&lt;/h3&gt;
+&lt;p&gt;创建一个合约工厂，通过合约工厂来创建目标合约。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;contract Factory{
+ function create2Animal(uint _salt) public returns (address) {
+ return address(new Animal{salt: _salt}()); //Animal是目标合约
+ }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="3优缺点"&gt;3.优缺点&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;优点：不受账户nonce影响&lt;/li&gt;
+&lt;li&gt;缺点：目标合约的内容不能修改，当目标合约代码修改后，字节码变动，则最终获得的地址也会发生变动。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="三create3---合约工厂部署器"&gt;三.create3 - 合约工厂+部署器&lt;/h2&gt;
+&lt;p&gt;为了防止目标合约代码变动导致最终合约地址发生变动，采用合约工厂+部署器方案。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;合约工厂：create2创建部署器，部署器代码固定，那么生成的合约地址只受salt影响。&lt;/li&gt;
+&lt;li&gt;部署器：create创建目标合约，一次性合约nonce总是0，生成的合约地址只受自身地址影响。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="1地址计算方式-2"&gt;1.地址计算方式&lt;/h3&gt;
+&lt;p&gt;通过create2计算部署器地址 -&amp;gt; 通过create计算目标地址&lt;/p&gt;</description></item><item><title>合约升级</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/8_%E5%90%88%E7%BA%A6%E5%8D%87%E7%BA%A7/</link><pubDate>Wed, 13 May 2026 13:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/8_%E5%90%88%E7%BA%A6%E5%8D%87%E7%BA%A7/</guid><description>&lt;p&gt;实际合约开发过程中，经常会遇到合约代码的功能升级和问题修复的需求，此时就需要做合约升级。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;
+合约升级并不代表链上数据可篡改，合约升级仅支持对合约代码逻辑的修复和增强。&lt;/p&gt;
 &lt;h2 id="一-升级---代理模式"&gt;一. 升级 - 代理模式&lt;/h2&gt;
 &lt;p&gt;业务合约拆分为代理合约和逻辑合约，代理合约负责保存用户数据和映射逻辑，逻辑合约负责逻辑计算。&lt;br&gt;
 核心是使用delegatecall，使用当前合约的上下文，来执行目标合约的逻辑。&lt;/p&gt;

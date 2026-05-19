@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>常见问题 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link><description>Recent content in 常见问题 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Mon, 18 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/index.xml" rel="self" type="application/rss+xml"/><item><title>跨域</title><link>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</link><pubDate>Mon, 18 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</guid><description>&lt;p&gt;&lt;strong&gt;同源策略&lt;/strong&gt;&lt;br&gt;
+浏览器出于安全考虑，限制当前域名只能访问同一&lt;strong&gt;协议、域名、端口&lt;/strong&gt;的网站资源。当请求另一个网站违反了同源策略时，就叫“跨域”，会被浏览器拦截。&lt;/p&gt;
+&lt;h2 id="解决方案"&gt;解决方案&lt;/h2&gt;
+&lt;p&gt;存在a.com前端，连接a.com/api后端；b.com前端，连接b.com/api后端。&lt;br&gt;
+当a.com请求b.com和b.com/api时，触发跨域。&lt;/p&gt;
+&lt;h3 id="1-被调用方添加跨域许可cors"&gt;1. 被调用方添加跨域许可（CORS）&lt;/h3&gt;
+&lt;p&gt;CORS是跨域资源共享，配置之后可以让origin源访问当前服务。&lt;/p&gt;
+&lt;p&gt;Gin框架中，在b.com/api后端添加以下代码：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;c.Header(&amp;#34;Access-Control-Allow-Origin&amp;#34;, &amp;#34;https://a.com&amp;#34;) // 必须在白名单内
+c.Header(&amp;#34;Access-Control-Allow-Credentials&amp;#34;, &amp;#34;true&amp;#34;)
+c.Header(&amp;#34;Access-Control-Allow-Methods&amp;#34;, &amp;#34;GET, POST, PUT, DELETE, OPTIONS&amp;#34;)
+c.Header(&amp;#34;Access-Control-Allow-Headers&amp;#34;, &amp;#34;Authorization, Content-Type, Accept&amp;#34;)
+c.Header(&amp;#34;Access-Control-Max-Age&amp;#34;, &amp;#34;86400&amp;#34;)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-调用方添加nginx反向代理"&gt;2. 调用方添加nginx反向代理&lt;/h3&gt;
+&lt;p&gt;在调用方反向代理来隐藏自身，让目标以为来源是目标同源地址。&lt;/p&gt;
+&lt;p&gt;在a.com前端所在的服务器上的nginx添加以下配置；&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; # 代理到 b.com，对外路径是 /b-api/
+ location /b-api/ {
+ proxy_pass https://b.com/api/;
+
+ proxy_set_header Host b.com;
+ proxy_set_header X-Real-IP $remote_addr;
+ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+ proxy_set_header X-Forwarded-Proto $scheme;
+ # 若 b 需要知道真实来源（可选）
+ proxy_set_header X-Forwarded-Host $host;
+ }
+&lt;/code&gt;&lt;/pre&gt;</description></item></channel></rss>
