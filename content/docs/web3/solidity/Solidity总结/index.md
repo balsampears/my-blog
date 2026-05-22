@@ -1,7 +1,7 @@
 +++
 date = '2026-04-10T20:00:00+08:00'
 draft = true
-title = 'Solidity特点'
+title = 'Solidity总结'
 description = 'Soidity各种特点总结'
 weight = 100
 +++

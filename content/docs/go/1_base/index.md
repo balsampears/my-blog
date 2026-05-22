@@ -34,6 +34,11 @@ int、float、bool等大部分都是值类型；
 在函数传递数据时，特别注意传递的是值类型还是引用类型，如果是值类型（结构体）要使用指针
 
 ### 2.slice
+```
+var arr = [3]int //数组
+var sli = []int  //切片
+sli = make([]int, 3) //分配长度为3的空间，分配空间后切片才能使用
+```
 数组与slice对比：
 - 数组是值类型，定长不可更改，类似java的[]数组。
 - slice是引用类型，不定长可扩容，通过make()方式创建。类似java的ArrayList。
@@ -56,13 +61,24 @@ Go不是一款面向对象的语言，但面向对象的思想可以用struct结
 
 ### 1.构造函数
 ```
+type Student struct{}
 func newStudent() *Student{
     stu := Student{}
-    //todo
+    //初始化
     return &stu
 }
 ```
-结构体没有构造函数，但是可以用一个单独函数去创建对象来充当构造函数
+结构体没有构造函数，但是可以用一个单独函数去创建对象来充当构造函数。  
+
+```
+type Student struct{}
+var stu *Student
+func init(){ //包初始化函数，自动运行
+    stu = &Student()
+    //初始化
+}
+```
+第二种方式，如果这个结构体是个单例仅被初始化一次，可以使用包初始化函数`init()`初始化包内变量。
 
 ### 2.接收者方法（成员函数）
 ```

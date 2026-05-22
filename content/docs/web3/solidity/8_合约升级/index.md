@@ -138,6 +138,7 @@ Upgrades.upgradeProxy(animalProxy, <合约>, <升级合同初始化函数>, <配
 
 ### 3. 信标代理
 适用于最小代理工厂创建的合约，信标合约负责保存和管理逻辑合约地址，最小代理工厂（信标代理合约）通过信标合约获取逻辑合约地址。
+{{< figure src="beacon.png" width="700" >}}
 
 #### OpenZeppelin实现
 ```
@@ -148,7 +149,7 @@ bytes memory data = abi.encodeCall(ERC20Impl.initialize, ("MyERC20", "MY", 100 *
 address tokenProxy = Upgrades.deployBeaconProxy(beacon, data);
 
 // 升级
-Upgrades.upgradeProxy(animalProxy, <合约>, <升级合同初始化函数>, <配置>);
+Upgrades.upgradeProxy(tokenProxy, <合约>, <升级合同初始化函数>, <配置>);
 ```
 
 ### 4. 钻石代理
