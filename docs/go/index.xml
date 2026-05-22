@@ -19,7 +19,10 @@ stu.name
 &lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;&lt;br&gt;
 在函数传递数据时，特别注意传递的是值类型还是引用类型，如果是值类型（结构体）要使用指针&lt;/p&gt;
 &lt;h3 id="2slice"&gt;2.slice&lt;/h3&gt;
-&lt;p&gt;数组与slice对比：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;var arr = [3]int //数组
+var sli = []int //切片
+sli = make([]int, 3) //分配长度为3的空间，分配空间后切片才能使用
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;数组与slice对比：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;数组是值类型，定长不可更改，类似java的[]数组。&lt;/li&gt;
 &lt;li&gt;slice是引用类型，不定长可扩容，通过make()方式创建。类似java的ArrayList。&lt;/li&gt;
@@ -34,32 +37,13 @@ stuMap := make(map[keyType]valueType)
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Go不是一款面向对象的语言，但面向对象的思想可以用struct结构体实现。&lt;/p&gt;
 &lt;h3 id="1构造函数"&gt;1.构造函数&lt;/h3&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;func newStudent() *Student{
+&lt;pre tabindex="0"&gt;&lt;code&gt;type Student struct{}
+func newStudent() *Student{
  stu := Student{}
- //todo
+ //初始化
  return &amp;amp;stu
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;结构体没有构造函数，但是可以用一个单独函数去创建对象来充当构造函数&lt;/p&gt;
-&lt;h3 id="2接收者方法成员函数"&gt;2.接收者方法（成员函数）&lt;/h3&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;// 定义
-func (stu *Student) DoHomework(){
- //do homework
-}
-// 使用
-stu.DoHomework()
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;结构体没有成员函数，但是可以定义一个接收者方法，向结构体类型插入一个方法，类似于javascript中的object.prototype属性&lt;/p&gt;
-&lt;h3 id="3继承"&gt;3.继承&lt;/h3&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;type Person struct{
- name string
-}
-type Student struct{
- no string
- Person
-}
-# 使用
-stu:= Student{}
-stu.name
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;匿名结构体的特点是可以将字段映射到外部，通过这个特点就可以实现父子级的继承&lt;/p&gt;</description></item><item><title>并发编程</title><link>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link><pubDate>Wed, 29 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid><description>&lt;h2 id="一-简介"&gt;一. 简介&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;结构体没有构造函数，但是可以用一个单独函数去创建对象来充当构造函数。&lt;/p&gt;</description></item><item><title>并发编程</title><link>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link><pubDate>Wed, 29 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid><description>&lt;h2 id="一-简介"&gt;一. 简介&lt;/h2&gt;
 &lt;h3 id="1进程线程协程"&gt;1.进程、线程、协程&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;进程 操作系统级别，CPU操作和内存调度的单位。&lt;/li&gt;
