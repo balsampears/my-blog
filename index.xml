@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 20 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>跨域</title><link>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</link><pubDate>Mon, 18 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</guid><description>&lt;p&gt;&lt;strong&gt;同源策略&lt;/strong&gt;&lt;br&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 26 May 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>跨域</title><link>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</link><pubDate>Mon, 18 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</guid><description>&lt;p&gt;&lt;strong&gt;同源策略&lt;/strong&gt;&lt;br&gt;
 浏览器出于安全考虑，限制当前域名只能访问同一&lt;strong&gt;协议、域名、端口&lt;/strong&gt;的网站资源。当请求另一个网站违反了同源策略时，就叫“跨域”，会被浏览器拦截。&lt;/p&gt;
 &lt;h2 id="解决方案"&gt;解决方案&lt;/h2&gt;
 &lt;p&gt;存在a.com前端，连接a.com/api后端；b.com前端，连接b.com/api后端。&lt;br&gt;
@@ -305,11 +305,22 @@ EOF
 sudo docker compose up -d
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;需要注意的是，如果使用sudo执行，则jenkins容器卷volume目录会在/root/jenkins_home，而不是当前用户的/home/ecs_user/jenkins_home。&lt;/p&gt;</description></item><item><title>并发编程</title><link>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link><pubDate>Wed, 29 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid><description>&lt;h2 id="一-简介"&gt;一. 简介&lt;/h2&gt;
 &lt;h3 id="1进程线程协程"&gt;1.进程、线程、协程&lt;/h3&gt;
+&lt;h4 id="简介"&gt;简介&lt;/h4&gt;
 &lt;ul&gt;
-&lt;li&gt;进程 操作系统级别，CPU操作和内存调度的单位。&lt;/li&gt;
-&lt;li&gt;线程 进程的执行实体，CPU操作的最小单位。&lt;/li&gt;
-&lt;li&gt;协程 线程的更小一层执行实体，拥有独立的栈空间和共享的堆空间。&lt;/li&gt;
+&lt;li&gt;进程是操作系统资源分配的基本单位，拥有独立的内存空间。&lt;/li&gt;
+&lt;li&gt;线程是CPU调度的基本单位，共享进程内代码段、数据段、堆并拥有独立的栈，切换线程开销较大。&lt;/li&gt;
+&lt;li&gt;协程是应用层的运行单位，在GO中通过GMP调度，切换协程开销较小。&lt;/li&gt;
+&lt;li&gt;资源分配是指分配内存、IO设备、文件和网络连接、PCB等。&lt;/li&gt;
+&lt;li&gt;CPU调度是CPU对当前时间段哪个线程执行任务的分配。&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h4 id="关联关系"&gt;关联关系&lt;/h4&gt;
+&lt;p&gt;一个进程可以拥有多个线程，一个线程可以拥有多个协程。&lt;/p&gt;
+&lt;h4 id="线程与协程的异同"&gt;线程与协程的异同&lt;/h4&gt;
+&lt;p&gt;共同点：&lt;br&gt;
+1.共享堆空间，独立栈空间&lt;/p&gt;
+&lt;p&gt;不同点：&lt;br&gt;
+1.线程是内核态切换开销大，协程是用户态切换开销小。&lt;br&gt;
+2.线程是抢占式，一段时间会被操作系统停止并被分配给其他线程。协程是协作式，只能协程阻塞或让出时，GMP调度才会切换到其他协程。（后续go也推出了信号抢占式协程）&lt;/p&gt;
 &lt;h3 id="2并发并行"&gt;2.并发、并行&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;并发 不同的任务，在一个CPU上，分时间段执行。&lt;/li&gt;
@@ -324,20 +335,25 @@ sudo docker compose up -d
 &lt;p&gt;GPM是go实现的一套调度机制&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;G 指 Goroutine，go协程&lt;/li&gt;
-&lt;li&gt;P 指 逻辑处理器，负责将Goroutine任务都分派到不同的M&lt;/li&gt;
+&lt;li&gt;P 指 Processor，逻辑处理器，负责将Goroutine任务都分派到不同的M&lt;/li&gt;
 &lt;li&gt;M 指 Machine，操作系统线程，Go程序执行需要映射到对应的M上。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id="运作流程"&gt;运作流程&lt;/h4&gt;
 &lt;ul&gt;
-&lt;li&gt;一个G被创建时会进入本地队列或全局队列。&lt;/li&gt;
-&lt;li&gt;然后调度器在P在队列中取出G，并在P绑定的M上执行G。&lt;/li&gt;
-&lt;li&gt;当G执行完成时，调度器会从队列中取出下一个G继续在相同的M执行。&lt;/li&gt;
-&lt;li&gt;当G被阻塞时，有两种情况。第一种是通道/锁用户态阻塞，P与M不解绑，而是将G挂起，取出下一个G继续执行。第二种是系统级阻塞，P与M解绑，M持续阻塞，调度器重新给P分配一个新的M，然后再执行下一个G。当阻塞的M释放后，会尝试绑定一个新的P。&lt;/li&gt;
+&lt;li&gt;一个G被创建时会进入本地队列，本地队列满了进入全局队列。&lt;/li&gt;
+&lt;li&gt;当队列存在G时，调度器通过P在队列中取出G，并且P会绑定一个M，然后在M上执行G。取G时优先从本地队列中取。&lt;/li&gt;
+&lt;li&gt;当G执行完成时，调度器会从队列中取出下一个G继续在绑定的M执行。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;阻塞&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当G被阻塞时，有两种情况。第一种是通道/锁用户态阻塞，P与M不解绑，而是将G挂起，取出下一个G继续执行。&lt;/li&gt;
+&lt;li&gt;第二种是系统级阻塞，P与M解绑，M持续阻塞，调度器重新给P分配一个新的M，然后再取出并执行下一个G。&lt;/li&gt;
+&lt;li&gt;当阻塞的M释放后进入休眠，等待被一个P绑定，并把恢复的G放回队列。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id="对应关系"&gt;对应关系&lt;/h4&gt;
 &lt;p&gt;同一时刻下P与M是一对一关系。&lt;br&gt;
 当某个G阻塞时，P会重新创建个M并将其余的G迁移过去。当阻塞的G完成或终止时，旧的M会被回收。
-G与M是多对多关系（M:N)
+G与M是多对多关系（M:N）
 多个G可以在一个M上执行。G阻塞入队列时，可以被不同的M取走。&lt;/p&gt;
 &lt;h3 id="常用函数"&gt;常用函数&lt;/h3&gt;
 &lt;h4 id="runtimegosched"&gt;runtime.Gosched()&lt;/h4&gt;
@@ -352,18 +368,7 @@ G与M是多对多关系（M:N)
 &lt;pre tabindex="0"&gt;&lt;code&gt;var 变量 chan 数据类型 //指定这个chan可以传输什么数据类型
 变量 = make(chan 数据类型, [容量]) //创建之后需要使用make分配内存，同时可以指定channel最多容纳多少条数据
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2操作"&gt;2.操作&lt;/h3&gt;
-&lt;p&gt;channel操作可以分为：发送、接收、关闭&lt;/p&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;c := make(chan int)
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="发送"&gt;发送&lt;/h4&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;c &amp;lt;- 1 #发送1到c的channel
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="接收"&gt;接收&lt;/h4&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;m := &amp;lt;- c #接收c传输的数据
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="关闭"&gt;关闭&lt;/h4&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;close(m)
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="3无缓冲有缓冲通道"&gt;3.无缓冲/有缓冲通道&lt;/h3&gt;
-&lt;h4 id="无缓冲通道"&gt;无缓冲通道&lt;/h4&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;c := make(chan int)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;没有指定容量的，就是无缓冲通道，特点是必须先指定接收者，才能发送数据&lt;/p&gt;</description></item><item><title>ERC721 - NFT</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/2_erc721/</link><pubDate>Sun, 12 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/2_erc721/</guid><description>&lt;p&gt;ERC721是非同质化货币，Non-fungible token，简称NFT。&lt;br&gt;
+&lt;p&gt;channel操作可以分为：发送、接收、关闭&lt;/p&gt;</description></item><item><title>ERC721 - NFT</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/2_erc721/</link><pubDate>Sun, 12 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/2_erc721/</guid><description>&lt;p&gt;ERC721是非同质化货币，Non-fungible token，简称NFT。&lt;br&gt;
 非同质化货币，每一个代币都是独特的、有区别的、与众不同的。ERC20中类似于法币，我的一块跟你的一块没有区别；ERC721类似于画作，虽然都是画，但是我的画跟你的画内容是完全不一样的。所以ERC721最早从数字藏品开始流行。&lt;br&gt;
 每一个NFT都有一个独特编号，这个编号是&lt;strong&gt;tokenId&lt;/strong&gt;。tokenId格式没有明确的要求，可以是自增ID，也可以是随机数。&lt;/p&gt;
 &lt;h2 id="一-nft组成"&gt;一. NFT组成&lt;/h2&gt;
@@ -540,7 +545,57 @@ go clean -modcache
  interfaceID == type(IERC1155).interfaceId
  ...
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;跟 ERC721 合约中的ERC165用法一致&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;跟 ERC721 合约中的ERC165用法一致&lt;/p&gt;</description></item><item><title>配置https</title><link>https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/4_%E9%85%8D%E7%BD%AEhttps/</link><pubDate>Tue, 26 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/4_%E9%85%8D%E7%BD%AEhttps/</guid><description>&lt;h2 id="一-获取ssl免费证书"&gt;一. 获取SSL免费证书&lt;/h2&gt;
+&lt;p&gt;进入阿里云，搜索SSL（现在名称为&lt;a href="https://yundun.console.aliyun.com/?spm=5176.2020520163.console-base_search-panel.dtab-product_cas.108b3711tGJKXi&amp;amp;p=cas#/instance/buy/cn-hangzhou"&gt;数字证书管理服务&lt;/a&gt;）&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/4_%E9%85%8D%E7%BD%AEhttps/https_1.png" width="700"&gt;
+&lt;/figure&gt;
+
+点击购买证书，刚开始我们使用免费SSL即可，每个用户可以用20个/年，每个证书有效期3个月。&lt;/p&gt;
+&lt;h2 id="二-申请ssl证书"&gt;二. 申请SSL证书&lt;/h2&gt;
+&lt;p&gt;购买成功后，回到SSL证书管理，点击申请证书，填写完资料提交后，一般10分钟之内会有结果。成功后，状态变为已签发。&lt;/p&gt;
+&lt;h2 id="三-配置nignx"&gt;三. 配置nignx&lt;/h2&gt;
+&lt;h3 id="1-下载证书"&gt;1. 下载证书&lt;/h3&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/4_%E9%85%8D%E7%BD%AEhttps/https_2.png" width="700"&gt;
+&lt;/figure&gt;
+
+点击下载，选择nginx类型，下载并解压缩后获得xxx.key xxx.pem，其中xxx是你申请的域名。&lt;/p&gt;
+&lt;h3 id="2-上传证书"&gt;2. 上传证书&lt;/h3&gt;
+&lt;p&gt;将xxx.key xxx.pem两个证书文件上传的云服务器中的/etc/nginx/cert/目录下&lt;/p&gt;
+&lt;h3 id="3-配置nignx"&gt;3. 配置nignx&lt;/h3&gt;
+&lt;p&gt;修改对应网站的nginx配置，/etc/nginx/conf.d/default.conf&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# HTTP → HTTPS 重定向
+server {
+ listen 80;
+ server_name _;
+ return 301 https://$host$request_uri;
+}
+
+# HTTPS 服务
+server {
+ listen 443 ssl http2;
+ server_name _;
+
+ # ---------- 证书配置（请替换为实际路径）----------
+ ssl_certificate /etc/nginx/cert/xxx.pem; 
+ ssl_certificate_key /etc/nginx/cert/xxx.key;
+
+ # ---------- 安全增强（推荐）----------
+ ssl_protocols TLSv1.2 TLSv1.3;
+ ssl_ciphers HIGH:!aNULL:!MD5;
+ ssl_prefer_server_ciphers on;
+
+ # ---------- 代理到后端 ----------
+ location / {
+ proxy_pass http://127.0.0.1:8081;
+ proxy_set_header Host $host;
+ proxy_set_header X-Real-IP $remote_addr;
+ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+ proxy_set_header X-Forwarded-Proto https; # 改为 https
+ }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="4-重新nginx"&gt;4. 重新nginx&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo nginx -t &amp;amp;&amp;amp; sudo systemctl reload nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在浏览器输入：https://域名，完成。&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
 &lt;h3 id="1-安装gin"&gt;1. 安装Gin&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;go mod init &amp;lt;项目名&amp;gt;
 go get -u github.com/gin-gonic/gin
@@ -637,7 +692,49 @@ return(0x0, 32)
 a := and 0xFF(sload 0x0)
 b := and 0xFF00(sload 0x0)
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-定长存储"&gt;2. 定长存储&lt;/h3&gt;
-&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item><item><title>Gas优化</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/5_gas%E4%BC%98%E5%8C%96/</link><pubDate>Wed, 20 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/5_gas%E4%BC%98%E5%8C%96/</guid><description>&lt;h2 id="一-gas评估"&gt;一. Gas评估&lt;/h2&gt;
+&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item><item><title>gORM框架</title><link>https://balsampears.github.io/my-blog/docs/go/5_gorm%E6%A1%86%E6%9E%B6/</link><pubDate>Fri, 22 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/5_gorm%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-连接数据库"&gt;一. 连接数据库&lt;/h2&gt;
+&lt;h3 id="1-引入gorm"&gt;1. 引入gORM&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;import (
+ &amp;#34;gorm.io/driver/mysql&amp;#34;
+	&amp;#34;gorm.io/gorm&amp;#34;
+)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;引入gorm，并用&lt;code&gt;go mod tidy&lt;/code&gt;安装&lt;/p&gt;
+&lt;h3 id="2-连接数据库"&gt;2. 连接数据库&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;dsn := &amp;#34;root:root@tcp(127.0.0.1:3307)/test_db?charset=utf8mb4&amp;amp;parseTime=True&amp;amp;loc=Local&amp;#34;
+db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config{})
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;配置表名策略&lt;/strong&gt;
+默认表名是下划线式+表名复数，通过以下方式可以将表名复数去除。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;&amp;amp;gorm.Config{
+ NamingStrategy: schema.NamingStrategy{
+ SingularTable: true, //禁用表名复数形式
+ },
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="二-定义实体"&gt;二. 定义实体&lt;/h2&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;type SysUser struct {
+	UserId uint `gorm:&amp;#34;primaryKey&amp;#34;` # 默认主键列名是Id
+	OrgId uint
+	UserName string
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="1-自定义表名"&gt;1. 自定义表名&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;func (SysUser) TableName() string {
+ return &amp;#34;sys_user&amp;#34;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;默认表名是下划线式+表名复数，只要实现&lt;code&gt;TableName() string&lt;/code&gt;接口即可覆盖。&lt;/p&gt;
+&lt;h3 id="2-默认模型"&gt;2. 默认模型&lt;/h3&gt;
+&lt;p&gt;gorm提供了默认模型给用户模型继承。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;gorm.Model
+type Model struct {
+ ID uint `gorm:&amp;#34;primaryKey&amp;#34;`
+ CreatedAt time.Time
+ UpdatedAt time.Time
+ DeletedAt gorm.DeletedAt `gorm:&amp;#34;index&amp;#34;` # 软删除
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="3-注意事项"&gt;3. 注意事项&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;字段名需要首字母大写，数据库表名下划线式会对应go模型的大写驼峰式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="三-增删改查"&gt;三. 增删改查&lt;/h2&gt;
+&lt;p&gt;gorm对sql操作有两种写法：泛型API和传统API。泛型API可以在编译器就检查出错误，下面主要以泛型API写法为主。&lt;/p&gt;</description></item><item><title>Gas优化</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/5_gas%E4%BC%98%E5%8C%96/</link><pubDate>Wed, 20 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/5_gas%E4%BC%98%E5%8C%96/</guid><description>&lt;h2 id="一-gas评估"&gt;一. Gas评估&lt;/h2&gt;
 &lt;h3 id="1-foundry测试"&gt;1. foundry测试&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;forge test --gas-report&lt;/code&gt;会在测试时同步打印每个方法消耗的Gas。&lt;/p&gt;
 &lt;h3 id="2-foundry评估文件"&gt;2. foundry评估文件&lt;/h3&gt;
@@ -690,7 +787,81 @@ address private constant HEAD = address(0);
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;更新（优化）&lt;br&gt;
-同时传入应该删除的上一个和应该插入的上一个元素，链上做校验、删除、新增。&lt;/p&gt;</description></item><item><title>合约创建</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/7_%E5%90%88%E7%BA%A6%E5%88%9B%E5%BB%BA/</link><pubDate>Wed, 13 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/7_%E5%90%88%E7%BA%A6%E5%88%9B%E5%BB%BA/</guid><description>&lt;p&gt;合约创建后返回的合约地址并不是随机的，接下来我们来了解如何获得确定性的合约地址。&lt;/p&gt;
+同时传入应该删除的上一个和应该插入的上一个元素，链上做校验、删除、新增。&lt;/p&gt;</description></item><item><title>GC</title><link>https://balsampears.github.io/my-blog/docs/go/6_gc/</link><pubDate>Tue, 26 May 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/6_gc/</guid><description>&lt;h2 id="一-标记清除法v13"&gt;一. 标记清除法v1.3&lt;/h2&gt;
+&lt;h3 id="1-stw"&gt;1. STW&lt;/h3&gt;
+&lt;p&gt;STW（Stop The World）是让go程序暂停，来进行gc操作的功能。&lt;/p&gt;
+&lt;h3 id="2-标记清除法"&gt;2. 标记清除法&lt;/h3&gt;
+&lt;p&gt;标记清除法具体流程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;STW启动&lt;/li&gt;
+&lt;li&gt;遍历栈空间和堆空间，标记所有可达的对象&lt;/li&gt;
+&lt;li&gt;删除所有没有标记的对象&lt;/li&gt;
+&lt;li&gt;STW关闭&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;标记清除法主要在go v1.3版本之前使用。&lt;/p&gt;
+&lt;h2 id="二-三色标记法v15"&gt;二. 三色标记法v1.5&lt;/h2&gt;
+&lt;h3 id="1-三色标记法"&gt;1. 三色标记法&lt;/h3&gt;
+&lt;p&gt;将所有对象划分黑、灰、白三个颜色，然后将灰色对象再分到其他颜色，最后将剩下的白色对象清除。&lt;/p&gt;
+&lt;p&gt;具体流程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;GC开始时将栈空间和堆空间的所有对象划为白色对象。&lt;/li&gt;
+&lt;li&gt;遍历寻找所有可达对象，将其划为灰色。&lt;/li&gt;
+&lt;li&gt;遍历灰色对象并将其改为黑色，将这个对象下一个可达对象划为灰色对象。&lt;/li&gt;
+&lt;li&gt;循环第3步，直到不存在任何灰色对象。&lt;/li&gt;
+&lt;li&gt;清除剩余白色对象。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;由于没有进行STW，那么进行三色标记法时，会同时执行go程序，导致出现新的问题：&lt;br&gt;
+假设a黑，b灰，c白&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;a-&amp;gt;nil改为a-&amp;gt;c，此时若所有灰色对象被清空，则白色对象c会被清除，a-&amp;gt;c指向的对象丢失。&lt;/li&gt;
+&lt;li&gt;b-&amp;gt;c改为a-&amp;gt;c，此时若所有灰色对象被清空，则白色对象c会被清除，b-&amp;gt;c指向的对象丢失。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="2-强-弱不变式"&gt;2. 强-弱不变式&lt;/h3&gt;
+&lt;p&gt;为了解决上面两个问题，需要两个不变式理论支持。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;强不变式
+若存在a-&amp;gt;b，a是黑，则b必定不能是白。&lt;br&gt;
+可以解决新增时对象丢失的问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;弱不变式
+若存在a-&amp;gt;b，a是黑且b是白，那么必然存在灰色c间接指向b（c-&amp;gt;b c-&amp;gt;d-&amp;gt;b等）。&lt;br&gt;
+可以解决删除时对象丢失的问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="3-新增写屏障"&gt;3. 新增写屏障&lt;/h3&gt;
+&lt;p&gt;堆上发生指针写入新对象时（a-&amp;gt;nil，改为a-&amp;gt;b），新增对象会被划为灰色。&lt;/p&gt;
+&lt;p&gt;特点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;满足强不变式。&lt;/li&gt;
+&lt;li&gt;写屏障仅针对堆空间，栈空间不使用。&lt;/li&gt;
+&lt;li&gt;GC结束时，对栈空间进行STW。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Go v1.5主要实现就是通过三色标记法+新增写屏障+STW扫栈进行GC。&lt;/p&gt;
+&lt;h3 id="4-删除写屏障"&gt;4. 删除写屏障&lt;/h3&gt;
+&lt;p&gt;堆上发生指针移除对象时（a-&amp;gt;b，改为a-&amp;gt;nil），移除的对象会被划为灰色。&lt;br&gt;
+本轮GC中b及子对象都会被置为黑色，但下一轮GC中会被置为白色（没有其他引用b）&lt;/p&gt;
+&lt;p&gt;特点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;满足弱不变式。&lt;/li&gt;
+&lt;li&gt;写屏障仅针对堆空间，栈空间不使用。&lt;/li&gt;
+&lt;li&gt;GC开始时，对栈空间进行STW。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="5-三色标记法写屏障的缺点"&gt;5. 三色标记法+写屏障的缺点&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;需要对栈空间进行STW&lt;/li&gt;
+&lt;li&gt;删除写屏障效率不高，需要等待下一个GC才能清除。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="三-混合写屏障v18"&gt;三. 混合写屏障v1.8&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;GC开始时栈空间所有&lt;strong&gt;可达对象&lt;/strong&gt;置为黑色，并且后续添加栈对象都置为黑色。&lt;/li&gt;
+&lt;li&gt;新增的堆对象置为灰色。&lt;/li&gt;
+&lt;li&gt;删除的堆对象置为灰色。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="四-提问"&gt;四. 提问&lt;/h2&gt;
+&lt;h3 id="1-三色标记法v15中跨堆栈对象指针需要使用写屏障吗"&gt;1. 三色标记法v1.5中，跨堆栈对象指针需要使用写屏障吗？&lt;/h3&gt;
+&lt;p&gt;若存在栈对象a，堆对象b：&lt;/p&gt;</description></item><item><title>合约创建</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/7_%E5%90%88%E7%BA%A6%E5%88%9B%E5%BB%BA/</link><pubDate>Wed, 13 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/7_%E5%90%88%E7%BA%A6%E5%88%9B%E5%BB%BA/</guid><description>&lt;p&gt;合约创建后返回的合约地址并不是随机的，接下来我们来了解如何获得确定性的合约地址。&lt;/p&gt;
 &lt;h2 id="一create"&gt;一.create&lt;/h2&gt;
 &lt;p&gt;EVM操作码create，采用账户nonce创建合约。&lt;/p&gt;
 &lt;h3 id="1地址计算方式"&gt;1.地址计算方式&lt;/h3&gt;
