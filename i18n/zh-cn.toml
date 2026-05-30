@@ -3,3 +3,6 @@ other = "标签"
 
 [taxonomy_categories]
 other = "分类"
+
+[published_at]
+other = "发布于"
