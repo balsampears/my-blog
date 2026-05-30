@@ -1,0 +1,17 @@
+{{ $context := .context -}}
+{{ $taxo := .taxo -}}
+{{ if (gt (len ($context.GetTerms $taxo)) 0) -}}
+<div class="taxonomy taxonomy-terms-article taxo-{{ urlize $taxo }}">
+  {{ $taxoI18nKeyMap := dict "tags" "taxonomy_tags" "categories" "taxonomy_categories" -}}
+  {{ $taxoTitle := humanize $taxo -}}
+  {{ with (index $taxoI18nKeyMap $taxo) -}}
+    {{ $taxoTitle = T . -}}
+  {{ end -}}
+  <h5 class="taxonomy-title">{{ $taxoTitle }}:</h5>
+  <ul class="taxonomy-terms">
+    {{ range ($context.GetTerms $taxo) -}}
+      <li><a class="taxonomy-term" href="{{ .Permalink }}" data-taxonomy-term="{{ urlize .LinkTitle }}"><span class="taxonomy-label">{{ .LinkTitle }}</span></a></li>
+    {{ end -}}
+  </ul>
+</div>
+{{ end -}}
