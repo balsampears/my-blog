@@ -4,7 +4,7 @@ draft = true
 title = 'Solidity总结'
 description = 'Soidity各种特点总结'
 tags = ['solidity', '教程']
-weight = 100
+weight = 1000
 +++
 
 ## 成员变量修饰词对比
