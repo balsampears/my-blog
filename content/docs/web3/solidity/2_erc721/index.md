@@ -3,6 +3,7 @@ date = '2026-04-12T22:00:00+08:00'
 draft = false
 title = 'ERC721 - NFT'
 description= 'ERC721又名NFT，是以太坊中的非同质化代币标准'
+tags = ['solidity', '教程']
 weight = 20
 +++
 

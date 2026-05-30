@@ -3,6 +3,7 @@ date = '2026-04-09T20:00:00+08:00'
 draft = false
 title = 'Hugo搭建个人博客'
 slug = "hugo-start"
+tags = ['项目']
 weight = 10
 +++
 

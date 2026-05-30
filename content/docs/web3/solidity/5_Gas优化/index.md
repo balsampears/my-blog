@@ -3,6 +3,7 @@ date = '2026-05-20T20:00:00+08:00'
 draft = false
 title = 'Gas优化'
 description = '节省Gas燃料费的各种技巧'
+tags = ['solidity', '解决方案']
 weight = 50
 +++
 

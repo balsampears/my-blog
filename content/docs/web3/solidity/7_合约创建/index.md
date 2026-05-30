@@ -3,6 +3,7 @@ date = '2026-05-13T20:00:00+08:00'
 draft = false
 title = '合约创建'
 description = '合约创建，可以合约工厂统一管理和创建合约'
+tags = ['solidity', '教程']
 weight = 70
 +++
 

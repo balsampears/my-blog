@@ -3,6 +3,7 @@ date = '2026-05-26T22:00:00+08:00'
 draft = false
 title = 'GC'
 description= 'Go的垃圾回收机制'
+tags = ['go', '理论']
 weight = 60
 +++
 

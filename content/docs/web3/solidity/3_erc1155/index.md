@@ -3,6 +3,7 @@ date = '2026-04-13T22:00:00+08:00'
 draft = false
 title = 'ERC1155'
 description= 'ERC1155是以太坊中的多重代币标准'
+tags = ['solidity', '教程']
 weight = 30
 +++
 

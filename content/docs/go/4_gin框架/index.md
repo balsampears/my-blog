@@ -3,6 +3,7 @@ date = '2026-05-16T20:00:00+08:00'
 draft = false
 title = 'Gin框架'
 description= 'Gin是最流行的http web框架'
+tags = ['go', '教程']
 weight = 40
 +++
 

@@ -2,6 +2,7 @@
 date = '2026-04-29T20:00:00+08:00'
 draft = false
 title = '配置并启动PC网站'
+tags = ['项目']
 weight = 10
 +++
 

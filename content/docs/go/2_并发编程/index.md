@@ -3,6 +3,7 @@ date = '2026-04-29T20:00:00+08:00'
 draft = false
 title = '并发编程'
 description= '协程的应用'
+tags = ['go', '教程']
 weight = 20
 +++
 

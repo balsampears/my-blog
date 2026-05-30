@@ -3,6 +3,7 @@ date = '2026-05-14T20:00:00+08:00'
 draft = false
 title = '命令与工具'
 description= 'Go常用的命令与工具'
+tags = ['go', '教程']
 weight = 30
 +++
 

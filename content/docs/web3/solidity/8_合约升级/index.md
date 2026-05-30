@@ -3,6 +3,7 @@ date = '2026-05-13T13:00:00+08:00'
 draft = false
 title = '合约升级'
 description= '合约升级，将存储和逻辑进行分离，支持开发者对合约进行修复和增强'
+tags = ['solidity', '教程']
 weight = 80
 +++
 

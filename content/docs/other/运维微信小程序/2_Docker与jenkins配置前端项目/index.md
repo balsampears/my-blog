@@ -2,6 +2,7 @@
 date = '2026-05-02T20:00:00+08:00'
 draft = false
 title = 'Docker与jenkins配置官网项目'
+tags = ['项目']
 weight = 20
 +++
 

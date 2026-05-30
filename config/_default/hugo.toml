@@ -4,6 +4,8 @@ title = '我的个人博客'
 #theme = 'ananke'
 theme = 'docsy'
 
+[taxonomies]
+  tag = 'tags'
 
 [params.ui]
 sidebar_menu_compact = true

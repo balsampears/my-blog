@@ -3,6 +3,7 @@ date = '2026-04-10T20:00:00+08:00'
 draft = true
 title = 'Solidity总结'
 description = 'Soidity各种特点总结'
+tags = ['solidity', '教程']
 weight = 100
 +++
 
