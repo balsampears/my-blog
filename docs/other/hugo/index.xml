@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hugo实践 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/</link><description>Recent content in Hugo实践 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 09 Apr 2026 21:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/other/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</guid><description>&lt;h2 id="一-开始"&gt;一. 开始&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hugo实践 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/</link><description>Recent content in Hugo实践 on 我的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 09 Apr 2026 21:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/other/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</guid><description>&lt;h2 id="一-开始"&gt;一. 开始&lt;/h2&gt;
 &lt;h3 id="1开始一个hugo项目"&gt;1.开始一个hugo项目&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;hugo new site quickstart
 cd quickstart
@@ -39,7 +39,7 @@ weight = 20
 &lt;h3 id="1发布代码到github"&gt;1.发布代码到Github&lt;/h3&gt;
 &lt;p&gt;这里大家都会，省略&lt;/p&gt;
 &lt;h3 id="2设置github-page"&gt;2.设置Github Page&lt;/h3&gt;
-&lt;p&gt;&lt;img src="setting_github_page.png" alt="设置页"&gt;
+&lt;p&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/setting_github_page.png" alt="设置页"&gt;
 这样做的目的是指定github page使用什么分支的代码、什么目录下的代码。&lt;/p&gt;
 &lt;h2 id="二-发布"&gt;二. 发布&lt;/h2&gt;
 &lt;h3 id="1发布前准备"&gt;1.发布前准备&lt;/h3&gt;
@@ -60,7 +60,7 @@ baseUrl = &amp;lsquo;[你的用户名].github.io/[Github仓库名]&amp;rsquo;&lt
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;重新设置Github Page
-&lt;img src="setting_github_action.png" alt="设置页"&gt;&lt;/p&gt;
+&lt;img src="https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/setting_github_action.png" alt="设置页"&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;编写工作流

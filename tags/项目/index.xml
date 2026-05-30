@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>项目 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/tags/%E9%A1%B9%E7%9B%AE/</link><description>Recent content in 项目 on 我的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 26 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/tags/%E9%A1%B9%E7%9B%AE/index.xml" rel="self" type="application/rss+xml"/><item><title>配置并启动PC网站</title><link>https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/</link><pubDate>Wed, 29 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/</guid><description>&lt;h2 id="前置准备"&gt;前置准备&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;申请一个个体工商户/企业，拿到营业执照&lt;/li&gt;
+&lt;li&gt;开通一个对公账户的银行卡&lt;/li&gt;
+&lt;li&gt;分别购买服务器资源（以阿里云为例）：
+&lt;ul&gt;
+&lt;li&gt;云服务器ECS&lt;/li&gt;
+&lt;li&gt;云数据库RDS&lt;/li&gt;
+&lt;li&gt;对象存储OSS&lt;/li&gt;
+&lt;li&gt;域名，需要用到营业执照&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="一-云服务器"&gt;一. 云服务器&lt;/h2&gt;
+&lt;p&gt;选购服务器最好至少需要购买4G+8G的，因为我们需要在一台服务器上配置很多软件。&lt;/p&gt;
+&lt;p&gt;选择“远程连接”进入命令行模式。&lt;/p&gt;
+&lt;h3 id="redis安装配置"&gt;redis安装配置&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo dnf install -y redis
+sudo systemctl enable --now redis
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="配置文件"&gt;配置文件&lt;/h4&gt;
+&lt;p&gt;/etc/redis.conf中，配置&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo tee /etc/redis.conf &amp;lt;&amp;lt;&amp;#39;EOF&amp;#39;
+bind 0.0.0.0
+port 6379
+daemonize no
+requirepass 你的强密码
+supervised systemd 
+dir /var/lib/redis
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;需要重启：&lt;code&gt;sudo systemctl restart redis&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id="外网访问redis可选"&gt;外网访问redis（可选）&lt;/h4&gt;
+&lt;p&gt;在“网络与安全组”中，添加入方向规则，端口6379，IP/4 0.0.0.0/0
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/ecs_redis_nolimit.png" width="700"&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h2 id="二-云数据库"&gt;二. 云数据库&lt;/h2&gt;
+&lt;h3 id="1进入数据库"&gt;1.进入数据库&lt;/h3&gt;
+&lt;p&gt;购买RDS后，可以在实例列表中选择登录数据库。如果没有看到，则可以切换地域查看你购买的地域RDS。
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/rds_1.png" width="700"&gt;
+&lt;/figure&gt;
+
+点击登录数据库后，会进入DMS，此时系统可能会让你创建一个DMS用户进行管理。
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/rds_2.png" width="700"&gt;
+&lt;/figure&gt;
+
+进入数据库详情，也能在”账号管理“中看到DMS创建的用户。
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/rds_3.png" width="700"&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id="2配置安全组"&gt;2.配置安全组&lt;/h3&gt;
+&lt;p&gt;需要配置ECS的安全组，让其中程序可以访问RDS。
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/rds_4.png" width="700"&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id="3配置外网直连数据库"&gt;3.配置外网直连数据库&lt;/h3&gt;
+&lt;p&gt;新建一个用户，选择“普通账户”，选择可访问的数据库+读写权限，输入密码，点击确认。
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/rds_nolimit_1.png" width="700"&gt;
+&lt;/figure&gt;
+
+配置白名单，选择全部放开。
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/rds_nolimit_2.png" width="700"&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h2 id="三-对象存储oss"&gt;三. 对象存储OSS&lt;/h2&gt;
+&lt;h3 id="1创建一个ram账号并分配权限"&gt;1.创建一个RAM账号并分配权限&lt;/h3&gt;
+&lt;p&gt;首先进入RAM控制台，用户 -&amp;gt; 创建用户
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/oss_ram_1.png" width="700"&gt;
+&lt;/figure&gt;
+
+命名为oss，不选择访问配置
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/oss_ram_2.png" width="700"&gt;
+&lt;/figure&gt;
+
+进入oss用户，创建AccessKey，选其他，然后将accessKey、accessSecret写入代码配置中
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/oss_ram_3.png" width="700"&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/oss_ram_4.png" width="700"&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/oss_ram_5.png" width="700"&gt;
+&lt;/figure&gt;
+
+最后给这个oss用户分配仅oss的权限&lt;br&gt;
+在列表页点击授权，搜索oss，选择AliyunOSSFullAccess，确认新增授权
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/oss_ram_6.png" width="700"&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/1_%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8pc%E7%BD%91%E7%AB%99/oss_ram_7.png" width="700"&gt;
+&lt;/figure&gt;
+&lt;/p&gt;</description></item><item><title>Hugo搭建个人博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</link><pubDate>Thu, 09 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-start/</guid><description>&lt;h2 id="一-开始"&gt;一. 开始&lt;/h2&gt;
+&lt;h3 id="1开始一个hugo项目"&gt;1.开始一个hugo项目&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hugo new site quickstart
+cd quickstart
+git init
+## 下载并应用一个主题
+git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke
+echo &amp;#34;theme = &amp;#39;ananke&amp;#39;&amp;#34; &amp;gt;&amp;gt; hugo.toml
+hugo server
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="1创建一篇文章"&gt;1.创建一篇文章&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hugo new content/posts/my-first-post.md
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;文章的头元数据如下：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;+++
+date = &amp;#39;2026-04-09T13:49:15+08:00&amp;#39;
+draft = true #代表是草稿状态，草稿状态正常不会展示到个人博客上 
+title = &amp;#39;使用Hugo搭建个人博客&amp;#39;
++++
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="3启动hugo"&gt;3.启动hugo&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hugo server -D # -D可以让草稿状态的文章也正常显示
+hugo server -D -F # -F可以未来发布的文件也正常显示
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="二创建菜单"&gt;二.创建菜单&lt;/h2&gt;
+&lt;h3 id="1更新配置"&gt;1.更新配置&lt;/h3&gt;
+&lt;p&gt;为了更好的维护配置，不要把配置都全部放在hugo.toml一个文件中&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;创建目录 config/_default/，并将hugo.toml移入该目录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="2创建一级菜单配置"&gt;2.创建一级菜单配置&lt;/h3&gt;
+&lt;p&gt;在 config/_default/ 创建 menus.toml 然后写入&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;[[main]]
+name = &amp;#34;首页&amp;#34;
+pageRef = &amp;#34;/&amp;#34;
+weight = 10
+
+[[main]]
+name = &amp;#34;文章&amp;#34;
+url = &amp;#34;/posts/hugo/hugo-start&amp;#34;
+weight = 20
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;右上角即可出现一级菜单&lt;/p&gt;</description></item><item><title>Docker与jenkins配置官网项目</title><link>https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/2_docker%E4%B8%8Ejenkins%E9%85%8D%E7%BD%AE%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE/</link><pubDate>Sat, 02 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/2_docker%E4%B8%8Ejenkins%E9%85%8D%E7%BD%AE%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE/</guid><description>&lt;h2 id="六-自动构建"&gt;六. 自动构建&lt;/h2&gt;
+&lt;h3 id="1docker安装配置"&gt;1.Docker安装配置&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 使用阿里镜像源安装docker
+sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+sudo dnf install -y docker-ce
+
+# 设置开机启动，现在立刻启动
+sudo systemctl enable --now docker
+
+# 给当前用户添加docker用户组，避免使用docker命令总需要sudo（重新登录生效）
+sudo usermod -aG docker ecs-user
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="配置加速镜像源"&gt;配置加速镜像源&lt;/h4&gt;
+&lt;p&gt;为了后续拉取镜像方便，可以在阿里云找“镜像容器服务”，获取加速器地址。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo tee /etc/docker/daemon.json &amp;lt;&amp;lt;-&amp;#39;EOF&amp;#39;
+{
+ &amp;#34;registry-mirrors&amp;#34;: [&amp;#34;https://你的ID.mirror.aliyuncs.com&amp;#34;]
+}
+EOF
+
+
+# 重新加载配置并重启docker
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;不过，阿里云镜像地址不好用，笔者使用时经常会报错：&lt;code&gt;Error response from daemon: Get &amp;quot;https://registry-1.docker.io/v2/&amp;quot;: context deadline exceeded (Client.Timeout exceeded while awaiting headers)&lt;/code&gt;
+解决方式有两种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;方式一：&lt;br&gt;
+本地拉取导出镜像，然后上传到服务器。&lt;/li&gt;
+&lt;li&gt;方式二：&lt;br&gt;
+在&lt;code&gt;https://github.com/dongyubin/DockerHub&lt;/code&gt;寻找一个可靠的镜像地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="docker常见命令"&gt;docker常见命令&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 镜像操作
+# 查询镜像列表
+docker images 
+# 删除镜像
+docker images rm 镜像名
+# 拉取镜像
+docker pull 镜像名:版本号
+
+# 容器操作
+# 查询容器列表
+docker ps
+# 开始/停止/重启容器
+docker start/stop/restart 容器名
+# 删除容器
+docker rm 容器名
+# 容器详情
+docker inspect 容器名
+
+# 通过docker-compose.yml拉取并后台启动一个容器
+# 在docker-compose.yml同一个目录下执行：
+docker compose up -d
+
+# 查看docker信息
+docker info
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2jenkins安装配置"&gt;2.Jenkins安装配置&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;创建一个jenkins目录，并且创建jenkins的docker文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;mkdir jenkins_home
+cd jenkins_home
+# 创建文件
+cat &amp;gt; docker-compose.yml &amp;lt;&amp;lt;&amp;#39;EOF&amp;#39;
+services:
+ jenkins:
+ image: jenkins/jenkins:2.555.1-lts
+ container_name: jenkins
+ restart: always
+ ports:
+ - &amp;#34;8080:8080&amp;#34;
+ - &amp;#34;50000:50000&amp;#34;
+ volumes:
+ - ~/jenkins_home:/var/jenkins_home
+ - /var/run/docker.sock:/var/run/docker.sock
+ - /usr/bin/docker:/usr/bin/docker
+ user: root
+EOF
+
+# 根据docker-compose文件创建容器
+sudo docker compose up -d
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;需要注意的是，如果使用sudo执行，则jenkins容器卷volume目录会在/root/jenkins_home，而不是当前用户的/home/ecs_user/jenkins_home。&lt;/p&gt;</description></item><item><title>GithubPage发布博客</title><link>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/</link><pubDate>Thu, 09 Apr 2026 21:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/</guid><description>&lt;h2 id="一-github仓库配置"&gt;一. Github仓库配置&lt;/h2&gt;
+&lt;h3 id="1发布代码到github"&gt;1.发布代码到Github&lt;/h3&gt;
+&lt;p&gt;这里大家都会，省略&lt;/p&gt;
+&lt;h3 id="2设置github-page"&gt;2.设置Github Page&lt;/h3&gt;
+&lt;p&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/setting_github_page.png" alt="设置页"&gt;
+这样做的目的是指定github page使用什么分支的代码、什么目录下的代码。&lt;/p&gt;
+&lt;h2 id="二-发布"&gt;二. 发布&lt;/h2&gt;
+&lt;h3 id="1发布前准备"&gt;1.发布前准备&lt;/h3&gt;
+&lt;p&gt;修改 config/_default/hugo.toml中的baseURL，指定为：&lt;br&gt;
+baseUrl = &amp;lsquo;[你的用户名].github.io/[Github仓库名]&amp;rsquo;&lt;/p&gt;
+&lt;h3 id="2运行发布脚本"&gt;2.运行发布脚本&lt;/h3&gt;
+&lt;p&gt;编写一个脚本，具体功能：
+1.使用hugo &amp;ndash;minify 生成public编译后的html
+2.切换到public目录，切换gh-pages分支
+3.将public目录下的代码发送到gh-pages分支上&lt;/p&gt;
+&lt;p&gt;将下面脚本放在 scripts/deploy.sh，运行它（scripts/deploy.sh）&lt;br&gt;
+参考: &lt;a href="https://github.com/balsampears/my-blog/blob/master/templates/deploy.sh"&gt;https://github.com/balsampears/my-blog/blob/master/templates/deploy.sh&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="3访问"&gt;3.访问&lt;/h3&gt;
+&lt;p&gt;[你的用户名].github.io/[Github仓库名]&lt;br&gt;
+注意：当发布到gh-pages时，可能需要1~5分钟才会刷新页面&lt;/p&gt;
+&lt;h3 id="4使用github-action发布可选"&gt;4.使用Github Action发布（可选）&lt;/h3&gt;
+&lt;p&gt;如果想监听分支提交，自动发布文档则可以使用Github Action&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;重新设置Github Page
+&lt;img src="https://balsampears.github.io/my-blog/docs/other/hugo/hugo-githubpage-publish/setting_github_action.png" alt="设置页"&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;编写工作流
+创建 .github/workflows/hugo.yml。当监听到master代码提交时，触发一次hugo构建，并将public代码发布到gh-pages分支上&lt;br&gt;
+参考: &lt;a href="https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml"&gt;https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;检查Github Action观察是否构建成功&lt;/p&gt;</description></item><item><title>配置https</title><link>https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/4_%E9%85%8D%E7%BD%AEhttps/</link><pubDate>Tue, 26 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/4_%E9%85%8D%E7%BD%AEhttps/</guid><description>&lt;h2 id="一-获取ssl免费证书"&gt;一. 获取SSL免费证书&lt;/h2&gt;
+&lt;p&gt;进入阿里云，搜索SSL（现在名称为&lt;a href="https://yundun.console.aliyun.com/?spm=5176.2020520163.console-base_search-panel.dtab-product_cas.108b3711tGJKXi&amp;amp;p=cas#/instance/buy/cn-hangzhou"&gt;数字证书管理服务&lt;/a&gt;）&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/4_%E9%85%8D%E7%BD%AEhttps/https_1.png" width="700"&gt;
+&lt;/figure&gt;
+
+点击购买证书，刚开始我们使用免费SSL即可，每个用户可以用20个/年，每个证书有效期3个月。&lt;/p&gt;
+&lt;h2 id="二-申请ssl证书"&gt;二. 申请SSL证书&lt;/h2&gt;
+&lt;p&gt;购买成功后，回到SSL证书管理，点击申请证书，填写完资料提交后，一般10分钟之内会有结果。成功后，状态变为已签发。&lt;/p&gt;
+&lt;h2 id="三-配置nignx"&gt;三. 配置nignx&lt;/h2&gt;
+&lt;h3 id="1-下载证书"&gt;1. 下载证书&lt;/h3&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/4_%E9%85%8D%E7%BD%AEhttps/https_2.png" width="700"&gt;
+&lt;/figure&gt;
+
+点击下载，选择nginx类型，下载并解压缩后获得xxx.key xxx.pem，其中xxx是你申请的域名。&lt;/p&gt;
+&lt;h3 id="2-上传证书"&gt;2. 上传证书&lt;/h3&gt;
+&lt;p&gt;将xxx.key xxx.pem两个证书文件上传的云服务器中的/etc/nginx/cert/目录下&lt;/p&gt;
+&lt;h3 id="3-配置nignx"&gt;3. 配置nignx&lt;/h3&gt;
+&lt;p&gt;修改对应网站的nginx配置，/etc/nginx/conf.d/default.conf&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# HTTP → HTTPS 重定向
+server {
+ listen 80;
+ server_name _;
+ return 301 https://$host$request_uri;
+}
+
+# HTTPS 服务
+server {
+ listen 443 ssl http2;
+ server_name _;
+
+ # ---------- 证书配置（请替换为实际路径）----------
+ ssl_certificate /etc/nginx/cert/xxx.pem; 
+ ssl_certificate_key /etc/nginx/cert/xxx.key;
+
+ # ---------- 安全增强（推荐）----------
+ ssl_protocols TLSv1.2 TLSv1.3;
+ ssl_ciphers HIGH:!aNULL:!MD5;
+ ssl_prefer_server_ciphers on;
+
+ # ---------- 代理到后端 ----------
+ location / {
+ proxy_pass http://127.0.0.1:8081;
+ proxy_set_header Host $host;
+ proxy_set_header X-Real-IP $remote_addr;
+ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+ proxy_set_header X-Forwarded-Proto https; # 改为 https
+ }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="4-重新nginx"&gt;4. 重新nginx&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo nginx -t &amp;amp;&amp;amp; sudo systemctl reload nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在浏览器输入：https://域名，完成。&lt;/p&gt;</description></item></channel></rss>

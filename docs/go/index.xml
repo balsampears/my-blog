@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go语言 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/go/</link><description>Recent content in Go语言 on 我的个人博客</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 26 May 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go语言 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/docs/go/</link><description>Recent content in Go语言 on 我的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 28 May 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/docs/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
 本篇文章不会介绍基础语法以及细节，仅重点介绍go语言的与众不同的特点以及注意事项。&lt;/p&gt;
 &lt;h2 id="一-指针"&gt;一. 指针&lt;/h2&gt;
 &lt;p&gt;go中存在指针可以直接获取内存地址：&lt;/p&gt;
@@ -308,4 +308,62 @@ type Model struct {
 &lt;/ol&gt;
 &lt;h2 id="四-提问"&gt;四. 提问&lt;/h2&gt;
 &lt;h3 id="1-三色标记法v15中跨堆栈对象指针需要使用写屏障吗"&gt;1. 三色标记法v1.5中，跨堆栈对象指针需要使用写屏障吗？&lt;/h3&gt;
-&lt;p&gt;若存在栈对象a，堆对象b：&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;若存在栈对象a，堆对象b：&lt;/p&gt;</description></item><item><title>https</title><link>https://balsampears.github.io/my-blog/docs/go/7_https/</link><pubDate>Thu, 28 May 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/7_https/</guid><description>&lt;p&gt;https是在http协议基础上，额外添加用于安全校验的TLS层（Transport Layer Security）。&lt;/p&gt;
+&lt;h2 id="一-ssl证书"&gt;一. SSL证书&lt;/h2&gt;
+&lt;p&gt;SSL证书是CA机构颁发给某个网站的证书，证书里存有网站域名、证书有效期，文件包含了SSL证书的公钥。&lt;/p&gt;
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/go/7_https/https_1_%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7.png" width="700"&gt;
+&lt;/figure&gt;
+
+&lt;h3 id="证书准备"&gt;证书准备&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;【浏览器安装】浏览器安装时会携带CA机构颁发的CA证书，颁发的CA证书存有CA公钥。&lt;/li&gt;
+&lt;li&gt;【SSL证书申请与签发】网站生成一个SSL密钥对（云平台可以自动生成），然后向CA机构申请一个SSL证书，CA机构用CA私钥对网站域名、有效期、SSL公钥等信息进行签名，生成SSL证书（*.pem证书文件）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="二-tls握手层"&gt;二. TLS握手层&lt;/h2&gt;
+&lt;h3 id="1证书验证"&gt;1.证书验证&lt;/h3&gt;
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/go/7_https/https_2_%E8%AF%81%E4%B9%A6%E9%AA%8C%E8%AF%81.png" width="700"&gt;
+&lt;/figure&gt;
+
+&lt;ol&gt;
+&lt;li&gt;浏览器访问网站，浏览器向服务器请求网站，服务器返回SSL证书。&lt;/li&gt;
+&lt;li&gt;浏览器用本地的CA证书对SSL证书进行签名验证，成功后说明此证书有效，对网站/服务器验证通过。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="2通信流程"&gt;2.通信流程&lt;/h3&gt;
+&lt;p&gt;浏览器确认了服务器身份，开始进行数据通信。&lt;/p&gt;
+&lt;h4 id="1tlsv12-rsa模式"&gt;（1）TLSv1.2 RSA模式&lt;/h4&gt;
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/go/7_https/https_3_TLSv1.2.png" width="700"&gt;
+&lt;/figure&gt;
+
+&lt;ol&gt;
+&lt;li&gt;浏览器和服务器各生成随机数（client random、server random）并交换。&lt;/li&gt;
+&lt;li&gt;浏览器生成pre-master secret（PMS预主密钥），通过证书公钥加密发给服务器，服务器通过证书私钥解密获得PMS。&lt;/li&gt;
+&lt;li&gt;浏览器和服务器根据PMS+两个随机数推导生成密钥块。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="2tlsv12-ecdhe--tlsv13"&gt;（2）TLSv1.2 ECDHE / TLSv1.3&lt;/h4&gt;
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/go/7_https/https_4_TLSv1.3.png" width="700"&gt;
+&lt;/figure&gt;
+
+&lt;ol&gt;
+&lt;li&gt;浏览器和服务器各生成随机数并交换（v1.2）。&lt;/li&gt;
+&lt;li&gt;浏览器和服务器各自生成ECDH公钥并交换（v1.3同步交换随机数），服务器用SSL私钥签名，浏览器用SSL公钥验签。&lt;/li&gt;
+&lt;li&gt;双方各自通过自己的ECDH私钥和对方的公钥计算获得相同的PMS。&lt;/li&gt;
+&lt;li&gt;浏览器和服务器根据PMS+两个随机数推导生成密钥块&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="三-tls记录层"&gt;三. TLS记录层&lt;/h2&gt;
+&lt;h3 id="加密数据"&gt;加密数据&lt;/h3&gt;
+&lt;p&gt;浏览器和服务器各自计算得到密钥块后，对数据进行加密。&lt;/p&gt;
+&lt;h4 id="1-tlsv12-rsaecdhe"&gt;1. TLSv1.2 （RSA、ECDHE）&lt;/h4&gt;
+&lt;p&gt;密钥块包含加密密钥和MAC密钥，浏览器用MAC密钥对发送数据进行运算获得MAC（消息识别码），服务器用加密密钥对明文+MAC加密获得密文。&lt;/p&gt;
+&lt;h4 id="2-tlsv13"&gt;2. TLSv1.3&lt;/h4&gt;
+&lt;p&gt;密钥块包含加密密钥，浏览器对发送数据进行对称加密，获得密文和AEAD tag，服务器用加密密钥解密和用标签验证完整性。&lt;/p&gt;
+&lt;h2 id="四-特点与总结"&gt;四. 特点与总结&lt;/h2&gt;
+&lt;h3 id="1特点"&gt;1.特点&lt;/h3&gt;
+&lt;p&gt;一次握手，多次复用&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个TCP连接的多个http请求公用一个密钥。&lt;/li&gt;
+&lt;li&gt;断线重连后无需重走证书验证和密钥交换。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2总结"&gt;2.总结&lt;/h3&gt;
+&lt;p&gt;浏览器和服务器通信即可进行安全通信，保证了数据的私密性（加密密钥）、完整性（Mac/AEAD tag）、身份验证（SSL证书）。&lt;/p&gt;
+&lt;h2 id="五-实践"&gt;五. 实践&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/4_%E9%85%8D%E7%BD%AEhttps/"&gt;配置https&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

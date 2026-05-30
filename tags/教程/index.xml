@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>教程 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/tags/%E6%95%99%E7%A8%8B/</link><description>Recent content in 教程 on 我的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 22 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/tags/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>Go基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
+本篇文章不会介绍基础语法以及细节，仅重点介绍go语言的与众不同的特点以及注意事项。&lt;/p&gt;
+&lt;h2 id="一-指针"&gt;一. 指针&lt;/h2&gt;
+&lt;p&gt;go中存在指针可以直接获取内存地址：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;amp;变量 是取地址符&lt;/li&gt;
+&lt;li&gt;*指针变量 是读地址上的具体数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;语法糖&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;stu := &amp;amp;Student{}
+stu.name
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stu是指针变量，但却可以直接取内部的属性，是go进行语法糖包装，实际上是(*stu).name&lt;/p&gt;
+&lt;h2 id="二-引用类型"&gt;二. 引用类型&lt;/h2&gt;
+&lt;p&gt;引用类型只有三类：slice、map、channel，需要使用make()分配内存空间&lt;/p&gt;
+&lt;h3 id="1值类型与引用类型对比"&gt;1.值类型与引用类型对比&lt;/h3&gt;
+&lt;p&gt;int、float、bool等大部分都是值类型；&lt;br&gt;
+仅有slice、map、channel是引用类型；&lt;br&gt;
+注意结构体是值类型，而不像java中是引用类型&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;&lt;br&gt;
+在函数传递数据时，特别注意传递的是值类型还是引用类型，如果是值类型（结构体）要使用指针&lt;/p&gt;
+&lt;h3 id="2slice"&gt;2.slice&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;var arr = [3]int //数组
+var sli = []int //切片
+sli = make([]int, 3) //分配长度为3的空间，分配空间后切片才能使用
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;数组与slice对比：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;数组是值类型，定长不可更改，类似java的[]数组。&lt;/li&gt;
+&lt;li&gt;slice是引用类型，不定长可扩容，通过make()方式创建。类似java的ArrayList。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3map"&gt;3.map&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# keyType、valueType代表数据类型
+stuMap := make(map[keyType]valueType)
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="三结构体"&gt;三.结构体&lt;/h2&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;type Student struct {
+ name string
+ gender int
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Go不是一款面向对象的语言，但面向对象的思想可以用struct结构体实现。&lt;/p&gt;
+&lt;h3 id="1构造函数"&gt;1.构造函数&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;type Student struct{}
+func newStudent() *Student{
+ stu := Student{}
+ //初始化
+ return &amp;amp;stu
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;结构体没有构造函数，但是可以用一个单独函数去创建对象来充当构造函数。&lt;/p&gt;</description></item><item><title>ERC20</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/1_erc20/</link><pubDate>Fri, 10 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/1_erc20/</guid><description>&lt;h2 id="一-eip-与-erc"&gt;一. EIP 与 ERC&lt;/h2&gt;
+&lt;p&gt;EIP（Ethereum Improvement Proposals）是以太坊改进协议，包括从链底层到应用层，从共识算法到智能合约，范围广泛。&lt;br&gt;
+ERC（Ethereum Requests For Commments）是以太坊征求意见，主要针对应用层智能合约的改进，属于EIP的其中一种。&lt;/p&gt;
+&lt;h2 id="二-erc20"&gt;二. ERC20&lt;/h2&gt;
+&lt;p&gt;ERC20是代币标准提案，智能合约中最广泛应用的标准之一，提出于ERC的第20个issue。&lt;br&gt;
+ERC20定义了一系列代币交易的标准接口，使得不同智能合约的代币可以互相调用、互相交易。
+具体标准如下：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;## 事件
+event Transfer(address indexed _from, address indexed _to, uint256 _value);
+event Approval(address indexed _owner, address indexed _spender, uint256 _value);
+
+## 代币属性
+function name() public view returns (string)
+function symbol() public view returns (string)
+function decimals() public view returns (uint8)
+
+## 代币查询
+function totalSupply() public view returns (uint256)
+function balanceOf(address _owner) public view returns (uint256 balance)
+function allowance(address _owner, address _spender) public view returns (uint256 remaining)
+
+## 代币操作：转账和授权
+function transfer(address _to, uint256 _value) public returns (bool success)
+function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
+function approve(address _spender, uint256 _value) public returns (bool success)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;事件+属性+查询+操作：2+3+3+3，一共11个定义。&lt;/p&gt;</description></item><item><title>并发编程</title><link>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link><pubDate>Wed, 29 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid><description>&lt;h2 id="一-简介"&gt;一. 简介&lt;/h2&gt;
+&lt;h3 id="1进程线程协程"&gt;1.进程、线程、协程&lt;/h3&gt;
+&lt;h4 id="简介"&gt;简介&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;进程是操作系统资源分配的基本单位，拥有独立的内存空间。&lt;/li&gt;
+&lt;li&gt;线程是CPU调度的基本单位，共享进程内代码段、数据段、堆并拥有独立的栈，切换线程开销较大。&lt;/li&gt;
+&lt;li&gt;协程是应用层的运行单位，在GO中通过GMP调度，切换协程开销较小。&lt;/li&gt;
+&lt;li&gt;资源分配是指分配内存、IO设备、文件和网络连接、PCB等。&lt;/li&gt;
+&lt;li&gt;CPU调度是CPU对当前时间段哪个线程执行任务的分配。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="关联关系"&gt;关联关系&lt;/h4&gt;
+&lt;p&gt;一个进程可以拥有多个线程，一个线程可以拥有多个协程。&lt;/p&gt;
+&lt;h4 id="线程与协程的异同"&gt;线程与协程的异同&lt;/h4&gt;
+&lt;p&gt;共同点：&lt;br&gt;
+1.共享堆空间，独立栈空间&lt;/p&gt;
+&lt;p&gt;不同点：&lt;br&gt;
+1.线程是内核态切换开销大，协程是用户态切换开销小。&lt;br&gt;
+2.线程是抢占式，一段时间会被操作系统停止并被分配给其他线程。协程是协作式，只能协程阻塞或让出时，GMP调度才会切换到其他协程。（后续go也推出了信号抢占式协程）&lt;/p&gt;
+&lt;h3 id="2并发并行"&gt;2.并发、并行&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;并发 不同的任务，在一个CPU上，分时间段执行。&lt;/li&gt;
+&lt;li&gt;并行 不同的任务，在不同CPU上，同时执行。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="二-goroutine"&gt;二. goroutine&lt;/h2&gt;
+&lt;p&gt;goroutine是go中协程，最小占用4~5KB栈空间，并且创建和销毁成本大幅降低，这是go实现高并发的基础。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;go funcXXX()
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="共享变量"&gt;共享变量&lt;/h3&gt;
+&lt;p&gt;goroutine通过通信来共享内存，而不是加锁来共享内存。&lt;/p&gt;
+&lt;h3 id="gpm"&gt;GPM&lt;/h3&gt;
+&lt;p&gt;GPM是go实现的一套调度机制&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;G 指 Goroutine，go协程&lt;/li&gt;
+&lt;li&gt;P 指 Processor，逻辑处理器，负责将Goroutine任务都分派到不同的M&lt;/li&gt;
+&lt;li&gt;M 指 Machine，操作系统线程，Go程序执行需要映射到对应的M上。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="运作流程"&gt;运作流程&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;一个G被创建时会进入本地队列，本地队列满了进入全局队列。&lt;/li&gt;
+&lt;li&gt;当队列存在G时，调度器通过P在队列中取出G，并且P会绑定一个M，然后在M上执行G。取G时优先从本地队列中取。&lt;/li&gt;
+&lt;li&gt;当G执行完成时，调度器会从队列中取出下一个G继续在绑定的M执行。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;阻塞&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当G被阻塞时，有两种情况。第一种是通道/锁用户态阻塞，P与M不解绑，而是将G挂起，取出下一个G继续执行。&lt;/li&gt;
+&lt;li&gt;第二种是系统级阻塞，P与M解绑，M持续阻塞，调度器重新给P分配一个新的M，然后再取出并执行下一个G。&lt;/li&gt;
+&lt;li&gt;当阻塞的M释放后进入休眠，等待被一个P绑定，并把恢复的G放回队列。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="对应关系"&gt;对应关系&lt;/h4&gt;
+&lt;p&gt;同一时刻下P与M是一对一关系。&lt;br&gt;
+当某个G阻塞时，P会重新创建个M并将其余的G迁移过去。当阻塞的G完成或终止时，旧的M会被回收。
+G与M是多对多关系（M:N）
+多个G可以在一个M上执行。G阻塞入队列时，可以被不同的M取走。&lt;/p&gt;
+&lt;h3 id="常用函数"&gt;常用函数&lt;/h3&gt;
+&lt;h4 id="runtimegosched"&gt;runtime.Gosched()&lt;/h4&gt;
+&lt;p&gt;让出当前占用内存给其他协程&lt;/p&gt;
+&lt;h4 id="runtimegoexit"&gt;runtime.Goexit()&lt;/h4&gt;
+&lt;p&gt;终止当前协程&lt;/p&gt;
+&lt;h4 id="runtimegomaxprocs"&gt;runtime.GOMAXPROCS&lt;/h4&gt;
+&lt;p&gt;使用的CPU最大内核，默认对应当前系统的CPU核心数&lt;/p&gt;
+&lt;h2 id="三-channel"&gt;三. channel&lt;/h2&gt;
+&lt;p&gt;channel是用于goroutine传输数据的通道&lt;/p&gt;
+&lt;h3 id="1-创建"&gt;1. 创建&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;var 变量 chan 数据类型 //指定这个chan可以传输什么数据类型
+变量 = make(chan 数据类型, [容量]) //创建之后需要使用make分配内存，同时可以指定channel最多容纳多少条数据
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2操作"&gt;2.操作&lt;/h3&gt;
+&lt;p&gt;channel操作可以分为：发送、接收、关闭&lt;/p&gt;</description></item><item><title>ERC721 - NFT</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/2_erc721/</link><pubDate>Sun, 12 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/2_erc721/</guid><description>&lt;p&gt;ERC721是非同质化货币，Non-fungible token，简称NFT。&lt;br&gt;
+非同质化货币，每一个代币都是独特的、有区别的、与众不同的。ERC20中类似于法币，我的一块跟你的一块没有区别；ERC721类似于画作，虽然都是画，但是我的画跟你的画内容是完全不一样的。所以ERC721最早从数字藏品开始流行。&lt;br&gt;
+每一个NFT都有一个独特编号，这个编号是&lt;strong&gt;tokenId&lt;/strong&gt;。tokenId格式没有明确的要求，可以是自增ID，也可以是随机数。&lt;/p&gt;
+&lt;h2 id="一-nft组成"&gt;一. NFT组成&lt;/h2&gt;
+&lt;p&gt;NFT由五个部分组成：ERC721、ERC165、ERC721TokenReceiver、ERC721Metadata、Metadata JSON。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ERC721 基础标准&lt;/li&gt;
+&lt;li&gt;ERC165 接口描述标准&lt;/li&gt;
+&lt;li&gt;ERC721TokenReceiver NFT接收标准，所有接收NFT的合约必须实现&lt;/li&gt;
+&lt;li&gt;ERC721Metadata NFT元数据，基本属性&lt;/li&gt;
+&lt;li&gt;Metadata JSON NFT元数据详情属性文件，通常保存在去中心化存储服务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中NFT合约需要实现ERC721、ERC165、ERCMetadata，接收NFT合约需要实现ERC721TokenReceiver，Metadata JSON则放在去中心化存储服务。&lt;/p&gt;
+&lt;h3 id="1erc721"&gt;1.ERC721&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;interface ERC721 {
+ # 事件
+ event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
+
+ event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
+
+ event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
+
+ # 查询
+ function balanceOf(address _owner) external view returns (uint256);
+
+ function ownerOf(uint256 _tokenId) external view returns (address);
+
+ function getApproved(uint256 _tokenId) external view returns (address);
+
+ function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+
+ # 操作：转账与授权
+ function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) external payable;
+
+ function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable;
+
+ function transferFrom(address _from, address _to, uint256 _tokenId) external payable;
+
+ function approve(address _approved, uint256 _tokenId) external payable;
+
+ function setApprovalForAll(address _operator, bool _approved) external;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;查询&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>命令与工具</title><link>https://balsampears.github.io/my-blog/docs/go/3_%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%B7%A5%E5%85%B7/</link><pubDate>Thu, 14 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/3_%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%B7%A5%E5%85%B7/</guid><description>&lt;h2 id="一编译与运行---go-run"&gt;一.编译与运行 - go run&lt;/h2&gt;
+&lt;p&gt;go源代码是跨平台的，编译后的机器码是限制目标平台，直接运行在目标平台。java源代码和编译后的字节码都是跨平台的，运行在JVM。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;go 到处编译，直接运行&lt;/li&gt;
+&lt;li&gt;java 一次编译，到处运行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="1编译并直接运行"&gt;1.编译并直接运行&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;go run main.go&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="2编译并生成可执行文件"&gt;2.编译并生成可执行文件&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;go build &lt;/code&gt; 当前目录编译&lt;/p&gt;
+&lt;h3 id="3编译目标平台"&gt;3.编译目标平台&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 编译到windows 
+GOOS=windows GOARCH=arm64 go build 
+# 编译到linux 
+GOOS=linux GOARCH=arm64 go build 
+# 编译到mac 
+GOOS=darwin GOARCH=arm64 go build 
+
+# 查看所有合法架构
+go tool dist list
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="二包管理---go-install"&gt;二.包管理 - go install&lt;/h2&gt;
+&lt;p&gt;通过go install安装的通常是二进制可执行程序。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 安装
+go install &amp;lt;package&amp;gt;@latest
+
+# 查看可执行程序
+ls $(go env GOPATH)/bin
+
+# 删除可执行程序
+rm $(go env GOPATH)/bin/&amp;lt;tool-name&amp;gt;
+# 删除指定包缓存
+go clean -i &amp;lt;package&amp;gt;
+# 删除模块缓存（下载了源码但没有生成二进制文件可通过这里命令删除）
+go clean -modcache
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="三模块管理---go-mod"&gt;三.模块管理 - go mod&lt;/h2&gt;
+&lt;p&gt;在golang 1.16之后，go默认使用模块化管理。通过创建一个依赖描述文件，自动下载相关库，类似java中的maven、前端的package.json。&lt;/p&gt;</description></item><item><title>ERC1155</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/3_erc1155/</link><pubDate>Mon, 13 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/3_erc1155/</guid><description>&lt;p&gt;ERC1155是多重货币，一个同时支持ERC20和ERC721的合约标准。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对于ERC20，ERC1155可以设置元数据。&lt;/li&gt;
+&lt;li&gt;对于ERC721，ERC1155可以同一个设置多个NFT。&lt;/li&gt;
+&lt;li&gt;相对于两者，ERC1155可以在一个合约中同时发行ERC20和NFT，简化发行多数不同类型代币合约的需求。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在ERC721中存在tokenId，在ERC1155中存在id，标识一种类型货币或者一个NFT。&lt;/p&gt;
+&lt;h2 id="一-erc1155组成"&gt;一. ERC1155组成&lt;/h2&gt;
+&lt;p&gt;ERC1155由四个部分组成：ERC1155、ERC165、ERC1155Received、Metadata JSON。&lt;br&gt;
+对比ERC721，缺少的部分是ERC1155Metadata接口，这是因为将这个接口填的数据放在了Metadata JSON配置文件进行管理。这样做的好处是，在当前合约发行ERC20类型的货币时，每个都可以有自己的name、decimals。&lt;/p&gt;
+&lt;h3 id="1-erc1155"&gt;1. ERC1155&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;interface ERC1155 /* is ERC165 */ {
+ # 事件
+ event TransferSingle(address indexed _operator, address indexed _from, address indexed _to, uint256 _id, uint256 _value);
+
+ event TransferBatch(address indexed _operator, address indexed _from, address indexed _to, uint256[] _ids, uint256[] _values);
+
+ event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
+
+ event URI(string _value, uint256 indexed _id);
+
+ # 查询
+ function balanceOf(address _owner, uint256 _id) external view returns (uint256);
+
+ function balanceOfBatch(address[] calldata _owners, uint256[] calldata _ids) external view returns (uint256[] memory);
+
+ function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+
+ # 操作：转账与授权
+ function safeTransferFrom(address _from, address _to, uint256 _id, uint256 _value, bytes calldata _data) external;
+
+ function safeBatchTransferFrom(address _from, address _to, uint256[] calldata _ids, uint256[] calldata _values, bytes calldata _data) external;
+
+ function setApprovalForAll(address _operator, bool _approved) external;
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;事件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;URI(value,id) 当某个id的前缀地址发生变化时，需要触发这个事件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;查询&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;balanceOf(owner,id) 查询用户在某个id下货币持有多少&lt;/li&gt;
+&lt;li&gt;balanceOfBatch(owners, ids) 查询多个用户在多个id下货币持有多少&lt;/li&gt;
+&lt;li&gt;isApprovedForAll(owner, operator) 查询用户是否给operator用户对所有货币进行了授权&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;操作：转账与授权&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;safeTransferFrom(from, to, id, value, data)&lt;br&gt;
+安全转账，将from用户的第id种货币转移value个给to用户&lt;/li&gt;
+&lt;li&gt;safeBatchTransferFrom(from, to, ids, values, data)&lt;br&gt;
+安全批量转账，将from用户的第ids种货币转移values个给to用户，ids和values一一对应&lt;/li&gt;
+&lt;li&gt;setApprovalForAll(operator, approved)
+将当前用户的所有货币给operator用户，进行全部授权/取消授权&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-erc165"&gt;2. ERC165&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;function supportsInterface(bytes4 interfaceID) external view returns (bool) {
+ return interfaceID == 0x01ffc9a7 || // ERC-165 support
+ interfaceID == type(IERC1155).interfaceId
+ ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;跟 ERC721 合约中的ERC165用法一致&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
+&lt;h3 id="1-安装gin"&gt;1. 安装Gin&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;go mod init &amp;lt;项目名&amp;gt;
+go get -u github.com/gin-gonic/gin
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-启动web服务"&gt;2. 启动Web服务&lt;/h3&gt;
+&lt;p&gt;添加main.go:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;func main(){
+ r := gin.Default()
+ // 定义一个接口
+ r.GET(&amp;#39;/&amp;#39;, func(c *gin.Context){
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+ })
+ // 启动项目，默认8080端口
+ r.Run()
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="二-接口请求与响应"&gt;二. 接口请求与响应&lt;/h2&gt;
+&lt;h3 id="1-restful风格接口"&gt;1. Restful风格接口&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;r.GET(...)
+r.POST(...)
+r.PUT(...)
+r.DELETE(...)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-请求参数"&gt;2. 请求参数&lt;/h3&gt;
+&lt;h4 id="1query入参"&gt;（1）Query入参&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;r.GET(&amp;#34;/get&amp;#34;, func(c *gin.Context){
+ name := c.Query(&amp;#34;name&amp;#34;)
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="2路径入参"&gt;（2）路径入参&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;r.GET(&amp;#39;/get2/:name&amp;#39;, func(c *gin.Context){
+ name := c.Query(&amp;#34;name&amp;#34;)
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;路径入参有两种写法，:name和*name，*name写法获取的值会带个/&lt;/p&gt;
+&lt;h4 id="3表单入参"&gt;（3）表单入参&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;r.POST(&amp;#34;/post&amp;#34;, func(c *gin.Context){
+ name := c.PostForm(&amp;#34;name&amp;#34;)
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="4表单json入参"&gt;（4）表单json入参&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;type Article struct{
+ Title string `json:title`
+ Content string `json:content`
+}
+r.POST(&amp;#34;/post&amp;#34;, func(c *gin.Context){
+ var art Article
+ if err:= c.ShouldBindJSON(&amp;amp;art); err!= nil{
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+ }
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;普通表单可以用ShouldBindQuery，xml可以用ShouldBindXML&lt;/p&gt;</description></item><item><title>EVM存储布局</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/4_evm%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80/</link><pubDate>Tue, 12 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/4_evm%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80/</guid><description>&lt;h2 id="一-空间资源"&gt;一. 空间资源&lt;/h2&gt;
+&lt;p&gt;EVM对空间应用可以视为键值对数据库，读写一次都是以256字节为单位。&lt;br&gt;
+EVM中空间资源划分为四类，有不同的特点和gas消耗。&lt;/p&gt;
+&lt;h3 id="1-永久存储"&gt;1. 永久存储&lt;/h3&gt;
+&lt;p&gt;变量会永久保存在链上，使用方式是成员变量的默认值或storage。&lt;br&gt;
+初始化数据、冷数据启动(第一次交易)、更新数据都需要消耗大量的gas（分别是20000， 2100， 5000）。&lt;/p&gt;
+&lt;p&gt;EVM操作码&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SSTORE(slot, value) 存储&lt;/li&gt;
+&lt;li&gt;SLOAD(slot) 加载&lt;br&gt;
+slot指槽位，后续解释。上面两个操作码gas消耗100。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-瞬时存储"&gt;2. 瞬时存储&lt;/h3&gt;
+&lt;p&gt;仅在一个交易中保存的数据，交易完成后变量会被丢弃，在成员变量前添加transient。
+gas消耗大幅降低。&lt;br&gt;
+通常会在防重入锁中用到，可以节约gas消耗。&lt;/p&gt;
+&lt;p&gt;EVM操作码&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;TSTORE(slot, value) 存储&lt;/li&gt;
+&lt;li&gt;TLOAD(slot) 加载&lt;br&gt;
+上面两个操作码gas消耗100。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-内存"&gt;3. 内存&lt;/h3&gt;
+&lt;p&gt;函数传参、返回值、内部变量等等都需要用到内存。&lt;br&gt;
+通常会在内联汇编（assembly）中用到。&lt;/p&gt;
+&lt;p&gt;EVM操作码&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MSTORE(index, value) 存储&lt;/li&gt;
+&lt;li&gt;MLOAD(index) 加载&lt;br&gt;
+上面两个操作码gas消耗3。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;内联汇编示例&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;let result := add(x, y)
+mstore(0x0, result)
+return(0x0, 32)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="4-栈"&gt;4. 栈&lt;/h3&gt;
+&lt;p&gt;EVM自动进行管理。&lt;/p&gt;
+&lt;h2 id="二-存储布局"&gt;二. 存储布局&lt;/h2&gt;
+&lt;h3 id="1-槽位slot"&gt;1. 槽位Slot&lt;/h3&gt;
+&lt;p&gt;合约的不同数据类型的成员变量，最终会转换为在链上占用一定空间的槽位。&lt;br&gt;
+槽位从0开始，依次递增，每个槽位占用32字节。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;槽位合并&lt;/strong&gt;
+变量和槽位的关系不是一对一，而是多对一。当相邻两个或多个变量的数据类型字节小于等于32字节时，会合并并保存到同一个槽位上。&lt;br&gt;
+举例：存在两个uint8 a, uint8 b，两者合并到槽位0。a在偏移0xFF位置，b在偏移0xFF00位置。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;内联汇编取值
+a := and 0xFF(sload 0x0)
+b := and 0xFF00(sload 0x0)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-定长存储"&gt;2. 定长存储&lt;/h3&gt;
+&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item><item><title>gORM框架</title><link>https://balsampears.github.io/my-blog/docs/go/5_gorm%E6%A1%86%E6%9E%B6/</link><pubDate>Fri, 22 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/5_gorm%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-连接数据库"&gt;一. 连接数据库&lt;/h2&gt;
+&lt;h3 id="1-引入gorm"&gt;1. 引入gORM&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;import (
+ &amp;#34;gorm.io/driver/mysql&amp;#34;
+	&amp;#34;gorm.io/gorm&amp;#34;
+)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;引入gorm，并用&lt;code&gt;go mod tidy&lt;/code&gt;安装&lt;/p&gt;
+&lt;h3 id="2-连接数据库"&gt;2. 连接数据库&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;dsn := &amp;#34;root:root@tcp(127.0.0.1:3307)/test_db?charset=utf8mb4&amp;amp;parseTime=True&amp;amp;loc=Local&amp;#34;
+db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config{})
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;配置表名策略&lt;/strong&gt;
+默认表名是下划线式+表名复数，通过以下方式可以将表名复数去除。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;&amp;amp;gorm.Config{
+ NamingStrategy: schema.NamingStrategy{
+ SingularTable: true, //禁用表名复数形式
+ },
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="二-定义实体"&gt;二. 定义实体&lt;/h2&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;type SysUser struct {
+	UserId uint `gorm:&amp;#34;primaryKey&amp;#34;` # 默认主键列名是Id
+	OrgId uint
+	UserName string
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="1-自定义表名"&gt;1. 自定义表名&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;func (SysUser) TableName() string {
+ return &amp;#34;sys_user&amp;#34;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;默认表名是下划线式+表名复数，只要实现&lt;code&gt;TableName() string&lt;/code&gt;接口即可覆盖。&lt;/p&gt;
+&lt;h3 id="2-默认模型"&gt;2. 默认模型&lt;/h3&gt;
+&lt;p&gt;gorm提供了默认模型给用户模型继承。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;gorm.Model
+type Model struct {
+ ID uint `gorm:&amp;#34;primaryKey&amp;#34;`
+ CreatedAt time.Time
+ UpdatedAt time.Time
+ DeletedAt gorm.DeletedAt `gorm:&amp;#34;index&amp;#34;` # 软删除
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="3-注意事项"&gt;3. 注意事项&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;字段名需要首字母大写，数据库表名下划线式会对应go模型的大写驼峰式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="三-增删改查"&gt;三. 增删改查&lt;/h2&gt;
+&lt;p&gt;gorm对sql操作有两种写法：泛型API和传统API。泛型API可以在编译器就检查出错误，下面主要以泛型API写法为主。&lt;/p&gt;</description></item><item><title>合约创建</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/7_%E5%90%88%E7%BA%A6%E5%88%9B%E5%BB%BA/</link><pubDate>Wed, 13 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/7_%E5%90%88%E7%BA%A6%E5%88%9B%E5%BB%BA/</guid><description>&lt;p&gt;合约创建后返回的合约地址并不是随机的，接下来我们来了解如何获得确定性的合约地址。&lt;/p&gt;
+&lt;h2 id="一create"&gt;一.create&lt;/h2&gt;
+&lt;p&gt;EVM操作码create，采用账户nonce创建合约。&lt;/p&gt;
+&lt;h3 id="1地址计算方式"&gt;1.地址计算方式&lt;/h3&gt;
+&lt;p&gt;创建合约的账户地址和交易记录计算获得hash，取后20个字节
+&lt;code&gt;keccak256(rlp.encode([user address], [user nonce]))[12:]&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="2代码实现"&gt;2.代码实现&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;solidity
+&lt;code&gt;ERC20 erc20 = new ERC20()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;foundry
+&lt;code&gt;forge create xxx.sol:xxx&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3创建合约的账户"&gt;3.创建合约的账户&lt;/h3&gt;
+&lt;p&gt;EOA账户和合约账号创建合约时有一些区别&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;EOA账户
+EOA的nonce每发生一笔交易则会增加一次。&lt;/li&gt;
+&lt;li&gt;合约账户
+合约账户的nonce每创建一个合约会增加一次。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4优缺点"&gt;4.优缺点&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;优点：gas消耗最低&lt;/li&gt;
+&lt;li&gt;缺点：create是solidity最基础的创建合约方式，很难控制合约地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="二create2---合约工厂"&gt;二.create2 - 合约工厂&lt;/h2&gt;
+&lt;p&gt;EVM操作码create2，采用加盐salt创建合约。&lt;br&gt;
+通过合约工厂加盐创建合约，可以保证合约的地址的确定性。&lt;/p&gt;
+&lt;h3 id="1地址计算方式-1"&gt;1.地址计算方式&lt;/h3&gt;
+&lt;p&gt;账户+盐+目标合约部署字节码
+&lt;code&gt;keccak256(0xff + sender + salt + keccak256(init_code))&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="2代码实现-1"&gt;2.代码实现&lt;/h3&gt;
+&lt;p&gt;创建一个合约工厂，通过合约工厂来创建目标合约。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;contract Factory{
+ function create2Animal(uint _salt) public returns (address) {
+ return address(new Animal{salt: _salt}()); //Animal是目标合约
+ }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="3优缺点"&gt;3.优缺点&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;优点：不受账户nonce影响&lt;/li&gt;
+&lt;li&gt;缺点：目标合约的内容不能修改，当目标合约代码修改后，字节码变动，则最终获得的地址也会发生变动。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="三create3---合约工厂部署器"&gt;三.create3 - 合约工厂+部署器&lt;/h2&gt;
+&lt;p&gt;为了防止目标合约代码变动导致最终合约地址发生变动，采用合约工厂+部署器方案。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;合约工厂：create2创建部署器，部署器代码固定，那么生成的合约地址只受salt影响。&lt;/li&gt;
+&lt;li&gt;部署器：create创建目标合约，一次性合约nonce总是0，生成的合约地址只受自身地址影响。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="1地址计算方式-2"&gt;1.地址计算方式&lt;/h3&gt;
+&lt;p&gt;通过create2计算部署器地址 -&amp;gt; 通过create计算目标地址&lt;/p&gt;</description></item><item><title>合约升级</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/8_%E5%90%88%E7%BA%A6%E5%8D%87%E7%BA%A7/</link><pubDate>Wed, 13 May 2026 13:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/8_%E5%90%88%E7%BA%A6%E5%8D%87%E7%BA%A7/</guid><description>&lt;p&gt;实际合约开发过程中，经常会遇到合约代码的功能升级和问题修复的需求，此时就需要做合约升级。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;
+合约升级并不代表链上数据可篡改，合约升级仅支持对合约代码逻辑的修复和增强。&lt;/p&gt;
+&lt;h2 id="一-升级---代理模式"&gt;一. 升级 - 代理模式&lt;/h2&gt;
+&lt;p&gt;业务合约拆分为代理合约和逻辑合约，代理合约负责保存用户数据和映射逻辑，逻辑合约负责逻辑计算。&lt;br&gt;
+核心是使用delegatecall，使用当前合约的上下文，来执行目标合约的逻辑。&lt;/p&gt;
+&lt;p&gt;实现代码参考：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;contract Animal{
+ //逻辑合约
+ address private impl; 
+ //升级逻辑合约
+ function updateTo(address newImpl) public{
+ impl = newImpl;
+ }
+ function eat(){
+ bytes memory data = abi.encodeWithSignature(&amp;#34;eat()&amp;#34;);
+ (bool success, ) = impl.delegatecall(data);
+ require(success, &amp;#34;delegatecall fail&amp;#34;);
+ }
+ function run(){
+ bytes memory data = abi.encodeWithSignature(&amp;#34;run()&amp;#34;);
+ (bool success, ) = impl.delegatecall(data);
+ require(success, &amp;#34;delegatecall fail&amp;#34;);
+ }
+ ...
+}
+
+contract Cat{
+ function eat(){}
+ function run(){}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;新的问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;每个实现函数都需要在代理合约中实现一遍，代码耦合度非常高。同时逻辑合约升级有新的方法，代理合约却无法添加新方法。&lt;/li&gt;
+&lt;li&gt;代理合约跟逻辑合约的成员变量顺序必须一致，否则会出现变量混乱问题。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="二-升级---统一委托"&gt;二. 升级 - 统一委托&lt;/h2&gt;
+&lt;p&gt;在代理合约中，将除了updateTo之外，所有的函数包括fallback和receive全部都映射到逻辑合约。&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Solidity on 我的个人博客</title><link>https://balsampears.github.io/my-blog/tags/solidity/</link><description>Recent content in Solidity on 我的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 20 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/tags/solidity/index.xml" rel="self" type="application/rss+xml"/><item><title>ERC20</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/1_erc20/</link><pubDate>Fri, 10 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/1_erc20/</guid><description>&lt;h2 id="一-eip-与-erc"&gt;一. EIP 与 ERC&lt;/h2&gt;
+&lt;p&gt;EIP（Ethereum Improvement Proposals）是以太坊改进协议，包括从链底层到应用层，从共识算法到智能合约，范围广泛。&lt;br&gt;
+ERC（Ethereum Requests For Commments）是以太坊征求意见，主要针对应用层智能合约的改进，属于EIP的其中一种。&lt;/p&gt;
+&lt;h2 id="二-erc20"&gt;二. ERC20&lt;/h2&gt;
+&lt;p&gt;ERC20是代币标准提案，智能合约中最广泛应用的标准之一，提出于ERC的第20个issue。&lt;br&gt;
+ERC20定义了一系列代币交易的标准接口，使得不同智能合约的代币可以互相调用、互相交易。
+具体标准如下：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;## 事件
+event Transfer(address indexed _from, address indexed _to, uint256 _value);
+event Approval(address indexed _owner, address indexed _spender, uint256 _value);
+
+## 代币属性
+function name() public view returns (string)
+function symbol() public view returns (string)
+function decimals() public view returns (uint8)
+
+## 代币查询
+function totalSupply() public view returns (uint256)
+function balanceOf(address _owner) public view returns (uint256 balance)
+function allowance(address _owner, address _spender) public view returns (uint256 remaining)
+
+## 代币操作：转账和授权
+function transfer(address _to, uint256 _value) public returns (bool success)
+function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
+function approve(address _spender, uint256 _value) public returns (bool success)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;事件+属性+查询+操作：2+3+3+3，一共11个定义。&lt;/p&gt;</description></item><item><title>ERC721 - NFT</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/2_erc721/</link><pubDate>Sun, 12 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/2_erc721/</guid><description>&lt;p&gt;ERC721是非同质化货币，Non-fungible token，简称NFT。&lt;br&gt;
+非同质化货币，每一个代币都是独特的、有区别的、与众不同的。ERC20中类似于法币，我的一块跟你的一块没有区别；ERC721类似于画作，虽然都是画，但是我的画跟你的画内容是完全不一样的。所以ERC721最早从数字藏品开始流行。&lt;br&gt;
+每一个NFT都有一个独特编号，这个编号是&lt;strong&gt;tokenId&lt;/strong&gt;。tokenId格式没有明确的要求，可以是自增ID，也可以是随机数。&lt;/p&gt;
+&lt;h2 id="一-nft组成"&gt;一. NFT组成&lt;/h2&gt;
+&lt;p&gt;NFT由五个部分组成：ERC721、ERC165、ERC721TokenReceiver、ERC721Metadata、Metadata JSON。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ERC721 基础标准&lt;/li&gt;
+&lt;li&gt;ERC165 接口描述标准&lt;/li&gt;
+&lt;li&gt;ERC721TokenReceiver NFT接收标准，所有接收NFT的合约必须实现&lt;/li&gt;
+&lt;li&gt;ERC721Metadata NFT元数据，基本属性&lt;/li&gt;
+&lt;li&gt;Metadata JSON NFT元数据详情属性文件，通常保存在去中心化存储服务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中NFT合约需要实现ERC721、ERC165、ERCMetadata，接收NFT合约需要实现ERC721TokenReceiver，Metadata JSON则放在去中心化存储服务。&lt;/p&gt;
+&lt;h3 id="1erc721"&gt;1.ERC721&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;interface ERC721 {
+ # 事件
+ event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
+
+ event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
+
+ event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
+
+ # 查询
+ function balanceOf(address _owner) external view returns (uint256);
+
+ function ownerOf(uint256 _tokenId) external view returns (address);
+
+ function getApproved(uint256 _tokenId) external view returns (address);
+
+ function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+
+ # 操作：转账与授权
+ function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) external payable;
+
+ function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable;
+
+ function transferFrom(address _from, address _to, uint256 _tokenId) external payable;
+
+ function approve(address _approved, uint256 _tokenId) external payable;
+
+ function setApprovalForAll(address _operator, bool _approved) external;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;查询&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>ERC1155</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/3_erc1155/</link><pubDate>Mon, 13 Apr 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/3_erc1155/</guid><description>&lt;p&gt;ERC1155是多重货币，一个同时支持ERC20和ERC721的合约标准。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对于ERC20，ERC1155可以设置元数据。&lt;/li&gt;
+&lt;li&gt;对于ERC721，ERC1155可以同一个设置多个NFT。&lt;/li&gt;
+&lt;li&gt;相对于两者，ERC1155可以在一个合约中同时发行ERC20和NFT，简化发行多数不同类型代币合约的需求。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在ERC721中存在tokenId，在ERC1155中存在id，标识一种类型货币或者一个NFT。&lt;/p&gt;
+&lt;h2 id="一-erc1155组成"&gt;一. ERC1155组成&lt;/h2&gt;
+&lt;p&gt;ERC1155由四个部分组成：ERC1155、ERC165、ERC1155Received、Metadata JSON。&lt;br&gt;
+对比ERC721，缺少的部分是ERC1155Metadata接口，这是因为将这个接口填的数据放在了Metadata JSON配置文件进行管理。这样做的好处是，在当前合约发行ERC20类型的货币时，每个都可以有自己的name、decimals。&lt;/p&gt;
+&lt;h3 id="1-erc1155"&gt;1. ERC1155&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;interface ERC1155 /* is ERC165 */ {
+ # 事件
+ event TransferSingle(address indexed _operator, address indexed _from, address indexed _to, uint256 _id, uint256 _value);
+
+ event TransferBatch(address indexed _operator, address indexed _from, address indexed _to, uint256[] _ids, uint256[] _values);
+
+ event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);
+
+ event URI(string _value, uint256 indexed _id);
+
+ # 查询
+ function balanceOf(address _owner, uint256 _id) external view returns (uint256);
+
+ function balanceOfBatch(address[] calldata _owners, uint256[] calldata _ids) external view returns (uint256[] memory);
+
+ function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+
+ # 操作：转账与授权
+ function safeTransferFrom(address _from, address _to, uint256 _id, uint256 _value, bytes calldata _data) external;
+
+ function safeBatchTransferFrom(address _from, address _to, uint256[] calldata _ids, uint256[] calldata _values, bytes calldata _data) external;
+
+ function setApprovalForAll(address _operator, bool _approved) external;
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;事件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;URI(value,id) 当某个id的前缀地址发生变化时，需要触发这个事件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;查询&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;balanceOf(owner,id) 查询用户在某个id下货币持有多少&lt;/li&gt;
+&lt;li&gt;balanceOfBatch(owners, ids) 查询多个用户在多个id下货币持有多少&lt;/li&gt;
+&lt;li&gt;isApprovedForAll(owner, operator) 查询用户是否给operator用户对所有货币进行了授权&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;操作：转账与授权&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;safeTransferFrom(from, to, id, value, data)&lt;br&gt;
+安全转账，将from用户的第id种货币转移value个给to用户&lt;/li&gt;
+&lt;li&gt;safeBatchTransferFrom(from, to, ids, values, data)&lt;br&gt;
+安全批量转账，将from用户的第ids种货币转移values个给to用户，ids和values一一对应&lt;/li&gt;
+&lt;li&gt;setApprovalForAll(operator, approved)
+将当前用户的所有货币给operator用户，进行全部授权/取消授权&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-erc165"&gt;2. ERC165&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;function supportsInterface(bytes4 interfaceID) external view returns (bool) {
+ return interfaceID == 0x01ffc9a7 || // ERC-165 support
+ interfaceID == type(IERC1155).interfaceId
+ ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;跟 ERC721 合约中的ERC165用法一致&lt;/p&gt;</description></item><item><title>EVM存储布局</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/4_evm%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80/</link><pubDate>Tue, 12 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/4_evm%E5%AD%98%E5%82%A8%E5%B8%83%E5%B1%80/</guid><description>&lt;h2 id="一-空间资源"&gt;一. 空间资源&lt;/h2&gt;
+&lt;p&gt;EVM对空间应用可以视为键值对数据库，读写一次都是以256字节为单位。&lt;br&gt;
+EVM中空间资源划分为四类，有不同的特点和gas消耗。&lt;/p&gt;
+&lt;h3 id="1-永久存储"&gt;1. 永久存储&lt;/h3&gt;
+&lt;p&gt;变量会永久保存在链上，使用方式是成员变量的默认值或storage。&lt;br&gt;
+初始化数据、冷数据启动(第一次交易)、更新数据都需要消耗大量的gas（分别是20000， 2100， 5000）。&lt;/p&gt;
+&lt;p&gt;EVM操作码&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SSTORE(slot, value) 存储&lt;/li&gt;
+&lt;li&gt;SLOAD(slot) 加载&lt;br&gt;
+slot指槽位，后续解释。上面两个操作码gas消耗100。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-瞬时存储"&gt;2. 瞬时存储&lt;/h3&gt;
+&lt;p&gt;仅在一个交易中保存的数据，交易完成后变量会被丢弃，在成员变量前添加transient。
+gas消耗大幅降低。&lt;br&gt;
+通常会在防重入锁中用到，可以节约gas消耗。&lt;/p&gt;
+&lt;p&gt;EVM操作码&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;TSTORE(slot, value) 存储&lt;/li&gt;
+&lt;li&gt;TLOAD(slot) 加载&lt;br&gt;
+上面两个操作码gas消耗100。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-内存"&gt;3. 内存&lt;/h3&gt;
+&lt;p&gt;函数传参、返回值、内部变量等等都需要用到内存。&lt;br&gt;
+通常会在内联汇编（assembly）中用到。&lt;/p&gt;
+&lt;p&gt;EVM操作码&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MSTORE(index, value) 存储&lt;/li&gt;
+&lt;li&gt;MLOAD(index) 加载&lt;br&gt;
+上面两个操作码gas消耗3。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;内联汇编示例&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;let result := add(x, y)
+mstore(0x0, result)
+return(0x0, 32)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="4-栈"&gt;4. 栈&lt;/h3&gt;
+&lt;p&gt;EVM自动进行管理。&lt;/p&gt;
+&lt;h2 id="二-存储布局"&gt;二. 存储布局&lt;/h2&gt;
+&lt;h3 id="1-槽位slot"&gt;1. 槽位Slot&lt;/h3&gt;
+&lt;p&gt;合约的不同数据类型的成员变量，最终会转换为在链上占用一定空间的槽位。&lt;br&gt;
+槽位从0开始，依次递增，每个槽位占用32字节。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;槽位合并&lt;/strong&gt;
+变量和槽位的关系不是一对一，而是多对一。当相邻两个或多个变量的数据类型字节小于等于32字节时，会合并并保存到同一个槽位上。&lt;br&gt;
+举例：存在两个uint8 a, uint8 b，两者合并到槽位0。a在偏移0xFF位置，b在偏移0xFF00位置。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;内联汇编取值
+a := and 0xFF(sload 0x0)
+b := and 0xFF00(sload 0x0)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-定长存储"&gt;2. 定长存储&lt;/h3&gt;
+&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item><item><title>Gas优化</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/5_gas%E4%BC%98%E5%8C%96/</link><pubDate>Wed, 20 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/5_gas%E4%BC%98%E5%8C%96/</guid><description>&lt;h2 id="一-gas评估"&gt;一. Gas评估&lt;/h2&gt;
+&lt;h3 id="1-foundry测试"&gt;1. foundry测试&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;forge test --gas-report&lt;/code&gt;会在测试时同步打印每个方法消耗的Gas。&lt;/p&gt;
+&lt;h3 id="2-foundry评估文件"&gt;2. foundry评估文件&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;forge snaphot&lt;/code&gt;会生成Gas消耗报告文件，额外添加&lt;code&gt;--check&lt;/code&gt;参数可以比较两次gas报告的变化。&lt;/p&gt;
+&lt;h3 id="3-rpc模拟交易"&gt;3. RPC模拟交易&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;eth_estimateGas&lt;/code&gt;会RPC模拟一次交易，并返回Gas消耗多少，估算值会随状态变化而不精确。&lt;/p&gt;
+&lt;h3 id="4-viem模拟交易"&gt;4. Viem模拟交易&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;publicClient.estimateGas&lt;/code&gt;viem.js中对rpc方法的封装。&lt;/p&gt;
+&lt;h2 id="二-gas优化"&gt;二. Gas优化&lt;/h2&gt;
+&lt;p&gt;口诀：&lt;strong&gt;合瞬妙无组，存小链多树&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id="1-槽位合并"&gt;1. 槽位合并&lt;/h3&gt;
+&lt;p&gt;相邻的两个成员变量占用字节大小小于32字节时可以进行合并，减少占用storage永久存储来节省gas。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;//共占用9字节，共用一个槽位
+bool isAdmin;
+uint40 time;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-瞬时存储"&gt;2. 瞬时存储&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;transient&lt;/code&gt;瞬时存储替代永久存储，TSTORE/TLOAD消耗100gas。&lt;/p&gt;
+&lt;h3 id="3-常量与immutable"&gt;3. 常量与immutable&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;constant/immutable&lt;/code&gt;常量存储，仅会在部署合约时消耗一次。&lt;/p&gt;
+&lt;h3 id="4-禁止无限增长数组"&gt;4. 禁止无限增长数组&lt;/h3&gt;
+&lt;p&gt;禁止使用无限制增长元素的数据，因为遍历时会消耗大量gas，直到gas超过限制会导致函数完全无法使用。&lt;br&gt;
+考虑使用mapping代替数据。&lt;/p&gt;
+&lt;h3 id="5-存储转移"&gt;5. 存储转移&lt;/h3&gt;
+&lt;p&gt;将链上存储的数据转移到链下存储、ipfs存储，减少用户上传数据时消耗的gas。&lt;/p&gt;
+&lt;h3 id="6-最小代理部署"&gt;6. 最小代理部署&lt;/h3&gt;
+&lt;p&gt;先部署可复用的合约做逻辑，再用最小代理工厂部署代理合约，代理合约转发调用逻辑合约的逻辑。&lt;br&gt;
+&lt;a href="https://balsampears.github.io/my-blog/docs/web3/solidity/7_%E5%90%88%E7%BA%A6%E5%88%9B%E5%BB%BA/#四最小代理工厂"&gt;最小代理工厂&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="7-链表代替数组"&gt;7. 链表代替数组&lt;/h3&gt;
+&lt;p&gt;（1）无序数组&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 定义链表
+mapping(address=&amp;gt;address) private users;
+mapping(address=&amp;gt;User) private userInfos;
+# 定义起始点
+address private constant HEAD = address(0);
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;新增&lt;br&gt;
+在头部插入数据，更新HEAD指向当前地址。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;删除（优化）
+传入待删除元素的上一个元素，可以指定删除某个位置的元素达到O(1)的时间复杂度。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;（2）有序数组&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;新增（优化）&lt;br&gt;
+新增时需要保持数据有序性，可以链下遍历，然后传入上一个元素位置，则链上只需做校验和插入即可。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;更新（优化）&lt;br&gt;
+同时传入应该删除的上一个和应该插入的上一个元素，链上做校验、删除、新增。&lt;/p&gt;</description></item><item><title>合约创建</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/7_%E5%90%88%E7%BA%A6%E5%88%9B%E5%BB%BA/</link><pubDate>Wed, 13 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/7_%E5%90%88%E7%BA%A6%E5%88%9B%E5%BB%BA/</guid><description>&lt;p&gt;合约创建后返回的合约地址并不是随机的，接下来我们来了解如何获得确定性的合约地址。&lt;/p&gt;
+&lt;h2 id="一create"&gt;一.create&lt;/h2&gt;
+&lt;p&gt;EVM操作码create，采用账户nonce创建合约。&lt;/p&gt;
+&lt;h3 id="1地址计算方式"&gt;1.地址计算方式&lt;/h3&gt;
+&lt;p&gt;创建合约的账户地址和交易记录计算获得hash，取后20个字节
+&lt;code&gt;keccak256(rlp.encode([user address], [user nonce]))[12:]&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="2代码实现"&gt;2.代码实现&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;solidity
+&lt;code&gt;ERC20 erc20 = new ERC20()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;foundry
+&lt;code&gt;forge create xxx.sol:xxx&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3创建合约的账户"&gt;3.创建合约的账户&lt;/h3&gt;
+&lt;p&gt;EOA账户和合约账号创建合约时有一些区别&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;EOA账户
+EOA的nonce每发生一笔交易则会增加一次。&lt;/li&gt;
+&lt;li&gt;合约账户
+合约账户的nonce每创建一个合约会增加一次。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4优缺点"&gt;4.优缺点&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;优点：gas消耗最低&lt;/li&gt;
+&lt;li&gt;缺点：create是solidity最基础的创建合约方式，很难控制合约地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="二create2---合约工厂"&gt;二.create2 - 合约工厂&lt;/h2&gt;
+&lt;p&gt;EVM操作码create2，采用加盐salt创建合约。&lt;br&gt;
+通过合约工厂加盐创建合约，可以保证合约的地址的确定性。&lt;/p&gt;
+&lt;h3 id="1地址计算方式-1"&gt;1.地址计算方式&lt;/h3&gt;
+&lt;p&gt;账户+盐+目标合约部署字节码
+&lt;code&gt;keccak256(0xff + sender + salt + keccak256(init_code))&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="2代码实现-1"&gt;2.代码实现&lt;/h3&gt;
+&lt;p&gt;创建一个合约工厂，通过合约工厂来创建目标合约。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;contract Factory{
+ function create2Animal(uint _salt) public returns (address) {
+ return address(new Animal{salt: _salt}()); //Animal是目标合约
+ }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="3优缺点"&gt;3.优缺点&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;优点：不受账户nonce影响&lt;/li&gt;
+&lt;li&gt;缺点：目标合约的内容不能修改，当目标合约代码修改后，字节码变动，则最终获得的地址也会发生变动。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="三create3---合约工厂部署器"&gt;三.create3 - 合约工厂+部署器&lt;/h2&gt;
+&lt;p&gt;为了防止目标合约代码变动导致最终合约地址发生变动，采用合约工厂+部署器方案。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;合约工厂：create2创建部署器，部署器代码固定，那么生成的合约地址只受salt影响。&lt;/li&gt;
+&lt;li&gt;部署器：create创建目标合约，一次性合约nonce总是0，生成的合约地址只受自身地址影响。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="1地址计算方式-2"&gt;1.地址计算方式&lt;/h3&gt;
+&lt;p&gt;通过create2计算部署器地址 -&amp;gt; 通过create计算目标地址&lt;/p&gt;</description></item><item><title>合约升级</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/8_%E5%90%88%E7%BA%A6%E5%8D%87%E7%BA%A7/</link><pubDate>Wed, 13 May 2026 13:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/8_%E5%90%88%E7%BA%A6%E5%8D%87%E7%BA%A7/</guid><description>&lt;p&gt;实际合约开发过程中，经常会遇到合约代码的功能升级和问题修复的需求，此时就需要做合约升级。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;
+合约升级并不代表链上数据可篡改，合约升级仅支持对合约代码逻辑的修复和增强。&lt;/p&gt;
+&lt;h2 id="一-升级---代理模式"&gt;一. 升级 - 代理模式&lt;/h2&gt;
+&lt;p&gt;业务合约拆分为代理合约和逻辑合约，代理合约负责保存用户数据和映射逻辑，逻辑合约负责逻辑计算。&lt;br&gt;
+核心是使用delegatecall，使用当前合约的上下文，来执行目标合约的逻辑。&lt;/p&gt;
+&lt;p&gt;实现代码参考：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;contract Animal{
+ //逻辑合约
+ address private impl; 
+ //升级逻辑合约
+ function updateTo(address newImpl) public{
+ impl = newImpl;
+ }
+ function eat(){
+ bytes memory data = abi.encodeWithSignature(&amp;#34;eat()&amp;#34;);
+ (bool success, ) = impl.delegatecall(data);
+ require(success, &amp;#34;delegatecall fail&amp;#34;);
+ }
+ function run(){
+ bytes memory data = abi.encodeWithSignature(&amp;#34;run()&amp;#34;);
+ (bool success, ) = impl.delegatecall(data);
+ require(success, &amp;#34;delegatecall fail&amp;#34;);
+ }
+ ...
+}
+
+contract Cat{
+ function eat(){}
+ function run(){}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;新的问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;每个实现函数都需要在代理合约中实现一遍，代码耦合度非常高。同时逻辑合约升级有新的方法，代理合约却无法添加新方法。&lt;/li&gt;
+&lt;li&gt;代理合约跟逻辑合约的成员变量顺序必须一致，否则会出现变量混乱问题。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="二-升级---统一委托"&gt;二. 升级 - 统一委托&lt;/h2&gt;
+&lt;p&gt;在代理合约中，将除了updateTo之外，所有的函数包括fallback和receive全部都映射到逻辑合约。&lt;/p&gt;</description></item></channel></rss>

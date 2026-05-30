@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go on 我的个人博客</title><link>https://balsampears.github.io/my-blog/tags/go/</link><description>Recent content in Go on 我的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 26 May 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
+本篇文章不会介绍基础语法以及细节，仅重点介绍go语言的与众不同的特点以及注意事项。&lt;/p&gt;
+&lt;h2 id="一-指针"&gt;一. 指针&lt;/h2&gt;
+&lt;p&gt;go中存在指针可以直接获取内存地址：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;amp;变量 是取地址符&lt;/li&gt;
+&lt;li&gt;*指针变量 是读地址上的具体数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;语法糖&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;stu := &amp;amp;Student{}
+stu.name
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stu是指针变量，但却可以直接取内部的属性，是go进行语法糖包装，实际上是(*stu).name&lt;/p&gt;
+&lt;h2 id="二-引用类型"&gt;二. 引用类型&lt;/h2&gt;
+&lt;p&gt;引用类型只有三类：slice、map、channel，需要使用make()分配内存空间&lt;/p&gt;
+&lt;h3 id="1值类型与引用类型对比"&gt;1.值类型与引用类型对比&lt;/h3&gt;
+&lt;p&gt;int、float、bool等大部分都是值类型；&lt;br&gt;
+仅有slice、map、channel是引用类型；&lt;br&gt;
+注意结构体是值类型，而不像java中是引用类型&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;&lt;br&gt;
+在函数传递数据时，特别注意传递的是值类型还是引用类型，如果是值类型（结构体）要使用指针&lt;/p&gt;
+&lt;h3 id="2slice"&gt;2.slice&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;var arr = [3]int //数组
+var sli = []int //切片
+sli = make([]int, 3) //分配长度为3的空间，分配空间后切片才能使用
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;数组与slice对比：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;数组是值类型，定长不可更改，类似java的[]数组。&lt;/li&gt;
+&lt;li&gt;slice是引用类型，不定长可扩容，通过make()方式创建。类似java的ArrayList。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3map"&gt;3.map&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# keyType、valueType代表数据类型
+stuMap := make(map[keyType]valueType)
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="三结构体"&gt;三.结构体&lt;/h2&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;type Student struct {
+ name string
+ gender int
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Go不是一款面向对象的语言，但面向对象的思想可以用struct结构体实现。&lt;/p&gt;
+&lt;h3 id="1构造函数"&gt;1.构造函数&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;type Student struct{}
+func newStudent() *Student{
+ stu := Student{}
+ //初始化
+ return &amp;amp;stu
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;结构体没有构造函数，但是可以用一个单独函数去创建对象来充当构造函数。&lt;/p&gt;</description></item><item><title>并发编程</title><link>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link><pubDate>Wed, 29 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid><description>&lt;h2 id="一-简介"&gt;一. 简介&lt;/h2&gt;
+&lt;h3 id="1进程线程协程"&gt;1.进程、线程、协程&lt;/h3&gt;
+&lt;h4 id="简介"&gt;简介&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;进程是操作系统资源分配的基本单位，拥有独立的内存空间。&lt;/li&gt;
+&lt;li&gt;线程是CPU调度的基本单位，共享进程内代码段、数据段、堆并拥有独立的栈，切换线程开销较大。&lt;/li&gt;
+&lt;li&gt;协程是应用层的运行单位，在GO中通过GMP调度，切换协程开销较小。&lt;/li&gt;
+&lt;li&gt;资源分配是指分配内存、IO设备、文件和网络连接、PCB等。&lt;/li&gt;
+&lt;li&gt;CPU调度是CPU对当前时间段哪个线程执行任务的分配。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="关联关系"&gt;关联关系&lt;/h4&gt;
+&lt;p&gt;一个进程可以拥有多个线程，一个线程可以拥有多个协程。&lt;/p&gt;
+&lt;h4 id="线程与协程的异同"&gt;线程与协程的异同&lt;/h4&gt;
+&lt;p&gt;共同点：&lt;br&gt;
+1.共享堆空间，独立栈空间&lt;/p&gt;
+&lt;p&gt;不同点：&lt;br&gt;
+1.线程是内核态切换开销大，协程是用户态切换开销小。&lt;br&gt;
+2.线程是抢占式，一段时间会被操作系统停止并被分配给其他线程。协程是协作式，只能协程阻塞或让出时，GMP调度才会切换到其他协程。（后续go也推出了信号抢占式协程）&lt;/p&gt;
+&lt;h3 id="2并发并行"&gt;2.并发、并行&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;并发 不同的任务，在一个CPU上，分时间段执行。&lt;/li&gt;
+&lt;li&gt;并行 不同的任务，在不同CPU上，同时执行。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="二-goroutine"&gt;二. goroutine&lt;/h2&gt;
+&lt;p&gt;goroutine是go中协程，最小占用4~5KB栈空间，并且创建和销毁成本大幅降低，这是go实现高并发的基础。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;go funcXXX()
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="共享变量"&gt;共享变量&lt;/h3&gt;
+&lt;p&gt;goroutine通过通信来共享内存，而不是加锁来共享内存。&lt;/p&gt;
+&lt;h3 id="gpm"&gt;GPM&lt;/h3&gt;
+&lt;p&gt;GPM是go实现的一套调度机制&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;G 指 Goroutine，go协程&lt;/li&gt;
+&lt;li&gt;P 指 Processor，逻辑处理器，负责将Goroutine任务都分派到不同的M&lt;/li&gt;
+&lt;li&gt;M 指 Machine，操作系统线程，Go程序执行需要映射到对应的M上。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="运作流程"&gt;运作流程&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;一个G被创建时会进入本地队列，本地队列满了进入全局队列。&lt;/li&gt;
+&lt;li&gt;当队列存在G时，调度器通过P在队列中取出G，并且P会绑定一个M，然后在M上执行G。取G时优先从本地队列中取。&lt;/li&gt;
+&lt;li&gt;当G执行完成时，调度器会从队列中取出下一个G继续在绑定的M执行。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;阻塞&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当G被阻塞时，有两种情况。第一种是通道/锁用户态阻塞，P与M不解绑，而是将G挂起，取出下一个G继续执行。&lt;/li&gt;
+&lt;li&gt;第二种是系统级阻塞，P与M解绑，M持续阻塞，调度器重新给P分配一个新的M，然后再取出并执行下一个G。&lt;/li&gt;
+&lt;li&gt;当阻塞的M释放后进入休眠，等待被一个P绑定，并把恢复的G放回队列。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="对应关系"&gt;对应关系&lt;/h4&gt;
+&lt;p&gt;同一时刻下P与M是一对一关系。&lt;br&gt;
+当某个G阻塞时，P会重新创建个M并将其余的G迁移过去。当阻塞的G完成或终止时，旧的M会被回收。
+G与M是多对多关系（M:N）
+多个G可以在一个M上执行。G阻塞入队列时，可以被不同的M取走。&lt;/p&gt;
+&lt;h3 id="常用函数"&gt;常用函数&lt;/h3&gt;
+&lt;h4 id="runtimegosched"&gt;runtime.Gosched()&lt;/h4&gt;
+&lt;p&gt;让出当前占用内存给其他协程&lt;/p&gt;
+&lt;h4 id="runtimegoexit"&gt;runtime.Goexit()&lt;/h4&gt;
+&lt;p&gt;终止当前协程&lt;/p&gt;
+&lt;h4 id="runtimegomaxprocs"&gt;runtime.GOMAXPROCS&lt;/h4&gt;
+&lt;p&gt;使用的CPU最大内核，默认对应当前系统的CPU核心数&lt;/p&gt;
+&lt;h2 id="三-channel"&gt;三. channel&lt;/h2&gt;
+&lt;p&gt;channel是用于goroutine传输数据的通道&lt;/p&gt;
+&lt;h3 id="1-创建"&gt;1. 创建&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;var 变量 chan 数据类型 //指定这个chan可以传输什么数据类型
+变量 = make(chan 数据类型, [容量]) //创建之后需要使用make分配内存，同时可以指定channel最多容纳多少条数据
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2操作"&gt;2.操作&lt;/h3&gt;
+&lt;p&gt;channel操作可以分为：发送、接收、关闭&lt;/p&gt;</description></item><item><title>命令与工具</title><link>https://balsampears.github.io/my-blog/docs/go/3_%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%B7%A5%E5%85%B7/</link><pubDate>Thu, 14 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/3_%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%B7%A5%E5%85%B7/</guid><description>&lt;h2 id="一编译与运行---go-run"&gt;一.编译与运行 - go run&lt;/h2&gt;
+&lt;p&gt;go源代码是跨平台的，编译后的机器码是限制目标平台，直接运行在目标平台。java源代码和编译后的字节码都是跨平台的，运行在JVM。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;go 到处编译，直接运行&lt;/li&gt;
+&lt;li&gt;java 一次编译，到处运行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="1编译并直接运行"&gt;1.编译并直接运行&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;go run main.go&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="2编译并生成可执行文件"&gt;2.编译并生成可执行文件&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;go build &lt;/code&gt; 当前目录编译&lt;/p&gt;
+&lt;h3 id="3编译目标平台"&gt;3.编译目标平台&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 编译到windows 
+GOOS=windows GOARCH=arm64 go build 
+# 编译到linux 
+GOOS=linux GOARCH=arm64 go build 
+# 编译到mac 
+GOOS=darwin GOARCH=arm64 go build 
+
+# 查看所有合法架构
+go tool dist list
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="二包管理---go-install"&gt;二.包管理 - go install&lt;/h2&gt;
+&lt;p&gt;通过go install安装的通常是二进制可执行程序。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 安装
+go install &amp;lt;package&amp;gt;@latest
+
+# 查看可执行程序
+ls $(go env GOPATH)/bin
+
+# 删除可执行程序
+rm $(go env GOPATH)/bin/&amp;lt;tool-name&amp;gt;
+# 删除指定包缓存
+go clean -i &amp;lt;package&amp;gt;
+# 删除模块缓存（下载了源码但没有生成二进制文件可通过这里命令删除）
+go clean -modcache
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="三模块管理---go-mod"&gt;三.模块管理 - go mod&lt;/h2&gt;
+&lt;p&gt;在golang 1.16之后，go默认使用模块化管理。通过创建一个依赖描述文件，自动下载相关库，类似java中的maven、前端的package.json。&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
+&lt;h3 id="1-安装gin"&gt;1. 安装Gin&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;go mod init &amp;lt;项目名&amp;gt;
+go get -u github.com/gin-gonic/gin
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-启动web服务"&gt;2. 启动Web服务&lt;/h3&gt;
+&lt;p&gt;添加main.go:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;func main(){
+ r := gin.Default()
+ // 定义一个接口
+ r.GET(&amp;#39;/&amp;#39;, func(c *gin.Context){
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+ })
+ // 启动项目，默认8080端口
+ r.Run()
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="二-接口请求与响应"&gt;二. 接口请求与响应&lt;/h2&gt;
+&lt;h3 id="1-restful风格接口"&gt;1. Restful风格接口&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;r.GET(...)
+r.POST(...)
+r.PUT(...)
+r.DELETE(...)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-请求参数"&gt;2. 请求参数&lt;/h3&gt;
+&lt;h4 id="1query入参"&gt;（1）Query入参&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;r.GET(&amp;#34;/get&amp;#34;, func(c *gin.Context){
+ name := c.Query(&amp;#34;name&amp;#34;)
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="2路径入参"&gt;（2）路径入参&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;r.GET(&amp;#39;/get2/:name&amp;#39;, func(c *gin.Context){
+ name := c.Query(&amp;#34;name&amp;#34;)
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;路径入参有两种写法，:name和*name，*name写法获取的值会带个/&lt;/p&gt;
+&lt;h4 id="3表单入参"&gt;（3）表单入参&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;r.POST(&amp;#34;/post&amp;#34;, func(c *gin.Context){
+ name := c.PostForm(&amp;#34;name&amp;#34;)
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id="4表单json入参"&gt;（4）表单json入参&lt;/h4&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;type Article struct{
+ Title string `json:title`
+ Content string `json:content`
+}
+r.POST(&amp;#34;/post&amp;#34;, func(c *gin.Context){
+ var art Article
+ if err:= c.ShouldBindJSON(&amp;amp;art); err!= nil{
+ c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
+ }
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;普通表单可以用ShouldBindQuery，xml可以用ShouldBindXML&lt;/p&gt;</description></item><item><title>gORM框架</title><link>https://balsampears.github.io/my-blog/docs/go/5_gorm%E6%A1%86%E6%9E%B6/</link><pubDate>Fri, 22 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/5_gorm%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-连接数据库"&gt;一. 连接数据库&lt;/h2&gt;
+&lt;h3 id="1-引入gorm"&gt;1. 引入gORM&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;import (
+ &amp;#34;gorm.io/driver/mysql&amp;#34;
+	&amp;#34;gorm.io/gorm&amp;#34;
+)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;引入gorm，并用&lt;code&gt;go mod tidy&lt;/code&gt;安装&lt;/p&gt;
+&lt;h3 id="2-连接数据库"&gt;2. 连接数据库&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;dsn := &amp;#34;root:root@tcp(127.0.0.1:3307)/test_db?charset=utf8mb4&amp;amp;parseTime=True&amp;amp;loc=Local&amp;#34;
+db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config{})
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;配置表名策略&lt;/strong&gt;
+默认表名是下划线式+表名复数，通过以下方式可以将表名复数去除。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;&amp;amp;gorm.Config{
+ NamingStrategy: schema.NamingStrategy{
+ SingularTable: true, //禁用表名复数形式
+ },
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="二-定义实体"&gt;二. 定义实体&lt;/h2&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;type SysUser struct {
+	UserId uint `gorm:&amp;#34;primaryKey&amp;#34;` # 默认主键列名是Id
+	OrgId uint
+	UserName string
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="1-自定义表名"&gt;1. 自定义表名&lt;/h3&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;func (SysUser) TableName() string {
+ return &amp;#34;sys_user&amp;#34;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;默认表名是下划线式+表名复数，只要实现&lt;code&gt;TableName() string&lt;/code&gt;接口即可覆盖。&lt;/p&gt;
+&lt;h3 id="2-默认模型"&gt;2. 默认模型&lt;/h3&gt;
+&lt;p&gt;gorm提供了默认模型给用户模型继承。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;gorm.Model
+type Model struct {
+ ID uint `gorm:&amp;#34;primaryKey&amp;#34;`
+ CreatedAt time.Time
+ UpdatedAt time.Time
+ DeletedAt gorm.DeletedAt `gorm:&amp;#34;index&amp;#34;` # 软删除
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="3-注意事项"&gt;3. 注意事项&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;字段名需要首字母大写，数据库表名下划线式会对应go模型的大写驼峰式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="三-增删改查"&gt;三. 增删改查&lt;/h2&gt;
+&lt;p&gt;gorm对sql操作有两种写法：泛型API和传统API。泛型API可以在编译器就检查出错误，下面主要以泛型API写法为主。&lt;/p&gt;</description></item><item><title>GC</title><link>https://balsampears.github.io/my-blog/docs/go/6_gc/</link><pubDate>Tue, 26 May 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/6_gc/</guid><description>&lt;h2 id="一-标记清除法v13"&gt;一. 标记清除法v1.3&lt;/h2&gt;
+&lt;h3 id="1-stw"&gt;1. STW&lt;/h3&gt;
+&lt;p&gt;STW（Stop The World）是让go程序暂停，来进行gc操作的功能。&lt;/p&gt;
+&lt;h3 id="2-标记清除法"&gt;2. 标记清除法&lt;/h3&gt;
+&lt;p&gt;标记清除法具体流程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;STW启动&lt;/li&gt;
+&lt;li&gt;遍历栈空间和堆空间，标记所有可达的对象&lt;/li&gt;
+&lt;li&gt;删除所有没有标记的对象&lt;/li&gt;
+&lt;li&gt;STW关闭&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;标记清除法主要在go v1.3版本之前使用。&lt;/p&gt;
+&lt;h2 id="二-三色标记法v15"&gt;二. 三色标记法v1.5&lt;/h2&gt;
+&lt;h3 id="1-三色标记法"&gt;1. 三色标记法&lt;/h3&gt;
+&lt;p&gt;将所有对象划分黑、灰、白三个颜色，然后将灰色对象再分到其他颜色，最后将剩下的白色对象清除。&lt;/p&gt;
+&lt;p&gt;具体流程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;GC开始时将栈空间和堆空间的所有对象划为白色对象。&lt;/li&gt;
+&lt;li&gt;遍历寻找所有可达对象，将其划为灰色。&lt;/li&gt;
+&lt;li&gt;遍历灰色对象并将其改为黑色，将这个对象下一个可达对象划为灰色对象。&lt;/li&gt;
+&lt;li&gt;循环第3步，直到不存在任何灰色对象。&lt;/li&gt;
+&lt;li&gt;清除剩余白色对象。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;由于没有进行STW，那么进行三色标记法时，会同时执行go程序，导致出现新的问题：&lt;br&gt;
+假设a黑，b灰，c白&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;a-&amp;gt;nil改为a-&amp;gt;c，此时若所有灰色对象被清空，则白色对象c会被清除，a-&amp;gt;c指向的对象丢失。&lt;/li&gt;
+&lt;li&gt;b-&amp;gt;c改为a-&amp;gt;c，此时若所有灰色对象被清空，则白色对象c会被清除，b-&amp;gt;c指向的对象丢失。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="2-强-弱不变式"&gt;2. 强-弱不变式&lt;/h3&gt;
+&lt;p&gt;为了解决上面两个问题，需要两个不变式理论支持。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;强不变式
+若存在a-&amp;gt;b，a是黑，则b必定不能是白。&lt;br&gt;
+可以解决新增时对象丢失的问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;弱不变式
+若存在a-&amp;gt;b，a是黑且b是白，那么必然存在灰色c间接指向b（c-&amp;gt;b c-&amp;gt;d-&amp;gt;b等）。&lt;br&gt;
+可以解决删除时对象丢失的问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="3-新增写屏障"&gt;3. 新增写屏障&lt;/h3&gt;
+&lt;p&gt;堆上发生指针写入新对象时（a-&amp;gt;nil，改为a-&amp;gt;b），新增对象会被划为灰色。&lt;/p&gt;
+&lt;p&gt;特点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;满足强不变式。&lt;/li&gt;
+&lt;li&gt;写屏障仅针对堆空间，栈空间不使用。&lt;/li&gt;
+&lt;li&gt;GC结束时，对栈空间进行STW。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Go v1.5主要实现就是通过三色标记法+新增写屏障+STW扫栈进行GC。&lt;/p&gt;
+&lt;h3 id="4-删除写屏障"&gt;4. 删除写屏障&lt;/h3&gt;
+&lt;p&gt;堆上发生指针移除对象时（a-&amp;gt;b，改为a-&amp;gt;nil），移除的对象会被划为灰色。&lt;br&gt;
+本轮GC中b及子对象都会被置为黑色，但下一轮GC中会被置为白色（没有其他引用b）&lt;/p&gt;
+&lt;p&gt;特点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;满足弱不变式。&lt;/li&gt;
+&lt;li&gt;写屏障仅针对堆空间，栈空间不使用。&lt;/li&gt;
+&lt;li&gt;GC开始时，对栈空间进行STW。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="5-三色标记法写屏障的缺点"&gt;5. 三色标记法+写屏障的缺点&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;需要对栈空间进行STW&lt;/li&gt;
+&lt;li&gt;删除写屏障效率不高，需要等待下一个GC才能清除。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="三-混合写屏障v18"&gt;三. 混合写屏障v1.8&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;GC开始时栈空间所有&lt;strong&gt;可达对象&lt;/strong&gt;置为黑色，并且后续添加栈对象都置为黑色。&lt;/li&gt;
+&lt;li&gt;新增的堆对象置为灰色。&lt;/li&gt;
+&lt;li&gt;删除的堆对象置为灰色。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="四-提问"&gt;四. 提问&lt;/h2&gt;
+&lt;h3 id="1-三色标记法v15中跨堆栈对象指针需要使用写屏障吗"&gt;1. 三色标记法v1.5中，跨堆栈对象指针需要使用写屏障吗？&lt;/h3&gt;
+&lt;p&gt;若存在栈对象a，堆对象b：&lt;/p&gt;</description></item></channel></rss>

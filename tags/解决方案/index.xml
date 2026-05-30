@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>解决方案 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link><description>Recent content in 解决方案 on 我的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 20 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/index.xml" rel="self" type="application/rss+xml"/><item><title>跨域</title><link>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</link><pubDate>Mon, 18 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</guid><description>&lt;p&gt;&lt;strong&gt;同源策略&lt;/strong&gt;&lt;br&gt;
+浏览器出于安全考虑，限制当前域名只能访问同一&lt;strong&gt;协议、域名、端口&lt;/strong&gt;的网站资源。当请求另一个网站违反了同源策略时，就叫“跨域”，会被浏览器拦截。&lt;/p&gt;
+&lt;h2 id="解决方案"&gt;解决方案&lt;/h2&gt;
+&lt;p&gt;存在a.com前端，连接a.com/api后端；b.com前端，连接b.com/api后端。&lt;br&gt;
+当a.com请求b.com和b.com/api时，触发跨域。&lt;/p&gt;
+&lt;h3 id="1-被调用方添加跨域许可cors"&gt;1. 被调用方添加跨域许可（CORS）&lt;/h3&gt;
+&lt;p&gt;CORS是跨域资源共享，配置之后可以让origin源访问当前服务。&lt;/p&gt;
+&lt;p&gt;Gin框架中，在b.com/api后端添加以下代码：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;c.Header(&amp;#34;Access-Control-Allow-Origin&amp;#34;, &amp;#34;https://a.com&amp;#34;) // 必须在白名单内
+c.Header(&amp;#34;Access-Control-Allow-Credentials&amp;#34;, &amp;#34;true&amp;#34;)
+c.Header(&amp;#34;Access-Control-Allow-Methods&amp;#34;, &amp;#34;GET, POST, PUT, DELETE, OPTIONS&amp;#34;)
+c.Header(&amp;#34;Access-Control-Allow-Headers&amp;#34;, &amp;#34;Authorization, Content-Type, Accept&amp;#34;)
+c.Header(&amp;#34;Access-Control-Max-Age&amp;#34;, &amp;#34;86400&amp;#34;)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-调用方添加nginx反向代理"&gt;2. 调用方添加nginx反向代理&lt;/h3&gt;
+&lt;p&gt;在调用方反向代理来隐藏自身，让目标以为来源是目标同源地址。&lt;/p&gt;
+&lt;p&gt;在a.com前端所在的服务器上的nginx添加以下配置；&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; # 代理到 b.com，对外路径是 /b-api/
+ location /b-api/ {
+ proxy_pass https://b.com/api/;
+
+ proxy_set_header Host b.com;
+ proxy_set_header X-Real-IP $remote_addr;
+ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+ proxy_set_header X-Forwarded-Proto $scheme;
+ # 若 b 需要知道真实来源（可选）
+ proxy_set_header X-Forwarded-Host $host;
+ }
+&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>Gas优化</title><link>https://balsampears.github.io/my-blog/docs/web3/solidity/5_gas%E4%BC%98%E5%8C%96/</link><pubDate>Wed, 20 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/web3/solidity/5_gas%E4%BC%98%E5%8C%96/</guid><description>&lt;h2 id="一-gas评估"&gt;一. Gas评估&lt;/h2&gt;
+&lt;h3 id="1-foundry测试"&gt;1. foundry测试&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;forge test --gas-report&lt;/code&gt;会在测试时同步打印每个方法消耗的Gas。&lt;/p&gt;
+&lt;h3 id="2-foundry评估文件"&gt;2. foundry评估文件&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;forge snaphot&lt;/code&gt;会生成Gas消耗报告文件，额外添加&lt;code&gt;--check&lt;/code&gt;参数可以比较两次gas报告的变化。&lt;/p&gt;
+&lt;h3 id="3-rpc模拟交易"&gt;3. RPC模拟交易&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;eth_estimateGas&lt;/code&gt;会RPC模拟一次交易，并返回Gas消耗多少，估算值会随状态变化而不精确。&lt;/p&gt;
+&lt;h3 id="4-viem模拟交易"&gt;4. Viem模拟交易&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;publicClient.estimateGas&lt;/code&gt;viem.js中对rpc方法的封装。&lt;/p&gt;
+&lt;h2 id="二-gas优化"&gt;二. Gas优化&lt;/h2&gt;
+&lt;p&gt;口诀：&lt;strong&gt;合瞬妙无组，存小链多树&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id="1-槽位合并"&gt;1. 槽位合并&lt;/h3&gt;
+&lt;p&gt;相邻的两个成员变量占用字节大小小于32字节时可以进行合并，减少占用storage永久存储来节省gas。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;//共占用9字节，共用一个槽位
+bool isAdmin;
+uint40 time;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-瞬时存储"&gt;2. 瞬时存储&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;transient&lt;/code&gt;瞬时存储替代永久存储，TSTORE/TLOAD消耗100gas。&lt;/p&gt;
+&lt;h3 id="3-常量与immutable"&gt;3. 常量与immutable&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;constant/immutable&lt;/code&gt;常量存储，仅会在部署合约时消耗一次。&lt;/p&gt;
+&lt;h3 id="4-禁止无限增长数组"&gt;4. 禁止无限增长数组&lt;/h3&gt;
+&lt;p&gt;禁止使用无限制增长元素的数据，因为遍历时会消耗大量gas，直到gas超过限制会导致函数完全无法使用。&lt;br&gt;
+考虑使用mapping代替数据。&lt;/p&gt;
+&lt;h3 id="5-存储转移"&gt;5. 存储转移&lt;/h3&gt;
+&lt;p&gt;将链上存储的数据转移到链下存储、ipfs存储，减少用户上传数据时消耗的gas。&lt;/p&gt;
+&lt;h3 id="6-最小代理部署"&gt;6. 最小代理部署&lt;/h3&gt;
+&lt;p&gt;先部署可复用的合约做逻辑，再用最小代理工厂部署代理合约，代理合约转发调用逻辑合约的逻辑。&lt;br&gt;
+&lt;a href="https://balsampears.github.io/my-blog/docs/web3/solidity/7_%E5%90%88%E7%BA%A6%E5%88%9B%E5%BB%BA/#四最小代理工厂"&gt;最小代理工厂&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="7-链表代替数组"&gt;7. 链表代替数组&lt;/h3&gt;
+&lt;p&gt;（1）无序数组&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 定义链表
+mapping(address=&amp;gt;address) private users;
+mapping(address=&amp;gt;User) private userInfos;
+# 定义起始点
+address private constant HEAD = address(0);
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;新增&lt;br&gt;
+在头部插入数据，更新HEAD指向当前地址。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;删除（优化）
+传入待删除元素的上一个元素，可以指定删除某个位置的元素达到O(1)的时间复杂度。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;（2）有序数组&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;新增（优化）&lt;br&gt;
+新增时需要保持数据有序性，可以链下遍历，然后传入上一个元素位置，则链上只需做校验和插入即可。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;更新（优化）&lt;br&gt;
+同时传入应该删除的上一个和应该插入的上一个元素，链上做校验、删除、新增。&lt;/p&gt;</description></item></channel></rss>
