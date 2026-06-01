@@ -4,6 +4,33 @@
         padding-left: 0.75em;
       }
     }
+
+    // 统一侧边栏标题字重，避免 __page(300) / __section(500) / tree-root(700) 混用
+    &__section-title {
+      font-weight: inherit;
+    }
+
+    .td-sidebar-link {
+      font-weight: inherit;
+      color: var(--bs-body-color);
+
+      &__page {
+        font-weight: inherit;
+      }
+
+      &__section {
+        color: var(--bs-body-color);
+      }
+
+      &.tree-root {
+        font-weight: inherit;
+      }
+    }
+
+    // a.active {
+    //   font-weight: inherit;
+    //   color: var(--bs-body-color);
+    // }
   }
   
   nav.foldable-nav {
