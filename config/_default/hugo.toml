@@ -1,6 +1,6 @@
 baseURL = 'https://balsampears.github.io/my-blog/'
 defaultContentLanguage = 'zh-cn'
-title = '我的个人博客'
+title = '阿星的个人博客'
 #theme = 'ananke'
 theme = 'docsy'
 
