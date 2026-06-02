@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kafka on 我的个人博客</title>
+    <link>http://localhost:1313/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/3_kafka/</link>
+    <description>Recent content in Kafka on 我的个人博客</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate></lastBuildDate>
+    <atom:link href="http://localhost:1313/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/3_kafka/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

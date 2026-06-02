@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 我的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 28 May 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>跨域</title><link>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</link><pubDate>Mon, 18 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</guid><description>&lt;p&gt;&lt;strong&gt;同源策略&lt;/strong&gt;&lt;br&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 阿星的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 阿星的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 28 May 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>跨域</title><link>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</link><pubDate>Mon, 18 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</guid><description>&lt;p&gt;&lt;strong&gt;同源策略&lt;/strong&gt;&lt;br&gt;
 浏览器出于安全考虑，限制当前域名只能访问同一&lt;strong&gt;协议、域名、端口&lt;/strong&gt;的网站资源。当请求另一个网站违反了同源策略时，就叫“跨域”，会被浏览器拦截。&lt;/p&gt;
 &lt;h2 id="解决方案"&gt;解决方案&lt;/h2&gt;
 &lt;p&gt;存在a.com前端，连接a.com/api后端；b.com前端，连接b.com/api后端。&lt;br&gt;
@@ -595,7 +595,7 @@ server {
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id="4-重新nginx"&gt;4. 重新nginx&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;sudo nginx -t &amp;amp;&amp;amp; sudo systemctl reload nginx
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在浏览器输入：https://域名，完成。&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在浏览器输入：https://域名，完成。&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
 &lt;h3 id="1-安装gin"&gt;1. 安装Gin&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;go mod init &amp;lt;项目名&amp;gt;
 go get -u github.com/gin-gonic/gin
@@ -692,7 +692,7 @@ return(0x0, 32)
 a := and 0xFF(sload 0x0)
 b := and 0xFF00(sload 0x0)
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-定长存储"&gt;2. 定长存储&lt;/h3&gt;
-&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item><item><title>gORM框架</title><link>https://balsampears.github.io/my-blog/docs/go/5_gorm%E6%A1%86%E6%9E%B6/</link><pubDate>Fri, 22 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/5_gorm%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-连接数据库"&gt;一. 连接数据库&lt;/h2&gt;
+&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item><item><title>GORM框架</title><link>https://balsampears.github.io/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/5_gorm%E6%A1%86%E6%9E%B6/</link><pubDate>Fri, 22 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/5_gorm%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-连接数据库"&gt;一. 连接数据库&lt;/h2&gt;
 &lt;h3 id="1-引入gorm"&gt;1. 引入gORM&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;import (
  &amp;#34;gorm.io/driver/mysql&amp;#34;

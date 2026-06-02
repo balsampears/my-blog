@@ -19924,6 +19924,19 @@ body {
   .td-sidebar-nav .ul-1 ul {
     padding-left: 0.75em; } }
 
+.td-sidebar-nav__section-title {
+  font-weight: inherit; }
+
+.td-sidebar-nav .td-sidebar-link {
+  font-weight: inherit;
+  color: var(--bs-body-color); }
+  .td-sidebar-nav .td-sidebar-link__page {
+    font-weight: inherit; }
+  .td-sidebar-nav .td-sidebar-link__section {
+    color: var(--bs-body-color); }
+  .td-sidebar-nav .td-sidebar-link.tree-root {
+    font-weight: inherit; }
+
 nav.foldable-nav .ul-1 > li {
   padding-left: 0.75em; }
 

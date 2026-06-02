@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go on 我的个人博客</title><link>https://balsampears.github.io/my-blog/tags/go/</link><description>Recent content in Go on 我的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 26 May 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go on 阿星的个人博客</title><link>https://balsampears.github.io/my-blog/tags/go/</link><description>Recent content in Go on 阿星的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 26 May 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
 本篇文章不会介绍基础语法以及细节，仅重点介绍go语言的与众不同的特点以及注意事项。&lt;/p&gt;
 &lt;h2 id="一-指针"&gt;一. 指针&lt;/h2&gt;
 &lt;p&gt;go中存在指针可以直接获取内存地址：&lt;/p&gt;
@@ -143,7 +143,7 @@ go clean -i &amp;lt;package&amp;gt;
 # 删除模块缓存（下载了源码但没有生成二进制文件可通过这里命令删除）
 go clean -modcache
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id="三模块管理---go-mod"&gt;三.模块管理 - go mod&lt;/h2&gt;
-&lt;p&gt;在golang 1.16之后，go默认使用模块化管理。通过创建一个依赖描述文件，自动下载相关库，类似java中的maven、前端的package.json。&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
+&lt;p&gt;在golang 1.16之后，go默认使用模块化管理。通过创建一个依赖描述文件，自动下载相关库，类似java中的maven、前端的package.json。&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
 &lt;h3 id="1-安装gin"&gt;1. 安装Gin&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;go mod init &amp;lt;项目名&amp;gt;
 go get -u github.com/gin-gonic/gin
@@ -192,7 +192,7 @@ r.POST(&amp;#34;/post&amp;#34;, func(c *gin.Context){
  c.String(http.StatusOK, &amp;#34;Hello Gin&amp;#34;)
  }
 })
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;普通表单可以用ShouldBindQuery，xml可以用ShouldBindXML&lt;/p&gt;</description></item><item><title>gORM框架</title><link>https://balsampears.github.io/my-blog/docs/go/5_gorm%E6%A1%86%E6%9E%B6/</link><pubDate>Fri, 22 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/5_gorm%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-连接数据库"&gt;一. 连接数据库&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;普通表单可以用ShouldBindQuery，xml可以用ShouldBindXML&lt;/p&gt;</description></item><item><title>GORM框架</title><link>https://balsampears.github.io/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/5_gorm%E6%A1%86%E6%9E%B6/</link><pubDate>Fri, 22 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/5_gorm%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-连接数据库"&gt;一. 连接数据库&lt;/h2&gt;
 &lt;h3 id="1-引入gorm"&gt;1. 引入gORM&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;import (
  &amp;#34;gorm.io/driver/mysql&amp;#34;

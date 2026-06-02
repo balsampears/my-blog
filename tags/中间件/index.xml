@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>中间件 on 我的个人博客</title>
+    <link>http://localhost:1313/my-blog/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
+    <description>Recent content in 中间件 on 我的个人博客</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 15 May 2026 20:00:00 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/my-blog/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kafka</title>
+      <link>http://localhost:1313/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/3_kafka/</link>
+      <pubDate>Fri, 15 May 2026 20:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/3_kafka/</guid>
+      <description>&lt;h2 id=&#34;消息队列&#34;&gt;消息队列&lt;/h2&gt;&#xA;&lt;h3 id=&#34;优势&#34;&gt;优势&lt;/h3&gt;&#xA;&lt;h4 id=&#34;解耦&#34;&gt;解耦&lt;/h4&gt;&#xA;&lt;p&gt;上下游业务无需强关联，下游业务可以根据需要订阅不同消息，一个消息也可以被多次消费。&lt;/p&gt;&#xA;&lt;h4 id=&#34;异步&#34;&gt;异步&lt;/h4&gt;&#xA;&lt;p&gt;一次请求可以先返回，延迟处理后续业务。&lt;/p&gt;&#xA;&lt;h4 id=&#34;削峰&#34;&gt;削峰&lt;/h4&gt;&#xA;&lt;p&gt;大流量请求可以堆积在消息队列，防止高并发导致应用崩溃。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

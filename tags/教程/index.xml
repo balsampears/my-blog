@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>教程 on 我的个人博客</title><link>https://balsampears.github.io/my-blog/tags/%E6%95%99%E7%A8%8B/</link><description>Recent content in 教程 on 我的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 22 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/tags/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>Go基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>教程 on 阿星的个人博客</title><link>https://balsampears.github.io/my-blog/tags/%E6%95%99%E7%A8%8B/</link><description>Recent content in 教程 on 阿星的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 22 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/tags/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>Go基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
 本篇文章不会介绍基础语法以及细节，仅重点介绍go语言的与众不同的特点以及注意事项。&lt;/p&gt;
 &lt;h2 id="一-指针"&gt;一. 指针&lt;/h2&gt;
 &lt;p&gt;go中存在指针可以直接获取内存地址：&lt;/p&gt;
@@ -277,7 +277,7 @@ go clean -modcache
  interfaceID == type(IERC1155).interfaceId
  ...
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;跟 ERC721 合约中的ERC165用法一致&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;跟 ERC721 合约中的ERC165用法一致&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
 &lt;h3 id="1-安装gin"&gt;1. 安装Gin&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;go mod init &amp;lt;项目名&amp;gt;
 go get -u github.com/gin-gonic/gin
@@ -374,7 +374,7 @@ return(0x0, 32)
 a := and 0xFF(sload 0x0)
 b := and 0xFF00(sload 0x0)
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id="2-定长存储"&gt;2. 定长存储&lt;/h3&gt;
-&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item><item><title>gORM框架</title><link>https://balsampears.github.io/my-blog/docs/go/5_gorm%E6%A1%86%E6%9E%B6/</link><pubDate>Fri, 22 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/5_gorm%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-连接数据库"&gt;一. 连接数据库&lt;/h2&gt;
+&lt;p&gt;整型、布尔型、地址型等固定长度都是定长存储。&lt;/p&gt;</description></item><item><title>GORM框架</title><link>https://balsampears.github.io/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/5_gorm%E6%A1%86%E6%9E%B6/</link><pubDate>Fri, 22 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/10_%E4%B8%AD%E9%97%B4%E4%BB%B6/5_gorm%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-连接数据库"&gt;一. 连接数据库&lt;/h2&gt;
 &lt;h3 id="1-引入gorm"&gt;1. 引入gORM&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;import (
  &amp;#34;gorm.io/driver/mysql&amp;#34;
