@@ -9,6 +9,8 @@ weight = 30
 
 本文以一个加法工具为例，演示如何使用 TypeScript 搭建 MCP Server，并分别通过 Stdio、SSE、Streamable HTTP 三种传输方式接入 Cherry Studio，最后介绍常用调试方法与上线方式。
 
+以下代码已放入github仓库：[mcp-server-ts-demo](https://github.com/balsampears/mcp-server-ts-demo)
+
 ## 一. TypeScript 搭建 MCP Server 项目
 ### 1. 配置环境
 进入 [Node.js 官网](https://nodejs.org/zh-cn/download)，下载安装 Node.js。
@@ -618,7 +620,6 @@ npx -y @balsampears/mcp-server-ts-demo
 #### （6）接入
 在 Cherry Studio 进行接入，跟 LLM 进行交互验证。
 {{< figure src="stdio2.png" width="700" >}}
-
 
 ### 2. 服务器部署上线
 适用于 SSE、Streamable HTTP 传输方式，将项目部署到服务器，通过 HTTP 访问。
