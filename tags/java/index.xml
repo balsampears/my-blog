@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on 阿星的个人博客</title>
+    <link>http://localhost:1313/my-blog/tags/java/</link>
+    <description>Recent content in Java on 阿星的个人博客</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 16 Apr 2026 19:00:00 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/my-blog/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MCP原理与实践</title>
+      <link>http://localhost:1313/my-blog/docs/ai/2_mcp%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/my-blog/docs/ai/2_mcp%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+      <description>&lt;h2 id=&#34;一-mcp概述&#34;&gt;一. MCP概述&lt;/h2&gt;&#xA;&lt;p&gt;Model Context Protocol，模型上下文协议。&lt;br&gt;&#xA;MCP协议约定了大模型和工具之间调用的传输格式，使两者进行解耦合，可以更方便的开发MCP服务器和调用其他人的MCP服务。&lt;/p&gt;&#xA;&lt;h3 id=&#34;组成部分&#34;&gt;组成部分&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;MCP Server：MCP服务端，负责提供特定业务服务。&lt;/li&gt;&#xA;&lt;li&gt;MCP Tool：MCP工具，负责具体服务逻辑，提供名称、描述、输入参数和结果等信息。一个MCP Server包含多个MCP Tool。&lt;/li&gt;&#xA;&lt;li&gt;MCP Client：MCP客户端，负责调用MCP Server。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;mcp在线服务端网站&#34;&gt;MCP在线服务端网站&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://mcp.so&#34;&gt;mcp.so&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;二-mcp实现方式&#34;&gt;二. MCP实现方式&lt;/h2&gt;&#xA;&lt;h3 id=&#34;1-stdio&#34;&gt;1. Stdio&lt;/h3&gt;&#xA;&lt;p&gt;Stdio，本地标准输入输出方式。&lt;br&gt;&#xA;本地MCP客户端会内部启用一个MCP服务端作子进程，将MCP服务端的输入流作发送请求，将输出流作接收响应。&lt;/p&gt;&#xA;&lt;h3 id=&#34;2-http调用&#34;&gt;2. http调用&lt;/h3&gt;&#xA;&lt;p&gt;早期HTTP+SSE方式流式传输，现在采用Streamable http方式，通过远程调用方式与大模型交互。&lt;br&gt;&#xA;具体交互流程：本地发起问题 -&amp;gt; 调用大模型判断应该调用某个MCP -&amp;gt; 本地作MCP客户端发起MCP调用 -&amp;gt; MCP服务端响应并返回结果 -&amp;gt; 大模型梳理结果并输出回答&lt;/p&gt;&#xA;&lt;h4 id=&#34;1httpsse&#34;&gt;（1）HTTP+SSE&lt;/h4&gt;&#xA;&lt;p&gt;添加两个入口，一个长连接/sse和一个推送消息/message，长连接需要更多的开销和额外配置。&lt;/p&gt;&#xA;&lt;h4 id=&#34;2streamable-http截止2026624最常用&#34;&gt;（2）Streamable http（截止2026.6.24最常用）&lt;/h4&gt;&#xA;&lt;p&gt;配置统一入口/mcp，根据接口需要自行配置直接返回或sse临时流式传输。无需配置固定长连接接口，可以节约系统开销。&lt;/p&gt;&#xA;&lt;h2 id=&#34;三-java项目mcp实现&#34;&gt;三. Java项目MCP实现&lt;/h2&gt;&#xA;&lt;h3 id=&#34;1-spring-ai&#34;&gt;1. Spring AI&lt;/h3&gt;&#xA;&lt;h4 id=&#34;1spring-ai-v100&#34;&gt;（1）Spring AI v1.0.0&lt;/h4&gt;&#xA;&lt;h4 id=&#34;2spring-ai-v200&#34;&gt;（2）Spring AI v2.0.0&lt;/h4&gt;&#xA;&lt;h3 id=&#34;2-spring-mcp&#34;&gt;2. Spring MCP&lt;/h3&gt;&#xA;&lt;h4 id=&#34;1基于serlvet的mcp&#34;&gt;（1）基于Serlvet的MCP&lt;/h4&gt;&#xA;&lt;h4 id=&#34;2基于webflux的mcp&#34;&gt;（2）基于Webflux的MCP&lt;/h4&gt;</description>
+    </item>
+  </channel>
+</rss>

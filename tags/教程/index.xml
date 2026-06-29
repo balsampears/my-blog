@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>教程 on 阿星的个人博客</title><link>https://balsampears.github.io/my-blog/tags/%E6%95%99%E7%A8%8B/</link><description>Recent content in 教程 on 阿星的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 22 May 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/tags/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>Go基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>教程 on 阿星的个人博客</title><link>https://balsampears.github.io/my-blog/tags/%E6%95%99%E7%A8%8B/</link><description>Recent content in 教程 on 阿星的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 26 Jun 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/tags/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>Go基础</title><link>https://balsampears.github.io/my-blog/docs/go/1_base/</link><pubDate>Thu, 16 Apr 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/1_base/</guid><description>&lt;p&gt;Golang是一个拥有接近c语言的运行速度和python语言的开发效率的语言。&lt;br&gt;
 本篇文章不会介绍基础语法以及细节，仅重点介绍go语言的与众不同的特点以及注意事项。&lt;/p&gt;
 &lt;h2 id="一-指针"&gt;一. 指针&lt;/h2&gt;
 &lt;p&gt;go中存在指针可以直接获取内存地址：&lt;/p&gt;
@@ -68,7 +68,47 @@ function allowance(address _owner, address _spender) public view returns (uint25
 function transfer(address _to, uint256 _value) public returns (bool success)
 function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
 function approve(address _spender, uint256 _value) public returns (bool success)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;事件+属性+查询+操作：2+3+3+3，一共11个定义。&lt;/p&gt;</description></item><item><title>并发编程</title><link>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link><pubDate>Wed, 29 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid><description>&lt;h2 id="一-简介"&gt;一. 简介&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;事件+属性+查询+操作：2+3+3+3，一共11个定义。&lt;/p&gt;</description></item><item><title>MCP服务发现与接入</title><link>https://balsampears.github.io/my-blog/docs/ai/2_mcp/2_mcp%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E4%B8%8E%E6%8E%A5%E5%85%A5/</link><pubDate>Fri, 26 Jun 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/ai/2_mcp/2_mcp%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E4%B8%8E%E6%8E%A5%E5%85%A5/</guid><description>&lt;p&gt;本篇介绍如何发现现成的 MCP 服务，并在 AI 客户端（Host）中完成接入与调用。&lt;/p&gt;
+&lt;h2 id="一-获取mcp服务"&gt;一. 获取MCP服务&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;登录 &lt;a href="https://mcp.so"&gt;mcp.so&lt;/a&gt;，查询 MCP 服务（以下以高德地图为例）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;找到 Amap Maps，获取 Server Config&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/ai/2_mcp/2_mcp%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E4%B8%8E%E6%8E%A5%E5%85%A5/mcp1.png" width="700"&gt;
+&lt;/figure&gt;
+
+&lt;ol start="3"&gt;
+&lt;li&gt;进入 &lt;a href="https://console.amap.com/"&gt;高德开发者平台&lt;/a&gt;，申请一个测试应用，并获取一个 API Key。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/ai/2_mcp/2_mcp%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E4%B8%8E%E6%8E%A5%E5%85%A5/mcp2.png" width="700"&gt;
+&lt;/figure&gt;
+
+&lt;h2 id="二-配置mcp服务"&gt;二. 配置MCP服务&lt;/h2&gt;
+&lt;p&gt;以下配置以 stdio 方式启动 MCP Server（通过 &lt;code&gt;npx&lt;/code&gt; 拉取并运行），需要本机已安装 Node.js 环境。&lt;/p&gt;
+&lt;p&gt;将 &lt;code&gt;AMAP_MAPS_API_KEY&lt;/code&gt; 替换为你在上一步申请的 Key。&lt;strong&gt;请勿将真实 Key 提交到 Git 仓库&lt;/strong&gt;，建议仅在本地配置中使用。&lt;/p&gt;
+&lt;p&gt;示例配置如下（&lt;code&gt;XXXX&lt;/code&gt; 处填入你的 API Key）：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;{
+ &amp;#34;mcpServers&amp;#34;: {
+ &amp;#34;amap-maps&amp;#34;: {
+ &amp;#34;command&amp;#34;: &amp;#34;npx&amp;#34;,
+ &amp;#34;args&amp;#34;: [
+ &amp;#34;-y&amp;#34;,
+ &amp;#34;@amap/amap-maps-mcp-server&amp;#34;
+ ],
+ &amp;#34;env&amp;#34;: {
+ &amp;#34;AMAP_MAPS_API_KEY&amp;#34;: &amp;#34;XXXX&amp;#34;
+ }
+ }
+ }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="1-cursor"&gt;1. Cursor&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;依次点击 Settings -&amp;gt; Tool&amp;amp;MCPs -&amp;gt; Open New MCP&lt;/p&gt;</description></item><item><title>并发编程</title><link>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link><pubDate>Wed, 29 Apr 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/2_%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid><description>&lt;h2 id="一-简介"&gt;一. 简介&lt;/h2&gt;
 &lt;h3 id="1进程线程协程"&gt;1.进程、线程、协程&lt;/h3&gt;
 &lt;h4 id="简介"&gt;简介&lt;/h4&gt;
 &lt;ul&gt;

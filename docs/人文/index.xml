@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>人文 on 阿星的个人博客</title>
+    <link>http://localhost:1313/my-blog/docs/%E4%BA%BA%E6%96%87/</link>
+    <description>Recent content in 人文 on 阿星的个人博客</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 09 Apr 2026 20:00:00 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/my-blog/docs/%E4%BA%BA%E6%96%87/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>术与道</title>
+      <link>http://localhost:1313/my-blog/docs/%E4%BA%BA%E6%96%87/1_%E6%9C%AF%E4%B8%8E%E9%81%93/</link>
+      <pubDate>Thu, 09 Apr 2026 20:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/my-blog/docs/%E4%BA%BA%E6%96%87/1_%E6%9C%AF%E4%B8%8E%E9%81%93/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>人们的关系：合作与竞争</title>
+      <link>http://localhost:1313/my-blog/docs/%E4%BA%BA%E6%96%87/2_%E4%BA%BA%E4%BB%AC%E7%9A%84%E5%85%B3%E7%B3%BB_%E5%90%88%E4%BD%9C%E4%B8%8E%E7%AB%9E%E4%BA%89/</link>
+      <pubDate>Thu, 09 Apr 2026 20:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/my-blog/docs/%E4%BA%BA%E6%96%87/2_%E4%BA%BA%E4%BB%AC%E7%9A%84%E5%85%B3%E7%B3%BB_%E5%90%88%E4%BD%9C%E4%B8%8E%E7%AB%9E%E4%BA%89/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

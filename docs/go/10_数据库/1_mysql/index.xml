@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Mysql on 我的个人博客</title>
+    <title>Mysql on 阿星的个人博客</title>
     <link>http://localhost:1313/my-blog/docs/go/10_%E6%95%B0%E6%8D%AE%E5%BA%93/1_mysql/</link>
-    <description>Recent content in Mysql on 我的个人博客</description>
+    <description>Recent content in Mysql on 阿星的个人博客</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
     <lastBuildDate></lastBuildDate>

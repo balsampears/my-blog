@@ -1,4 +1,48 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 阿星的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 阿星的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 28 May 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>跨域</title><link>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</link><pubDate>Mon, 18 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</guid><description>&lt;p&gt;&lt;strong&gt;同源策略&lt;/strong&gt;&lt;br&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Balsam的学习笔记 on 阿星的个人博客</title><link>https://balsampears.github.io/my-blog/</link><description>Recent content in Balsam的学习笔记 on 阿星的个人博客</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sat, 27 Jun 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://balsampears.github.io/my-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>MCP组成原理</title><link>https://balsampears.github.io/my-blog/docs/ai/2_mcp/1_mcp%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/</link><pubDate>Fri, 26 Jun 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/ai/2_mcp/1_mcp%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/</guid><description>&lt;h2 id="一-mcp概述"&gt;一. MCP概述&lt;/h2&gt;
+&lt;p&gt;Model Context Protocol，模型上下文协议。&lt;br&gt;
+MCP 协议约定了大模型与外部工具/数据之间的调用格式，使两者解耦，便于独立开发业务服务，并在不同 AI 客户端中复用同一套 MCP Server。&lt;/p&gt;
+&lt;h3 id="1-组成部分"&gt;1. 组成部分&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;MCP Host（AI客户端）&lt;/strong&gt;：嵌入 LLM 的应用程序（如 Cursor、Claude Desktop），负责与用户交互、调度大模型，并管理 MCP Client。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MCP Client&lt;/strong&gt;：运行在 Host 内的连接器，通常与一个 MCP Server 一一对应，负责协议握手与 JSON-RPC 调用。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MCP Server&lt;/strong&gt;：对外提供 Tools、Resources、Prompts 等能力的服务端进程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-交互流程"&gt;2. 交互流程&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;用户在 Host 中发起问题&lt;/li&gt;
+&lt;li&gt;Host 调用 LLM，判断是否需要调用某个 MCP Tool&lt;/li&gt;
+&lt;li&gt;Host 内的 MCP Client 向 MCP Server 发起调用&lt;/li&gt;
+&lt;li&gt;MCP Server 执行逻辑并返回结果&lt;/li&gt;
+&lt;li&gt;Host 将结果交回 LLM，整理后输出回答&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;下一篇将介绍如何在 Cursor 等 Host 中配置并使用 MCP 服务。&lt;/p&gt;
+&lt;h2 id="二-mcp分层"&gt;二. MCP分层&lt;/h2&gt;
+&lt;h3 id="1-传输层"&gt;1. 传输层&lt;/h3&gt;
+&lt;p&gt;传输层负责 MCP Client 与 MCP Server 之间的通信连接管理，目前主要有 stdio、Streamable HTTP 两种方式。&lt;/p&gt;</description></item><item><title>AI基础</title><link>https://balsampears.github.io/my-blog/docs/ai/1_%E5%9F%BA%E7%A1%80/</link><pubDate>Sun, 21 Jun 2026 19:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/ai/1_%E5%9F%BA%E7%A1%80/</guid><description>&lt;h2 id="1-llm"&gt;1. LLM&lt;/h2&gt;
+&lt;p&gt;大语言模型，通过海量文本进行训练，通过神经网络学习语言规律，生成文本的模型，本质是个文字接龙游戏。&lt;/p&gt;
+&lt;h2 id="2-token"&gt;2. Token&lt;/h2&gt;
+&lt;p&gt;LLM生成的最小单位，也是收费计价的单位。不同语言和模型的分词规则不一样，中文一个字和英文一个单词并不等于一个token。&lt;/p&gt;
+&lt;h2 id="3-prompt-提示词"&gt;3. Prompt 提示词&lt;/h2&gt;
+&lt;p&gt;LLM是通用大模型，包含所有人类已有的知识。提示词是引导LLM往指定方向进行回答的提示，用户提问、用户规则都算提示词。&lt;/p&gt;
+&lt;h2 id="4-function-calling--tool-choice"&gt;4. Function Calling / Tool Choice&lt;/h2&gt;
+&lt;p&gt;函数调用/工具选择，由本地外部实现的工具，给大模型进行调用。&lt;/p&gt;
+&lt;h2 id="5-mcp"&gt;5. MCP&lt;/h2&gt;
+&lt;p&gt;Model Context Protocol，模型上下文协议。&lt;br&gt;
+MCP协议约定了大模型和工具之间调用的传输格式，使两者进行解耦合，可以更方便的开发MCP服务器和调用其他人的MCP服务。&lt;/p&gt;
+&lt;h2 id="6-agent"&gt;6. Agent&lt;/h2&gt;
+&lt;p&gt;AI智能体，通过大模型和工作流设计，能够自主判断不同场景执行不同任务的机器人。&lt;br&gt;
+agent = LLM + memory + planning + tool use（大模型+记忆+工作流+MCP）&lt;/p&gt;
+&lt;h3 id="在线agent平台"&gt;在线Agent平台&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://cloud.dify.ai/apps"&gt;dify&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://n8n.io/"&gt;n8n&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.coze.com/"&gt;coze国际版&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.coze.cn/"&gt;coze国内版&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://bailian.console.aliyun.com/"&gt;阿里云百炼&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://agents.baidu.com/center"&gt;文心智能体&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="7-rag"&gt;7. RAG&lt;/h2&gt;
+&lt;p&gt;检索-增强-生成，通过检索知识库文档，仅把相关联内容交给LLM，再让LLM进行回答，可以避免文档过大过大让无关内容占用太多的LLM上下文。&lt;/p&gt;</description></item><item><title>跨域</title><link>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</link><pubDate>Mon, 18 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/20_%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/1_%E8%B7%A8%E5%9F%9F/</guid><description>&lt;p&gt;&lt;strong&gt;同源策略&lt;/strong&gt;&lt;br&gt;
 浏览器出于安全考虑，限制当前域名只能访问同一&lt;strong&gt;协议、域名、端口&lt;/strong&gt;的网站资源。当请求另一个网站违反了同源策略时，就叫“跨域”，会被浏览器拦截。&lt;/p&gt;
 &lt;h2 id="解决方案"&gt;解决方案&lt;/h2&gt;
 &lt;p&gt;存在a.com前端，连接a.com/api后端；b.com前端，连接b.com/api后端。&lt;br&gt;
@@ -222,7 +266,47 @@ weight = 10
 name = &amp;#34;文章&amp;#34;
 url = &amp;#34;/posts/hugo/hugo-start&amp;#34;
 weight = 20
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;右上角即可出现一级菜单&lt;/p&gt;</description></item><item><title>Docker与jenkins配置官网项目</title><link>https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/2_docker%E4%B8%8Ejenkins%E9%85%8D%E7%BD%AE%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE/</link><pubDate>Sat, 02 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/2_docker%E4%B8%8Ejenkins%E9%85%8D%E7%BD%AE%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE/</guid><description>&lt;h2 id="六-自动构建"&gt;六. 自动构建&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;右上角即可出现一级菜单&lt;/p&gt;</description></item><item><title>MCP服务发现与接入</title><link>https://balsampears.github.io/my-blog/docs/ai/2_mcp/2_mcp%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E4%B8%8E%E6%8E%A5%E5%85%A5/</link><pubDate>Fri, 26 Jun 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/ai/2_mcp/2_mcp%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E4%B8%8E%E6%8E%A5%E5%85%A5/</guid><description>&lt;p&gt;本篇介绍如何发现现成的 MCP 服务，并在 AI 客户端（Host）中完成接入与调用。&lt;/p&gt;
+&lt;h2 id="一-获取mcp服务"&gt;一. 获取MCP服务&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;登录 &lt;a href="https://mcp.so"&gt;mcp.so&lt;/a&gt;，查询 MCP 服务（以下以高德地图为例）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;找到 Amap Maps，获取 Server Config&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/ai/2_mcp/2_mcp%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E4%B8%8E%E6%8E%A5%E5%85%A5/mcp1.png" width="700"&gt;
+&lt;/figure&gt;
+
+&lt;ol start="3"&gt;
+&lt;li&gt;进入 &lt;a href="https://console.amap.com/"&gt;高德开发者平台&lt;/a&gt;，申请一个测试应用，并获取一个 API Key。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure&gt;&lt;img src="https://balsampears.github.io/my-blog/docs/ai/2_mcp/2_mcp%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E4%B8%8E%E6%8E%A5%E5%85%A5/mcp2.png" width="700"&gt;
+&lt;/figure&gt;
+
+&lt;h2 id="二-配置mcp服务"&gt;二. 配置MCP服务&lt;/h2&gt;
+&lt;p&gt;以下配置以 stdio 方式启动 MCP Server（通过 &lt;code&gt;npx&lt;/code&gt; 拉取并运行），需要本机已安装 Node.js 环境。&lt;/p&gt;
+&lt;p&gt;将 &lt;code&gt;AMAP_MAPS_API_KEY&lt;/code&gt; 替换为你在上一步申请的 Key。&lt;strong&gt;请勿将真实 Key 提交到 Git 仓库&lt;/strong&gt;，建议仅在本地配置中使用。&lt;/p&gt;
+&lt;p&gt;示例配置如下（&lt;code&gt;XXXX&lt;/code&gt; 处填入你的 API Key）：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;{
+ &amp;#34;mcpServers&amp;#34;: {
+ &amp;#34;amap-maps&amp;#34;: {
+ &amp;#34;command&amp;#34;: &amp;#34;npx&amp;#34;,
+ &amp;#34;args&amp;#34;: [
+ &amp;#34;-y&amp;#34;,
+ &amp;#34;@amap/amap-maps-mcp-server&amp;#34;
+ ],
+ &amp;#34;env&amp;#34;: {
+ &amp;#34;AMAP_MAPS_API_KEY&amp;#34;: &amp;#34;XXXX&amp;#34;
+ }
+ }
+ }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="1-cursor"&gt;1. Cursor&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;依次点击 Settings -&amp;gt; Tool&amp;amp;MCPs -&amp;gt; Open New MCP&lt;/p&gt;</description></item><item><title>Docker与jenkins配置官网项目</title><link>https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/2_docker%E4%B8%8Ejenkins%E9%85%8D%E7%BD%AE%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE/</link><pubDate>Sat, 02 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/other/%E8%BF%90%E7%BB%B4%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/2_docker%E4%B8%8Ejenkins%E9%85%8D%E7%BD%AE%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE/</guid><description>&lt;h2 id="六-自动构建"&gt;六. 自动构建&lt;/h2&gt;
 &lt;h3 id="1docker安装配置"&gt;1.Docker安装配置&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;# 使用阿里镜像源安装docker
 sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
@@ -443,7 +527,29 @@ baseUrl = &amp;lsquo;[你的用户名].github.io/[Github仓库名]&amp;rsquo;&lt
 参考: &lt;a href="https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml"&gt;https://github.com/balsampears/my-blog/blob/master/templates/github_workflow_hugo.yml&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;检查Github Action观察是否构建成功&lt;/p&gt;</description></item><item><title>命令与工具</title><link>https://balsampears.github.io/my-blog/docs/go/3_%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%B7%A5%E5%85%B7/</link><pubDate>Thu, 14 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/3_%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%B7%A5%E5%85%B7/</guid><description>&lt;h2 id="一编译与运行---go-run"&gt;一.编译与运行 - go run&lt;/h2&gt;
+&lt;p&gt;检查Github Action观察是否构建成功&lt;/p&gt;</description></item><item><title>MCP Server TS搭建</title><link>https://balsampears.github.io/my-blog/docs/ai/2_mcp/3_mcp-server%E6%90%AD%E5%BB%BA_ts%E5%AE%9E%E7%8E%B0/</link><pubDate>Sat, 27 Jun 2026 22:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/ai/2_mcp/3_mcp-server%E6%90%AD%E5%BB%BA_ts%E5%AE%9E%E7%8E%B0/</guid><description>&lt;p&gt;本文以一个加法工具为例，演示如何使用 TypeScript 搭建 MCP Server，并分别通过 Stdio、SSE、Streamable HTTP 三种传输方式接入 Cherry Studio，最后介绍常用调试方法与上线方式。&lt;/p&gt;
+&lt;p&gt;以下代码已放入github仓库：&lt;a href="https://github.com/balsampears/mcp-server-ts-demo"&gt;mcp-server-ts-demo&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="一-typescript-搭建-mcp-server-项目"&gt;一. TypeScript 搭建 MCP Server 项目&lt;/h2&gt;
+&lt;h3 id="1-配置环境"&gt;1. 配置环境&lt;/h3&gt;
+&lt;p&gt;进入 &lt;a href="https://nodejs.org/zh-cn/download"&gt;Node.js 官网&lt;/a&gt;，下载安装 Node.js。&lt;/p&gt;
+&lt;p&gt;安装完成后，查看版本&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;npm --version
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;node --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="2-创建项目结构"&gt;2. 创建项目结构&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;mkdir mcp-server-ts
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd mcp-server-ts
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Initialize a new npm project&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;npm init -y
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Install dependencies&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;npm install @modelcontextprotocol/sdk express zod@3
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;npm install -D @types/express @types/node typescript
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Create our files&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;mkdir src
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;touch src/index.ts
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在 &lt;code&gt;package.json&lt;/code&gt; 中合并以下字段：&lt;/p&gt;</description></item><item><title>命令与工具</title><link>https://balsampears.github.io/my-blog/docs/go/3_%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%B7%A5%E5%85%B7/</link><pubDate>Thu, 14 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/3_%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%B7%A5%E5%85%B7/</guid><description>&lt;h2 id="一编译与运行---go-run"&gt;一.编译与运行 - go run&lt;/h2&gt;
 &lt;p&gt;go源代码是跨平台的，编译后的机器码是限制目标平台，直接运行在目标平台。java源代码和编译后的字节码都是跨平台的，运行在JVM。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;go 到处编译，直接运行&lt;/li&gt;
@@ -584,18 +690,26 @@ server {
  ssl_ciphers HIGH:!aNULL:!MD5;
  ssl_prefer_server_ciphers on;
 
- # ---------- 代理到后端 ----------
+ # ---------- 代理到前端 ----------
  location / {
  proxy_pass http://127.0.0.1:8081;
  proxy_set_header Host $host;
  proxy_set_header X-Real-IP $remote_addr;
  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
- proxy_set_header X-Forwarded-Proto https; # 改为 https
+ proxy_set_header X-Forwarded-Proto https; 
+ }
+
+ # ---------- 代理到后端 ----------
+ location /api {
+ proxy_pass http://127.0.0.1:8090;
+ proxy_set_header Host $host;
+ proxy_set_header X-Real-IP $remote_addr;
+ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+ proxy_set_header X-Forwarded-Proto $scheme;
  }
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="4-重新nginx"&gt;4. 重新nginx&lt;/h3&gt;
-&lt;pre tabindex="0"&gt;&lt;code&gt;sudo nginx -t &amp;amp;&amp;amp; sudo systemctl reload nginx
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在浏览器输入：https://域名，完成。&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;&lt;br&gt;
+proxy_pass要看末尾加/需要看情况：&lt;/p&gt;</description></item><item><title>Gin框架</title><link>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</link><pubDate>Sat, 16 May 2026 20:00:00 +0800</pubDate><guid>https://balsampears.github.io/my-blog/docs/go/4_gin%E6%A1%86%E6%9E%B6/</guid><description>&lt;h2 id="一-安装和启动"&gt;一. 安装和启动&lt;/h2&gt;
 &lt;h3 id="1-安装gin"&gt;1. 安装Gin&lt;/h3&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;go mod init &amp;lt;项目名&amp;gt;
 go get -u github.com/gin-gonic/gin
