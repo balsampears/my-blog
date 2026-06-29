@@ -48,16 +48,30 @@ server {
     ssl_ciphers HIGH:!aNULL:!MD5;
     ssl_prefer_server_ciphers on;
 
-    # ---------- 代理到后端 ----------
+    # ---------- 代理到前端 ----------
     location / {
         proxy_pass http://127.0.0.1:8081;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto https;   # 改为 https
+        proxy_set_header X-Forwarded-Proto https;   
+    }
+
+    # ---------- 代理到后端 ----------
+    location /api {
+        proxy_pass http://127.0.0.1:8090;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
 ```
+**注意**  
+proxy_pass要看末尾加/需要看情况：
+1. 若后端请求时需要去除/api，则使用http://127.0.0.1:8090/
+2. 若后端请求时保留/api，则使用http://127.0.0.1:8090
+ 
 
 ### 4. 重新nginx
 ```

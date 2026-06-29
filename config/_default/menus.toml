@@ -28,11 +28,11 @@ pageRef = "/docs/go"
 weight = 30
 identifier = "go"
 
-# [[main]]
-# name = "AI"
-# pageRef = "/docs/ai"
-# weight = 40
-# identifier = "ai"
+[[main]]
+name = "AI"
+pageRef = "/docs/ai"
+weight = 40
+identifier = "ai"
 
 [[main]]
 name = "更多"
